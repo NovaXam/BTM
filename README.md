@@ -104,7 +104,6 @@ Track all company business' trips in one app with extended functionality and fri
  Extra features of the web-app is a weather and a time checkers
  User invited to type the name of the city to travel on the form placed right below the Trip tracker
  As soon as user hits the enter button the data in the fields weather and time updated according with a user request
-## Flow char
 
 ## MockUp
 
@@ -119,24 +118,24 @@ Track all company business' trips in one app with extended functionality and fri
    Day  | Task                     | Time to complet, h   | Status
    ____ | ________________________ | ____________________ | ______
 	1   | mockUps, 		           |    2,  2,  2,  1 	  | done			
-		| charts user flow,        |		              | 
-		| UX, UI,		           |				      |
-		| readme,		           |				      |
+		  charts user flow,        		               
+		  UX, UI,		           				      
+		  readme,		           				      
     2   | build front-end 		   |     	6, 2, 3 	  | in progress
-    	| component 			   |					  |
-    	| structure of the app,    |					  |
-    	| write tests, 			   |					  |
-    	| field the pages with     |					  |
-    	| a content 			   | 					  |
+    	  component 			    					   
+    	  structure of the app,     					   
+    	  write tests, 			    					   
+    	  field the pages with      					   
+    	  a content 			     					   
 	3   | build css effects,	   |  		 3, 6 		  | upcoming 
-		| D3 graphs				   | 					  |
+		  D3 graphs				     					   
 	4   | Spring Boot architecture | 		  6 3 		  | upcoming
-		| data base(MVC) 		   | 					  |
+		  data base(MVC) 		     					   
 	5   | Connect back-end and 	   | 		6 3 		  | upcoming
-		| front-end, 			   |					  |
-		| tests					   |					  |
+		  front-end, 			    					   
+		  tests					    					   
 	6   | Presentation of the 	   |					  |
-		| project				   |					  |
+		  project				    					   
 
 ## Code snippet
 ```JS
