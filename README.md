@@ -108,7 +108,11 @@ Track all company business' trips in one app with extended functionality and fri
 
 ## MockUp
 
+![alt text](https://github.com/NovaXam/BTM/blob/master/Planning/graphs.JPG)
 
+![alt text](https://github.com/NovaXam/BTM/blob/master/Planning/newTrip.JPG)
+
+![alt text](https://github.com/NovaXam/BTM/blob/master/Planning/tripTracker.JPG)
 
 
 ## Schedul
