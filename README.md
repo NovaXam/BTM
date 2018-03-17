@@ -115,27 +115,16 @@ Track all company business' trips in one app with extended functionality and fri
 
 
 ## Schedul
-   Day  | Task                     | Time to complet, h   | Status
-   ____ | ________________________ | ____________________ | ______
-	1   | mockUps, 		           |    2,  2,  2,  1 	  | done			
-		  charts user flow,        		               
-		  UX, UI,		           				      
-		  readme,		           				      
-    2   | build front-end 		   |     	6, 2, 3 	  | in progress
-    	  component 			    					   
-    	  structure of the app,     					   
-    	  write tests, 			    					   
-    	  field the pages with      					   
-    	  a content 			     					   
-	3   | build css effects,	   |  		 3, 6 		  | upcoming 
-		  D3 graphs				     					   
-	4   | Spring Boot architecture | 		  6 3 		  | upcoming
-		  data base(MVC) 		     					   
-	5   | Connect back-end and 	   | 		6 3 		  | upcoming
-		  front-end, 			    					   
-		  tests					    					   
-	6   | Presentation of the 	   |					  |
-		  project				    					   
+  
+| Day | Task | Time to complet, h | Status |
+|---|---|---|---|
+| 1  |mockUps, harts user flow, UX, UI, readme, | 2,  2,  2,  1   | done |
+|  2 | build front-end, component structure of the app, write tests, field the pages | 6, 2, 3  | in progress  |
+| 3  | build css effects, D3 graphs | 3, 6  | upcoming |
+| 4 | Spring Boot architecture data base(MVC) |  6, 3  | upcoming |
+| 5 | Connect back-end and front-end, tests | 6, 3  | upcoming |
+| 6 | Presentation of the project | - | upcoming |
+		    					   
 
 ## Code snippet
 ```JS
