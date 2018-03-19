@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import SingleGraph from './SingleGraph';
+
 import './style/graphs.css';
 
 class Graps extends Component {
@@ -9,10 +11,10 @@ class Graps extends Component {
 
     render() { 
         return (  
-            <div className="row no-gutters" style={{height: "8rem"}}>
-                <div id="budget" className="col col-sm-4"> some </div>
-                <div id="freq" className="col col-sm-4"> graphs </div>
-                <div id="dest" className="col col-sm-4"> some </div>
+            <div className="row justify-content-around no-gutters" style={{height: "8rem"}}>
+                <SingleGraph />
+                <SingleGraph />
+                <SingleGraph />
             </div>
         )
     }

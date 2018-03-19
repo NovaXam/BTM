@@ -1,0 +1,15 @@
+.closedFormTrip {
+    /* display: none; */
+    height: 3.5rem;
+    transition: height 2s;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.openedFormTrip {
+    display: inline-block;
+    height: 42rem;
+    transition: height 2s;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}

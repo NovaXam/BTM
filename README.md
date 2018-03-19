@@ -114,16 +114,17 @@ Track all company business' trips in one app with extended functionality and fri
 ![alt text](https://github.com/NovaXam/BTM/blob/master/Planning/tripTracker.JPG)
 
 
-## Schedul
+## Schedule
   
 | Day | Task | Time to complet, h | Status |
 |---|---|---|---|
-| 1  |mockUps, harts user flow, UX, UI, readme, | 2,  2,  2,  1   | done |
+| 1  |mockUps, charts user flow, UX, UI, readme, |  2,  2,  2,  1  | done |
 |  2 | build front-end, component structure of the app, write tests, field the pages | 6, 2, 3  | in progress  |
-| 3  | build css effects, D3 graphs | 3, 6  | upcoming |
+| 3  | build css effects, D3 graphs |  3, 6  | upcoming |
 | 4 | Spring Boot architecture data base(MVC) |  6, 3  | upcoming |
-| 5 | Connect back-end and front-end, tests | 6, 3  | upcoming |
-| 6 | Presentation of the project | - | upcoming |
+| 5 | Connect back-end and front-end, tests |  6, 3  | upcoming |
+| 6 | Presentation of the project |  -  | upcoming |
+| 6 | Total |  45  | |
 		    					   
 
 ## Code snippet

@@ -1,6 +1,6 @@
 .Main {
   text-align: center;
-  margin: 5rem 0rem 0rem 0rem; 
+  margin: 2rem 0rem 0rem 0rem; 
 }
 
 .container {
@@ -12,5 +12,15 @@
 }
 
 #middle {
+  height: 30rem;
+}
 
+hr {
+  border-width: 0.15rem;
+}
+
+#line {
+  border-width: 0.2rem;
+  width: 50rem;
+  margin: 0.25em auto;
 }
