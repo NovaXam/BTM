@@ -4,7 +4,6 @@ import Scroll from 'react-scroll';
 const Element = Scroll.Element;
 
 const SingleGraph = (props) => {
-    console.log(props)
     return (  
             <div className="col col-sm-4"> 
         {/* <Element>        */}

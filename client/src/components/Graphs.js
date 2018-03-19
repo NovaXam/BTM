@@ -12,83 +12,143 @@ class Graps extends Component {
         super(props);
         this.state = { 
             graphAreaState: "closedGrpahArea",
+            buttonsAreaState: "8rem",
             singleGraphId: [0, 1, 2],
-            data: []
+            data: [],
+            name: "",
+            dataType: [],
+            height: "0rem"
         }
         this.handleSingleGraph = this.handleSingleGraph.bind(this);
         this.buildDataBudgetGraph = this.buildDataBudgetGraph.bind(this);
         this.buildDataFreqDurGraph = this.buildDataFreqDurGraph.bind(this);
         this.buildDataDestGraph = this.buildDataDestGraph.bind(this);
     };
+
+
     
     handleSingleGraph(e) {
         e.stopPropagation();
         e.preventDefault();
-        console.log(e.target.id);
+        const value = this.props["compEntries"];
         switch(e.target.id) {
             case "0": 
                 this.setState({
-                    data: this.buildDataBudgetGraph(this.props["compEntries"])
+                    data: this.buildDataBudgetGraph(value),
+                    name: "Budget",
+                    dataType: ["money", "month"]
                 });
             break;
             case "1": 
                 this.setState({
-                    data: this.buildDataFreqDurGraph(this.props["inProgEntries"])
+                    data: this.buildDataFreqDurGraph(value),
+                    name: "Frequency",
+                    dataType: ["number", "month"]
+
                 });
             break;
             case "2": 
                 this.setState({
-                    data: this.buildDataDestGraph(this.props["upComEntries"])
+                    data: this.buildDataDestGraph(value),
+                    name: "Destination",
+                    dataType: []
                 });
             break;
         }
         if (this.state.graphAreaState === "closedGrpahArea") {
             this.setState({
-                graphAreaState: "openGrpahArea"
+                graphAreaState: "openGrpahArea",
+                buttonsAreaState: "34rem",
+                height: "32rem"
             });
         }
     };
 
     buildDataBudgetGraph(initInfo) {
-        const arrData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            initInfo.map((elem) => {
+        let finalArr = [];
+        let map = {};
+        let tempArr = [];
+        initInfo.map((elem) => {
+            let year = elem.date.split("-")[2];
             let index = parseInt(elem.date.split("-")[0]);
             let budget = parseInt(elem.budget);
-            arrData[index] += budget;
+            if(map[year] == undefined) {
+                tempArr = tempArr.concat(year);
+                var arrData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                map[year] = arrData;
+                map[year][index] += budget;
+            } else {
+                map[year][index] += budget;
+            };
         });
-        return arrData;
+        finalArr.push(map);
+        finalArr.push(tempArr); 
+        return finalArr;
     };
 
     buildDataFreqDurGraph(initInfo) {
-        const arrData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            initInfo.map((elem) => {
+        let finalArr = [];
+        let map = {};
+        let tempArr = [];
+        initInfo.map((elem) => {
+            let year = elem.date.split("-")[2];
             let index = parseInt(elem.date.split("-")[0]);
-            arrData[index] += 1;
+            let budget = parseInt(elem.budget);
+            if(map[year] == undefined) {
+                tempArr = tempArr.concat(year);
+                var arrData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                map[year] = arrData;
+                map[year][index] += 1;
+            } else {
+                map[year][index] += 1;
+            };
         });
-        return arrData;
+        finalArr.push(map);
+        finalArr.push(tempArr); 
+        return finalArr;
     };
 
     buildDataDestGraph(initInfo) {
-
-    }
-
-    render() { 
-        console.log(this.state.data);
-        return (
-            <div id={this.state.graphAreaState} className="row justify-content-around no-gutters" style={{height: "8rem"}} onClick={this.handleSingleGraph}>
-                {
-                    this.state.singleGraphId.map((elem, i) => {
-                        return <SingleGraph 
-                                    key={i}
-                                    id={elem}
-                                />
-                    })   
+        let finalArr = [];
+        let map = {};
+        let tempArr = [];
+        initInfo.map((elem) => {
+            let year = elem.date.split("-")[2];
+            let destination = elem.destination;
+            if(map[year] == undefined) {
+                tempArr = tempArr.concat(year);
+                map[year] = {};
+                map[year][destination] = 1;
+            } else if (map[year][destination] === undefined) {
+                    map[year][destination] = 1;
+            } else {
+                    map[year][destination] += 1;
                 }
+            });
+        finalArr.push(map);
+        finalArr.push(tempArr);
+        return finalArr;
+    };
+
+    render() {
+        return (
+            <div className={this.state.graphAreaState} >
                 <GraphPage 
                     data={this.state.data}
                     name={this.state.name}
-                    dataType={this.dataType}
+                    dataType={this.state.dataType}
+                    height={this.state.height}
                 />
+                <div className="row justify-content-around no-gutters" style={{height: "8rem", top: this.state.buttonsAreaState, position: "sticky", transition: "top 2s"}} onClick={this.handleSingleGraph}>
+                    {
+                        this.state.singleGraphId.map((elem, i) => {
+                            return <SingleGraph 
+                                        key={i}
+                                        id={elem}
+                                    />
+                        })   
+                    }
+                </div>
             </div>
         )
     }

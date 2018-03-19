@@ -25,7 +25,7 @@ const data = [
     },
     {
         "traveler": "Valery Nickols",
-        "destination": "Madrid",
+        "destination": "Kiev",
         "budget": "10435",
         "goal": "joy",
         "date": "10-23-2017",
@@ -33,10 +33,10 @@ const data = [
     },
     {
         "traveler": "John Vatson",
-        "destination": "Tokio",
+        "destination": "New York",
         "budget": "24350",
         "goal": "sign contract",
-        "date": "9-30-2016",
+        "date": "9-30-2012",
         "status": 0
     },
     {
@@ -81,7 +81,7 @@ const data = [
     },
     {
         "traveler": "John Vatson",
-        "destination": "Tokio",
+        "destination": "Berlin",
         "budget": "24350",
         "goal": "sign contract",
         "date": "9-30-2016",
@@ -105,7 +105,7 @@ const data = [
     },
     {
         "traveler": "John Vatson",
-        "destination": "Tokio",
+        "destination": "Berlin",
         "budget": "24350",
         "goal": "sign contract",
         "date": "9-30-2016",
@@ -137,7 +137,7 @@ const data = [
     },
     {
         "traveler": "Kirkland Island",
-        "destination": "San Paolo",
+        "destination": "Kioto",
         "budget": "7869",
         "goal": "business",
         "date": "01-18-2018",
