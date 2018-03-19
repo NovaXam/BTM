@@ -68,20 +68,25 @@ assignFunc(elem1, elem2, elem3) {
   });
 }
 
-handleWTInput(e) {
-  e.preventDefault();
+handleWTInput(event) {
+  event.stopPropagation();
+  event.preventDefault();
   this.setState({
-    inputCity: e.target.value
-
+    inputCity: event.target.value
   });
 };
 
 handleSubApi(e) {
   e.preventDefault();
+  e.stopPropagation();
   
   const weather = `https://api.openweathermap.org/data/2.5/weather?q=${this.state.inputCity}&units=metric&APPID=${key}`;
   const picture = `https://api.teleport.org/api/urban_areas/slug:${this.state.inputCity.toLowerCase()}/images/`;
-  console.log(e.target.ref);
+  
+  this.setState({
+    inputCity: ""
+  });
+
   Promise.all([axios(weather), axios(picture)]).then((res) => {
     this.setState({
       weather: [res[0].data.name, res[0].data.main.temp, res[0].data.main.humidity, res[0].data.weather[0].description],
@@ -107,7 +112,11 @@ handleSubApi(e) {
         <div className="container">
           <div id="top" className="row no-gutters justify-content-center">
             <div className="col-sm-9" style={{margin: "1rem"}}>
-              <Graphs />
+              <Graphs 
+                  compEntries={this.state.compEntries}
+                  inProgEntries={this.state.inProgEntries}
+                  upComEntries={this.state.upComEntries}
+              />
             </div>
           </div>
           <div id="middle" className="row no-gutters align-item-center">  
@@ -141,6 +150,7 @@ handleSubApi(e) {
                   type="text"
                   style={{width: "20rem"}}
                   className="form-control"
+                  name="inputForWeather"
                   ref="weatime" 
                   placeholder="Type the name of the city" 
                   aria-describedby="basic-addon1" 

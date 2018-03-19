@@ -140,7 +140,7 @@ handleSubApi(e) {
       weather: [res[0].data.name, res[0].data.main.temp, res[0].data.main.humidity, res[0].data.weather[0].description],
       pictureBack: res[1].data.photos[0].image.mobile
     });
-    const time = `http://api.geonames.org/timezoneJSON?lat=${res[0].data.coord.lat}&lng=${res[0].data.coord.lon}&username=novaxam`;
+    const time = `http://api.geonames.org/timezoneJSON?lat=${res[0].data.coord.lat}&lng=${res[0].data.coord.lon}&username=?????`;
     axios(time)
     .then((data) => {
       const arr = data.data.time.split(" ");

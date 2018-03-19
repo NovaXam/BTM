@@ -30,8 +30,6 @@ class Form extends Component {
     handleFilling(e) {
         e.preventDefault();
         e.stopPropagation();
-        console.log(this.state);
-        console.log(e.target.name);
         switch(e.target.name) {
             case "name": this.setState({name: e.target.value});
             break;

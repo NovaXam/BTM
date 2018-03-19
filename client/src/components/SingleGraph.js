@@ -1,16 +1,19 @@
-import React, {Component} from 'react';
+import React from 'react';
+import Scroll from 'react-scroll';
 
-class SingleGraph extends Component {
-    state = {}
-    render() { 
-        return (  
+const Element = Scroll.Element;
+
+const SingleGraph = (props) => {
+    console.log(props)
+    return (  
             <div className="col col-sm-4"> 
-                <div style={{margin: "0.5rem", height: "90%", borderRadius: "0.5rem", border: "0.05rem solid grey"}}>
+        {/* <Element>        */}
+                <div id={props.id} style={{margin: "0.5rem", height: "90%", borderRadius: "0.5rem", border: "0.05rem solid grey"}}>
                     singleGraphs
                 </div>
+        {/* </Element> */}
             </div>
-        )
-    }
-}
+    )
+};
  
 export default SingleGraph;

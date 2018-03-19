@@ -19,7 +19,6 @@ class AddNewTrip extends Component {
 
     handleOpenForm(e) {
         e.preventDefault();
-        // this.setForm();
         this.setState({
             formTripState: "openedFormTrip"
         })
