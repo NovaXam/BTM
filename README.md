@@ -10,7 +10,7 @@
    - PSQL(1 db, 3 tables trip, 1)
    - Docker 
    - Flyway
-   - Grable
+   - Gradle
    - External API
 
 ## Screens: 
@@ -118,9 +118,9 @@ Track all company business' trips in one app with extended functionality and fri
   
 | Day | Task | Time to complet, h | Status |
 |---|---|---|---|
-| 1  |mockUps, charts user flow, UX, UI, readme, |  2,  2,  2,  1  | done |
-|  2 | build front-end, component structure of the app, write tests, field the pages | 6, 2, 3  | in progress  |
-| 3  | build css effects, D3 graphs |  3, 6  | upcoming |
+| 1 | mockUps, charts user flow, UX, UI, readme, |  2,  2,  2,  1  | done |
+| 2 | build front-end, component structure of the app, write tests, content | 6, 2, 3  | done  |
+| 3 | build css effects, D3 graphs |  3, 6  | in progress |
 | 4 | Spring Boot architecture data base(MVC) |  6, 3  | upcoming |
 | 5 | Connect back-end and front-end, tests |  6, 3  | upcoming |
 | 6 | Presentation of the project |  -  | upcoming |
@@ -129,7 +129,30 @@ Track all company business' trips in one app with extended functionality and fri
 
 ## Code snippet
 ```JS
-
+handleSubApi(e) {
+  e.preventDefault();
+  
+  const weather = `https://api.openweathermap.org/data/2.5/weather?q=${this.state.inputCity}&units=metric&APPID=${key}`;
+  const picture = `https://api.teleport.org/api/urban_areas/slug:${this.state.inputCity.toLowerCase()}/images/`;
+  console.log(e.target.ref);
+  Promise.all([axios(weather), axios(picture)]).then((res) => {
+    this.setState({
+      weather: [res[0].data.name, res[0].data.main.temp, res[0].data.main.humidity, res[0].data.weather[0].description],
+      pictureBack: res[1].data.photos[0].image.mobile
+    });
+    const time = `http://api.geonames.org/timezoneJSON?lat=${res[0].data.coord.lat}&lng=${res[0].data.coord.lon}&username=novaxam`;
+    axios(time)
+    .then((data) => {
+      const arr = data.data.time.split(" ");
+      this.setState({
+        time: arr
+      })
+    }) 
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+}
 ```
 
 ```Java
