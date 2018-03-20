@@ -8,7 +8,7 @@
 
 .openGrpahArea {
     /* display: inline-block; */
-    height: 42rem;
+    height: 40rem;
     transition: height 2s;
     overflow-y: hidden;
     overflow-x: hidden;

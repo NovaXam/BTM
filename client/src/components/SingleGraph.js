@@ -5,7 +5,7 @@ const Element = Scroll.Element;
 
 const SingleGraph = (props) => {
     return (  
-            <div className="col col-sm-4"> 
+            <div className="col col-sm-4" style={{height: "7rem"}}> 
         {/* <Element>        */}
                 <div id={props.id} style={{margin: "0.5rem", height: "90%", borderRadius: "0.5rem", border: "0.05rem solid grey"}}>
                     singleGraphs

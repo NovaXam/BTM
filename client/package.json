@@ -6,7 +6,10 @@
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap": "^4.0.0",
+    "chart.js": "^2.7.2",
     "react": "^16.2.0",
+    "react-d3-basic": "^1.6.11",
+    "react-d3-components": "^0.9.0",
     "react-dom": "^16.2.0",
     "react-scripts": "1.1.1",
     "react-scroll": "1.7.7"

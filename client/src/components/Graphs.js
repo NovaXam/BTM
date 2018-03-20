@@ -25,8 +25,6 @@ class Graps extends Component {
         this.buildDataDestGraph = this.buildDataDestGraph.bind(this);
     };
 
-
-    
     handleSingleGraph(e) {
         e.stopPropagation();
         e.preventDefault();
@@ -61,6 +59,10 @@ class Graps extends Component {
                 buttonsAreaState: "34rem",
                 height: "32rem"
             });
+            scroller.scrollTo(`${this.state.graphAreaState}`, {
+                smooth: true,
+              });
+
         }
     };
 
@@ -131,27 +133,28 @@ class Graps extends Component {
     };
 
     render() {
+        console.log(this.state.data);
         return (
-            <div className={this.state.graphAreaState} >
-                <GraphPage 
-                    data={this.state.data}
-                    name={this.state.name}
-                    dataType={this.state.dataType}
-                    height={this.state.height}
-                />
-                <div className="row justify-content-around no-gutters" style={{height: "8rem", top: this.state.buttonsAreaState, position: "sticky", transition: "top 2s"}} onClick={this.handleSingleGraph}>
-                    {
-                        this.state.singleGraphId.map((elem, i) => {
-                            return <SingleGraph 
-                                        key={i}
-                                        id={elem}
-                                    />
-                        })   
-                    }
-                </div>
+                <div className={this.state.graphAreaState} >
+                        <GraphPage 
+                            data={this.state.data}
+                            name={this.state.name}
+                            dataType={this.state.dataType}
+                            height={this.state.height}
+                        />
+                    <div className="row justify-content-around no-gutters" style={{position: "relative", transition: "top 2s"}} onClick={this.handleSingleGraph}>
+                        {
+                            this.state.singleGraphId.map((elem, i) => {
+                                return <SingleGraph 
+                                            key={i}
+                                            id={elem}
+                                        />
+                            })   
+                        }
+                    </div>
             </div>
         )
     }
-}
+};
  
 export default Graps;
