@@ -23,7 +23,6 @@ class Main extends Component {
       weather: [],
       time: [],
       pictureBack: "",
-      entryRef: null
     };
 
     this.assignFunc = this.assignFunc.bind(this);
@@ -32,6 +31,7 @@ class Main extends Component {
     this.handleSubApi = this.handleSubApi.bind(this);
   }
 
+  //feeding data from DB to a component
   async componentWillMount() {
     //in a final version of the app redirect a stream to DB using axios
     var temp = {
@@ -47,6 +47,7 @@ class Main extends Component {
   }
 };
 
+//building a temporary storage for a specific cathegory of a trip 
 selector(arr, instance) {
   arr.map(function(elem) {
     switch(elem.status) {
@@ -61,6 +62,7 @@ selector(arr, instance) {
 });
 }
 
+//update states of trips' cathegories. 
 assignFunc(elem1, elem2, elem3) {
   this.setState({
     compEntries: elem1,
@@ -69,6 +71,7 @@ assignFunc(elem1, elem2, elem3) {
   });
 }
 
+//method to catch an input value onSubmit on an API weather form field. 
 handleWTInput(event) {
   event.stopPropagation();
   event.preventDefault();
@@ -77,6 +80,7 @@ handleWTInput(event) {
   });
 };
 
+//weather, time and picture API calls
 handleSubApi(e) {
   e.preventDefault();
   e.stopPropagation();
@@ -107,6 +111,7 @@ handleSubApi(e) {
   });
 }
 
+//main render lifecycle method
   render() {
     return (
       <div className="Main">
@@ -135,7 +140,6 @@ handleSubApi(e) {
                     compEntries ={this.state.compEntries} 
                     inProgEntries ={this.state.inProgEntries} 
                     upComEntries ={this.state.upComEntries}
-                    entryRef={this.entryRef}
               />
             </div>
             <div className="col col-sm-2 ">

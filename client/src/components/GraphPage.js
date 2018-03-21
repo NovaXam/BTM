@@ -24,7 +24,6 @@ class GraphPage extends Component {
     };
 
     componentWillReceiveProps(nextProps) {
-         console.log(nextProps);
         if(nextProps.data[0] !== undefined) {
             this.setState({
                 data: Object.assign({}, this.dataModify(nextProps)),
@@ -43,9 +42,7 @@ class GraphPage extends Component {
         ];
         if (item.name == "Destination") {
             if (Object.keys(item.data[0]).length > 0) {
-                console.log(item.data[0]);
                 for (let elem in item.data[0]["2012"]) {
-                    console.log(elem);
                     newData[0].values.push({x: elem, y: item.data[0]["2012"][elem]});
                 }
             }
@@ -58,7 +55,6 @@ class GraphPage extends Component {
                 };
             }
         }
-        console.log(newData);
         return newData;
     };
 

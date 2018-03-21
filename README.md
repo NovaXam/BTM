@@ -1,4 +1,3 @@
-
 # Trip business tracker
 
 ## Technologies in use:
@@ -8,7 +7,7 @@
    - Spring
    - Java
    - PSQL(1 db, 3 tables trip, 1)
-   - Docker 
+   - Docker
    - Flyway
    - Gradle
    - External API
@@ -120,7 +119,7 @@ Track all company business' trips in one app with extended functionality and fri
 |---|---|---|---|
 | 1 | mockUps, charts user flow, UX, UI, readme, |  2,  2,  2,  1  | done |
 | 2 | build front-end, component structure of the app, write tests, content | 6, 2, 3  | done  |
-| 3 | build css effects, D3 graphs |  3, 6  | in progress |
+| 3 | build css effects, D3 graphs |  3, 6  | done |
 | 4 | Spring Boot architecture data base(MVC) |  6, 3  | upcoming |
 | 5 | Connect back-end and front-end, tests |  6, 3  | upcoming |
 | 6 | Presentation of the project |  -  | upcoming |

@@ -67,7 +67,7 @@ class Form extends Component {
         return (
         <Element name="Form">
             <div style={{margin: "1rem auto", width: "40rem", backgroundColor: "lightblue", borderRadius: "1em"}}>
-                <button type="submit" className="btn btn-outline-dark" style={{position: "relative", top: "1rem", left: "18rem"}} onClick={this.handleCloseForm}>X</button>
+                <button type="submit" className="btn btn-outline-info" style={{position: "relative", border: "none", top: "1rem", left: "18rem"}} onClick={this.handleCloseForm}>X</button>
                 <form style={{width: "20rem", margin: "0rem auto", paddingTop: "1rem"}} onSubmit={this.handleSubmit} >
                     <div className="form-group" >
                         <label>Name of the traveler</label>
