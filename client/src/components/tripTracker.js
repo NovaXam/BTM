@@ -8,9 +8,16 @@ class TripTracker extends Component {
 constructor(props) {
     super(props);
     this.state = {
-        arr: [["COMPLETED", "#F5ED4E"], ["ONGOING", "#57FF65"], ["UPCOMING", "#4FD9E0"]]
+        arr: [["COMPLETED", "#F5ED4E"], ["ONGOING", "#57FF65"], ["UPCOMING", "#4FD9E0"]],
+        elemDom: null
+        };
+        this.handleEntryListener = this.handleEntryListener.bind(this);
+    };
 
-        }
+    handleEntryListener(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log(e.target);
     };
 
     render() {
@@ -30,13 +37,24 @@ constructor(props) {
                     }
                 </div>
                 <div className="row no-gutters" style={{height: "27rem"}}>
-                    <TripList data={this.props.compEntries} />
-                    <TripList data={this.props.inProgEntries} />
-                    <TripList data={this.props.upComEntries} />
+                    <TripList 
+                        data={this.props.compEntries}
+                        val={this.handleEntryListener}
+                        elemDom={this.state.elemDom}
+                    />
+                    <TripList 
+                        data={this.props.inProgEntries}
+                        val={this.handleEntryListener}
+                    />
+                    <TripList 
+                        data={this.props.upComEntries}
+                        val={this.handleEntryListener} 
+                    />
                 </div>
             </div>
         );
     }
-}
+};
+
 export default TripTracker;
  

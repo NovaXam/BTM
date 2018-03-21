@@ -22,7 +22,8 @@ class Main extends Component {
       inputCity: "",
       weather: [],
       time: [],
-      pictureBack: ""
+      pictureBack: "",
+      entryRef: null
     };
 
     this.assignFunc = this.assignFunc.bind(this);
@@ -133,7 +134,8 @@ handleSubApi(e) {
               <TripTracker 
                     compEntries ={this.state.compEntries} 
                     inProgEntries ={this.state.inProgEntries} 
-                    upComEntries ={this.state.upComEntries} 
+                    upComEntries ={this.state.upComEntries}
+                    entryRef={this.entryRef}
               />
             </div>
             <div className="col col-sm-2 ">

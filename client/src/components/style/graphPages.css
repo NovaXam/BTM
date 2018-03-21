@@ -1,4 +1,4 @@
-.closedGrpahArea {
+.barChartClose {
     /* display: none; */
     height: 8rem;
     transition: height 2s;
@@ -6,9 +6,16 @@
     overflow-x: hidden;
 }
 
-.openGrpahArea {
+.barChartOpen {
     /* display: inline-block; */
-    height: 43.5rem;
+    height: 25rem;
+    transition: height 2s;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+svg {
+    height: 30rem;
     transition: height 2s;
     overflow-y: hidden;
     overflow-x: hidden;

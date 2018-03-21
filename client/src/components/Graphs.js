@@ -12,17 +12,19 @@ class Graps extends Component {
         super(props);
         this.state = { 
             graphAreaState: "closedGrpahArea",
-            buttonsAreaState: "8rem",
+            hei: "0",
             singleGraphId: [0, 1, 2],
             data: [],
             name: "",
             dataType: [],
-            height: "0rem"
+            height: "0rem",
+            nameGraph: ["BUDGET", "HOW OFTEN", "WHERE TO"]
         }
         this.handleSingleGraph = this.handleSingleGraph.bind(this);
         this.buildDataBudgetGraph = this.buildDataBudgetGraph.bind(this);
         this.buildDataFreqDurGraph = this.buildDataFreqDurGraph.bind(this);
         this.buildDataDestGraph = this.buildDataDestGraph.bind(this);
+        this.closer = this.closer.bind(this);
     };
 
     handleSingleGraph(e) {
@@ -56,8 +58,9 @@ class Graps extends Component {
         if (this.state.graphAreaState === "closedGrpahArea") {
             this.setState({
                 graphAreaState: "openGrpahArea",
-                buttonsAreaState: "34rem",
-                height: "32rem"
+                height: "35rem",
+                hei: "2.35rem",
+                idChart: e.target.id
             });
             scroller.scrollTo(`${this.state.graphAreaState}`, {
                 smooth: true,
@@ -65,6 +68,14 @@ class Graps extends Component {
 
         }
     };
+
+    closer() {
+        this.setState({
+            graphAreaState: "closedGrpahArea",
+            height: "0rem",
+            hei: "0rem",
+        });
+    }
 
     buildDataBudgetGraph(initInfo) {
         let finalArr = [];
@@ -133,7 +144,6 @@ class Graps extends Component {
     };
 
     render() {
-        console.log(this.state.data);
         return (
                 <div className={this.state.graphAreaState} >
                         <GraphPage 
@@ -141,13 +151,15 @@ class Graps extends Component {
                             name={this.state.name}
                             dataType={this.state.dataType}
                             height={this.state.height}
+                            closer={this.closer}
                         />
-                    <div className="row justify-content-around no-gutters" style={{position: "relative", transition: "top 2s"}} onClick={this.handleSingleGraph}>
+                    <div className="row justify-content-around no-gutters" style={{position: "relative"}} onClick={this.handleSingleGraph}>
                         {
                             this.state.singleGraphId.map((elem, i) => {
                                 return <SingleGraph 
                                             key={i}
-                                            id={elem}
+                                            id={i}
+                                            graphCathegoryname={this.state.nameGraph[i]}
                                         />
                             })   
                         }
