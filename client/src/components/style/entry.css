@@ -1,0 +1,13 @@
+.entryOpened {
+    height: 26rem;
+    transition: height 2s;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.entryClosed {
+    height: 6rem;
+    transition: height 1s;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
