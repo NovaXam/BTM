@@ -5,7 +5,13 @@ const TripList = (props) => {
     return (
         <div className="col col-sm-4" style={{overflow: "auto"}}>
             {props.data.map((elem, i) => {
-                return <Entry key={i} type={props.type} handleUpdateForm={props.handleUpdateForm} entryData={elem} />
+                return <Entry 
+                        key={i} 
+                        type={props.type} 
+                        handleUpdateForm={props.handleUpdateForm} 
+                        handleButtonForm={props.handleButtonForm}
+                        entryData={elem} 
+                    />
                 })
             }
         </div>

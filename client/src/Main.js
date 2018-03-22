@@ -29,18 +29,21 @@ class Main extends Component {
     this.selector = this.selector.bind(this);
     this.handleWTInput = this.handleWTInput.bind(this);
     this.handleSubApi = this.handleSubApi.bind(this);
+    this.handleUpdateForm = this.handleUpdateForm.bind(this);
+    this.handleButtonForm = this.handleButtonForm.bind(this);
   }
 
   //feeding data from DB to a component
   async componentWillMount() {
     //in a final version of the app redirect a stream to DB using axios
+    const dataFromDb = data;
     var temp = {
       tempArr1: [],
       tempArr2: [],
       tempArr3: []
     }
     try {
-          const updatedState = await this.selector(data, temp);
+          const updatedState = await this.selector(dataFromDb, temp);
           const assinger = await this.assignFunc(temp.tempArr1, temp.tempArr2, temp.tempArr3);
   } catch(err) {
     console.log(err);
@@ -69,7 +72,27 @@ assignFunc(elem1, elem2, elem3) {
     inProgEntries: elem2,
     upComEntries: elem3
   });
-}
+};
+
+handleUpdateForm(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  var dataToDb = {};
+  console.log(e.target[0].value);
+  for(let i = 1; i < 6; i++) {
+      dataToDb[`${e.target[i].name}`] = e.target[i].value;
+  };
+  //make a axios post request to db and update entry with new data from dataToDb
+  console.log(dataToDb);
+};
+
+handleButtonForm(e) {
+  e.preventDefault();
+  console.log(e.target.id);
+  console.log(e.target);
+  return e.target.name;;
+
+};
 
 //method to catch an input value onSubmit on an API weather form field. 
 handleWTInput(event) {
@@ -137,9 +160,11 @@ handleSubApi(e) {
             </div>
             <div className="col col-sm-8">
               <TripTracker 
-                    compEntries ={this.state.compEntries} 
-                    inProgEntries ={this.state.inProgEntries} 
+                    compEntries ={this.state.compEntries}
+                    inProgEntries ={this.state.inProgEntries}
                     upComEntries ={this.state.upComEntries}
+                    handleUpdateForm ={this.handleUpdateForm}
+                    handleButtonForm = {this.handleButtonForm}
               />
             </div>
             <div className="col col-sm-2 ">
