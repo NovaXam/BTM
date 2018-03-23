@@ -1,4 +1,4 @@
 export const key = {
-    apiWeather: "673231bac3273ad544dce5bd054bbb9e",
+    apiWeather: "a2ad009234d83c5c91891c0ec51a4b27",
     apiTime: "novaxam"
 };

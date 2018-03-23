@@ -5,6 +5,7 @@
 
 # assets
 /assets
+.LocalStorage.js
 
 # testing
 /coverage

@@ -40,7 +40,7 @@ async modifyData(elem) {
       const newList = await this.deleteItemFromList(elem);
       const newState = await this.updateState(newList);
    } else {
-      const newList = this.updateValue(elem);
+      const newList = await this.updateValue(elem);
       const newState = await this.updateState(newList);
    }
  } catch(err) {
