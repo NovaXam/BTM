@@ -173,7 +173,7 @@ const data = [
     {
         "id": 20,
         "traveler": "Valery Nickols",
-        "destination": "Madrid",
+        "destination": "Kiev",
         "budget": "10435",
         "goal": "joy",
         "date": "10-23-2017",

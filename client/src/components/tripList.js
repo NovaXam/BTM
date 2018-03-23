@@ -6,11 +6,10 @@ const TripList = (props) => {
         <div className="col col-sm-4" style={{overflow: "auto"}}>
             {props.data.map((elem, i) => {
                 return <Entry 
-                        key={i} 
-                        type={props.type} 
-                        handleUpdateForm={props.handleUpdateForm} 
-                        handleButtonForm={props.handleButtonForm}
-                        entryData={elem} 
+                        key={i}
+                        type={props.type}
+                        entryData={elem}
+                        modifyData={props.modifyData}
                     />
                 })
             }

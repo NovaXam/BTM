@@ -10,8 +10,14 @@ const EntryContent = (props) => {
                         type="hidden" 
                         name="id"
                         className="form-control" 
-                        value={props.id}
+                        value={props.localData.id}
                         />
+                        <input
+                            type="hidden" 
+                            name="status"
+                            className="form-control" 
+                            value={props.localData.status}
+                        />        
                 <div className="form-group" >
                         <input
                             type="text" 

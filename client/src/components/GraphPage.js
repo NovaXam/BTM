@@ -17,7 +17,6 @@ class GraphPage extends Component {
                 }
             ],
             barAreaState: "barChartClose"
-
         };
         this.dataModify = this.dataModify.bind(this);
         this.handleCloseGraph = this.handleCloseGraph.bind(this);
@@ -29,7 +28,6 @@ class GraphPage extends Component {
                 data: Object.assign({}, this.dataModify(nextProps)),
                 barAreaState: "barChartOpen"
             });
-
         }
     };
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { key } from './assets/LocalStorage';
 
 import './Main.css';
 
@@ -10,88 +11,78 @@ import Weather from './components/Weather';
 import Time from './components/Time';
 import data from './dataStorage/trips';
 
-const key = "673231bac3273ad544dce5bd054bbb9e";
-
 class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      compEntries: [],
-      inProgEntries: [],
-      upComEntries: [],
       inputCity: "",
       weather: [],
       time: [],
       pictureBack: "",
+      dataFromDb: data
     };
 
-    this.assignFunc = this.assignFunc.bind(this);
-    this.selector = this.selector.bind(this);
     this.handleWTInput = this.handleWTInput.bind(this);
     this.handleSubApi = this.handleSubApi.bind(this);
-    this.handleUpdateForm = this.handleUpdateForm.bind(this);
-    this.handleButtonForm = this.handleButtonForm.bind(this);
+    this.modifyData = this.modifyData.bind(this); 
+    this.deleteItemFromList = this.deleteItemFromList.bind(this);
+    this. updateState = this.updateState.bind(this);
+    this.updateValue = this.updateValue.bind(this);
   }
 
   //feeding data from DB to a component
   async componentWillMount() {
-    //in a final version of the app redirect a stream to DB using axios
-    const dataFromDb = data;
-    var temp = {
-      tempArr1: [],
-      tempArr2: [],
-      tempArr3: []
-    }
-    try {
-          const updatedState = await this.selector(dataFromDb, temp);
-          const assinger = await this.assignFunc(temp.tempArr1, temp.tempArr2, temp.tempArr3);
-  } catch(err) {
-    console.log(err);
-  }
 };
 
-//building a temporary storage for a specific cathegory of a trip 
-selector(arr, instance) {
-  arr.map(function(elem) {
-    switch(elem.status) {
-      case 0: instance.tempArr1 = instance.tempArr1.concat(elem);
-      break;
-      case 1: instance.tempArr2 = instance.tempArr2.concat(elem);
-      break;
-      case 2: instance.tempArr3 = instance.tempArr3.concat(elem);
-      break;
-    };
-  return instance;
-});
+async modifyData(elem) {
+  try {
+    if (typeof elem == "string") {
+      const newList = await this.deleteItemFromList(elem);
+      const newState = await this.updateState(newList);
+   } else {
+      const newList = this.updateValue(elem);
+      const newState = await this.updateState(newList);
+   }
+ } catch(err) {
+    console.log(err);
+  };
+};
+
+updateState(modifiedState) {
+  this.setState({
+    dataFromDb: modifiedState
+  });
 }
 
-//update states of trips' cathegories. 
-assignFunc(elem1, elem2, elem3) {
+updateValue(updatedEntry) {
+  var obj = this.state.dataFromDb;
+  updatedEntry.id = parseInt(updatedEntry.id);
+  updatedEntry.status = parseInt(updatedEntry.status);
+  obj = obj.map((elem) => {
+    if (elem.id == updatedEntry.id) {
+      elem = {...updatedEntry}
+     } else {
+      };
+      return elem;
+    });
+    return obj;
+};
+
+
+deleteItemFromList(data) {
+  let newElem = parseInt(data);
+  var obj = this.state.dataFromDb;
+  const newList = obj.filter((item) => {
+      return item.id !== newElem;
+    });
+  return newList;
+};
+
+componentWillReceiveProps() {
   this.setState({
-    compEntries: elem1,
-    inProgEntries: elem2,
-    upComEntries: elem3
+    dataFromDb: data
   });
-};
-
-handleUpdateForm(e) {
-  e.preventDefault();
-  e.stopPropagation();
-  var dataToDb = {};
-  console.log(e.target[0].value);
-  for(let i = 1; i < 6; i++) {
-      dataToDb[`${e.target[i].name}`] = e.target[i].value;
-  };
-  //make a axios post request to db and update entry with new data from dataToDb
-  console.log(dataToDb);
-};
-
-handleButtonForm(e) {
-  e.preventDefault();
-  console.log(e.target.id);
-  console.log(e.target);
-  return e.target.name;;
-
+  console.log()
 };
 
 //method to catch an input value onSubmit on an API weather form field. 
@@ -108,7 +99,7 @@ handleSubApi(e) {
   e.preventDefault();
   e.stopPropagation();
   
-  const weather = `https://api.openweathermap.org/data/2.5/weather?q=${this.state.inputCity}&units=metric&APPID=${key}`;
+  const weather = `https://api.openweathermap.org/data/2.5/weather?q=${this.state.inputCity}&units=metric&APPID=${key.apiWeather}`;
   const picture = `https://api.teleport.org/api/urban_areas/slug:${this.state.inputCity.toLowerCase()}/images/`;
   
   this.setState({
@@ -120,7 +111,7 @@ handleSubApi(e) {
       weather: [res[0].data.name, res[0].data.main.temp, res[0].data.main.humidity, res[0].data.weather[0].description],
       pictureBack: res[1].data.photos[0].image.mobile
     });
-    const time = `http://api.geonames.org/timezoneJSON?lat=${res[0].data.coord.lat}&lng=${res[0].data.coord.lon}&username=novaxam`;
+    const time = `http://api.geonames.org/timezoneJSON?lat=${res[0].data.coord.lat}&lng=${res[0].data.coord.lon}&username=${key.apiTime}`;
     axios(time)
     .then((data) => {
       const arr = data.data.time.split(" ");
@@ -142,9 +133,7 @@ handleSubApi(e) {
           <div id="top" className="row no-gutters justify-content-center">
             <div className="col-sm-9" style={{margin: "1rem"}}>
               <Graphs 
-                  compEntries={this.state.compEntries}
-                  inProgEntries={this.state.inProgEntries}
-                  upComEntries={this.state.upComEntries}
+                  dataFromDb={this.state.dataFromDb}
               />
             </div>
           </div>
@@ -160,11 +149,8 @@ handleSubApi(e) {
             </div>
             <div className="col col-sm-8">
               <TripTracker 
-                    compEntries ={this.state.compEntries}
-                    inProgEntries ={this.state.inProgEntries}
-                    upComEntries ={this.state.upComEntries}
-                    handleUpdateForm ={this.handleUpdateForm}
-                    handleButtonForm = {this.handleButtonForm}
+                    dataFromDb ={this.state.dataFromDb}
+                    modifyData={this.modifyData}
               />
             </div>
             <div className="col col-sm-2 ">
