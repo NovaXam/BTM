@@ -4,8 +4,7 @@
 /node_modules
 
 # assets
-/assets
-.LocalStorage.js
+assets/LocalStorage
 
 # testing
 /coverage

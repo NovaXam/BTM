@@ -117,13 +117,20 @@ Track all company business' trips in one app with extended functionality and fri
   
 | Day | Task | Time to complet, h | Status |
 |---|---|---|---|
-| 1 | mockUps, charts user flow, UX, UI, readme, |  2,  2,  2,  1  | done |
-| 2 | build front-end, component structure of the app, write tests, content | 6, 2, 3  | done  |
-| 3 | build css effects, D3 graphs |  3, 6  | done |
-| 4 | Spring Boot architecture data base(MVC) |  6, 3  | upcoming |
-| 5 | Connect back-end and front-end, tests |  6, 3  | upcoming |
-| 6 | Presentation of the project |  -  | upcoming |
-| 6 | Total |  45  | |
+| 1.1 | mockUps, charts user flow, UX, UI, readme, |  2,  2,  2,  1  | done |
+| 1.2 | build front-end, component structure of the app, write tests, content | 6, 2, 3  | done  |
+| 1.3 | build css effects, D3 graphs |  3, 6  | done |
+|  - |  MVP | 27 hours | done |
+| 2.1 | Spring Boot architecture data base(MVC) |  12  | ongoing |
+| 2.2 | connect back-end and front-end, tests |  6, 3  | upcoming |
+| - | Version 1 |  21 hours  | in progress |
+| 3.1 | add calendar option on the graph, fix bugs | 10, 2 | upcoming
+| 3.2 | redesign a grid | 12 | upcoming
+| 3.3 | update an Add trip form | 4 | upcoming
+| - | Version 2 | 28 hours | upcoming
+| 4.1 | add sort option for notes column | 8 | upcoming
+| 4.2 | add horizontal menu | 12 | upcoming 
+| 4.3 | add traveler profile | 24 | upcoming
 		    					   
 
 ## Code snippet

@@ -99,7 +99,7 @@ class Entry extends Component {
     render() {
         return (    
             <div 
-                style={{lineHeight: "0.1rem", margin: "0.5rem 0.5rem 0.5rem 0.5rem"}} 
+                style={{lineHeight: "0.1rem", margin: "0.5rem 0.5rem 0.5rem 0.5rem", cursor: "pointer"}} 
                 className={`${this.props.type[2]} ${this.state.entrySlideClass}`}
                 id={this.props.id} 
                 role="alert" 

@@ -10,6 +10,7 @@ const TripList = (props) => {
                         type={props.type}
                         entryData={elem}
                         modifyData={props.modifyData}
+                        style={{cursor: "pointer"}}
                     />
                 })
             }
