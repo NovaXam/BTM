@@ -38,7 +38,7 @@ class Entry extends Component {
         this.setState({
             statusView: "entryOpenedToExtendView",
             entrySlideClass: "entryOpenedView"
-            });
+            }); 
         }
     };
 
@@ -97,7 +97,7 @@ class Entry extends Component {
       };
       
     render() {
-        return (    
+        return (
             <div 
                 style={{lineHeight: "0.1rem", margin: "0.5rem 0.5rem 0.5rem 0.5rem", cursor: "pointer"}} 
                 className={`${this.props.type[2]} ${this.state.entrySlideClass}`}

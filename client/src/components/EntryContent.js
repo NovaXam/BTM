@@ -78,13 +78,13 @@ const EntryContent = (props) => {
                 <hr />
                 {props.localData.destination}
                 <hr />
-                {props.localData.budget} 
+                {props.localData.budget} USD
                 <hr />
                 {props.localData.date} 
                 <hr />
                 {props.localData.goal} 
                 <hr />
-                <button type="submit" className="btn btn-light btn-sm" style={{marginRight: "1rem"}} onClick={props.handleRollerView}>Edit</button>
+                <button type="submit" className="btn btn-light btn-sm" onClick={props.handleRollerView}>Edit</button>
             </div>
         );
     } else {

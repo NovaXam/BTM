@@ -107,7 +107,7 @@ class Form extends Component {
                         <input 
                             type="text" 
                             className="form-control" 
-                            placeholder="Date" 
+                            placeholder="MM-DD-YYYY" 
                             name="date"
                             value={this.state.date}
                             onChange={this.handleFilling}

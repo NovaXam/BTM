@@ -13,10 +13,3 @@
     overflow-y: hidden;
     overflow-x: hidden;
 }
-
-svg {
-    height: 30rem;
-    transition: height 2s;
-    overflow-y: hidden;
-    overflow-x: hidden;
-}

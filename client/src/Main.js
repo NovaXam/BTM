@@ -98,9 +98,15 @@ handleWTInput(event) {
 handleSubApi(e) {
   e.preventDefault();
   e.stopPropagation();
-  
+  var picture = "";
   const weather = `https://api.openweathermap.org/data/2.5/weather?q=${this.state.inputCity}&units=metric&APPID=${key.apiWeather}`;
-  const picture = `https://api.teleport.org/api/urban_areas/slug:${this.state.inputCity.toLowerCase()}/images/`;
+  if (this.state.inputCity.split(" ").length > 1) {
+    const newString = this.state.inputCity.split(" ").join("-").toLowerCase();
+    console.log(newString);
+    picture = `https://api.teleport.org/api/urban_areas/slug:${newString}/images/`;
+  } else {
+    picture = `https://api.teleport.org/api/urban_areas/slug:${this.state.inputCity.toLowerCase()}/images/`;
+  };
   
   this.setState({
     inputCity: ""

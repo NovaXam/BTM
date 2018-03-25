@@ -68,7 +68,7 @@ class GraphPage extends Component {
             if (this.state.data[0].values.length > 0) {
                 return (
                         <div className="graphContainer" style={{height: this.props.height, transition: "height 2s", overflowX: "hidden", marginTop: "1rem", borderBottom: "0.15rem solid lightgrey"}}>
-                            <div style={{overflowY: "hidden", height: this.state.hei, transition: "height 2s", margin: "1rem 0rem 0rem 45rem"}}>
+                            <div style={{overflow: "hidden", height: this.state.hei, transition: "height 2s", margin: "1rem 0rem 0rem 45rem"}}>
                                 <button type="submit" className="btn btn-outline-info" onClick={this.handleCloseGraph}>X</button>
                             </div>
                             <BarChart  
@@ -81,7 +81,7 @@ class GraphPage extends Component {
                     );
                 }
                 else return (
-                    <div className="graphContainer" style={{height: this.props.height, transition: "height 2s", overflowX: "hidden", marginTop: "1rem", borderBottom: "0.15rem solid lightgrey"}}>
+                    <div className="graphContainer" style={{height: this.props.height, transition: "height 2s", overflow: "hidden", marginTop: "1rem", borderBottom: "0.15rem solid lightgrey"}}>
                     </div>
                 );
         break;
