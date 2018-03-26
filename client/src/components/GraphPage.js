@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { BarChart, LineChart, PieChart } from "react-d3-components";
 import Scroll from "react-scroll";
+import Calendar from 'react-calendar';
 
 import './style/graphPages.css'; 
 
@@ -16,10 +17,14 @@ class GraphPage extends Component {
                     values: []
                 }
             ],
-            barAreaState: "barChartClose"
+            barAreaState: "barChartClose",
+            range: true,
+            calClass: "updatedCal",
+            value: null
         };
         this.dataModify = this.dataModify.bind(this);
         this.handleCloseGraph = this.handleCloseGraph.bind(this);
+        this.handleCalendarEvent = this.handleCalendarEvent.bind(this);
     };
 
     componentWillReceiveProps(nextProps) {
@@ -60,23 +65,43 @@ class GraphPage extends Component {
         e.preventDefault();
         e.stopPropagation();
         this.props.closer();
-    }
+    };
+
+    handleCalendarEvent(date) {
+        console.log(date);
+    };
 
    render() {
     switch(this.props.name) {
         case "Budget": 
             if (this.state.data[0].values.length > 0) {
                 return (
-                        <div className="graphContainer" style={{height: this.props.height, transition: "height 2s", overflowX: "hidden", marginTop: "1rem", borderBottom: "0.15rem solid lightgrey"}}>
-                            <div style={{overflow: "hidden", height: this.state.hei, transition: "height 2s", margin: "1rem 0rem 0rem 45rem"}}>
-                                <button type="submit" className="btn btn-outline-info" onClick={this.handleCloseGraph}>X</button>
+                        <div className="row no-gutter graphContainer" style={{height: this.props.height, transition: "height 2s", overflowX: "hidden", marginTop: "1rem", borderBottom: "0.15rem solid lightgrey"}}>
+                            <div className="col col-sm-3">
+                                <div className="navBlock">
+                                    <Calendar 
+                                        selectRange={this.state.range}
+                                        className={this.state.updatedCal}
+                                        value={this.state.value}
+                                        onChange={this.handleCalendarEvent}
+                                    />
+                                </div>
                             </div>
-                            <BarChart  
-                                data={this.state.data[0]}
-                                width={700}
-                                height={500}
-                                margin={{top: 10, bottom: 50, left: 50, right: 10}}
-                            />
+                            <div className="col col-sm-9">
+                                <div className="row align-items-start" style={{overflowY: "hidden", height: this.state.hei, transition: "height 2s", marginBottom: "1rem", textAlign: "right"}}>
+                                        <div className="col">
+                                            <button type="submit" className="btn btn-outline-info" onClick={this.handleCloseGraph}>X</button>
+                                        </div>
+                                    </div>
+                                <div className="row no-gutter" style={{marginLeft: "1rem"}}>
+                                    <BarChart  
+                                        data={this.state.data[0]}
+                                        width={700}
+                                        height={500}
+                                        margin={{top: 10, bottom: 50, left: 50, right: 10}}
+                                    />
+                                </div>
+                            </div>
                         </div>
                     );
                 }
@@ -88,16 +113,31 @@ class GraphPage extends Component {
         case "Frequency": 
             if (this.state.data[0].values.length > 0) {
                 return (
-                        <div className="graphContainer" style={{height: this.props.height, transition: "height 2s", overflowX: "hidden", marginTop: "1rem", borderBottom: "0.15rem solid lightgrey"}}>
-                            <div style={{overflowY: "hidden", height: this.state.hei, transition: "height 2s", margin: "1rem 0rem 0rem 45rem"}}>
-                                <button type="submit" className="btn btn-outline-info" onClick={this.handleCloseGraph}>X</button>
+                        <div className="row no-gutter graphContainer" style={{height: this.props.height, transition: "height 2s", overflowX: "hidden", marginTop: "1rem", borderBottom: "0.15rem solid lightgrey"}}>
+                            <div className="col col-sm-3">
+                                <div className="navBlock">
+                                    <Calendar 
+                                        selectRange={this.state.range}
+                                        className={this.state.updatedCal}
+                                        value={this.state.value}
+                                    />
+                                </div>
                             </div>
-                            <LineChart  
-                                data={this.state.data[0]}
-                                width={700}
-                                height={500}
-                                margin={{top: 10, bottom: 50, left: 50, right: 10}}
-                            />
+                            <div className="col col-sm-9">
+                                <div className="row align-items-start" style={{overflowY: "hidden", height: this.state.hei, transition: "height 2s", marginBottom: "1rem", textAlign: "right"}}>
+                                    <div className="col">
+                                        <button type="submit" className="btn btn-outline-info" onClick={this.handleCloseGraph}>X</button>
+                                    </div>
+                                </div>
+                                <div className="row no-gutter" style={{marginLeft: "1rem"}}>    
+                                    <LineChart  
+                                        data={this.state.data[0]}
+                                        width={800}
+                                        height={500}
+                                        margin={{top: 10, bottom: 50, left: 50, right: 10}}
+                                    />
+                                </div>
+                            </div>
                         </div>
                     );
                 }
@@ -110,18 +150,33 @@ class GraphPage extends Component {
             var sort = null;    
             if (this.state.data[0].values.length > 0) {
                 return (
-                        <div className="graphContainer" style={{height: this.props.height, transition: "height 2s", overflowX: "hidden", marginTop: "1rem", borderBottom: "0.15rem solid lightgrey"}}>
-                            <div style={{overflowY: "hidden", height: this.state.hei, transition: "height 2s", margin: "1rem 0rem 0rem 45rem"}}>
-                                <button type="submit" className="btn btn-outline-info" onClick={this.handleCloseGraph}>X</button>
+                    <div className="row no-gutter graphContainer" style={{height: this.props.height, transition: "height 2s", overflowX: "hidden", marginTop: "1rem", borderBottom: "0.15rem solid lightgrey"}}>
+                            <div className="col col-sm-3">
+                                <div className="navBlock">
+                                    <Calendar 
+                                        selectRange={this.state.range}
+                                        className={this.state.updatedCal}
+                                        value={this.state.value}
+                                    />
+                                </div>
                             </div>
-                            <PieChart  
-                                data={this.state.data[0]}
-                                width={700}
-                                height={500}
-                                margin={{top: 10, bottom: 50, left: 50, right: 10}}
-                                sort={sort}
-                            />
+                            <div className="col col-sm-9">
+                                <div className="row align-items-start" style={{overflowY: "hidden", height: this.state.hei, transition: "height 2s", marginBottom: "1rem", textAlign: "right"}}>
+                                    <div className="col">
+                                        <button type="submit" className="btn btn-outline-info" onClick={this.handleCloseGraph}>X</button>
+                                    </div>
+                                </div>
+                            <div className="row no-gutter" style={{marginLeft: "1rem"}}>    
+                                <PieChart  
+                                    data={this.state.data[0]}
+                                    width={800}
+                                    height={500}
+                                    margin={{top: 10, bottom: 50, left: 50, right: 10}}
+                                    sort={sort}
+                                />
+                            </div>
                         </div>
+                    </div>
                     );
                 }
                 else return (

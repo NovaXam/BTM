@@ -55,6 +55,6 @@ public class TravelerController {
             oldData.setEmail(newData.getEmail());
         };
 
-        travelerRepository.save(oldData);
+        return travelerRepository.save(oldData);
     };
 }

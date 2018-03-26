@@ -74,7 +74,7 @@ render() {
                         })
                 }
             </div>
-            <div className="row no-gutters" style={{height: "27rem"}}>
+            <div className="row no-gutters" style={{height: "27rem", marginBottom: "0.75rem"}}>
                 {
                     this.state.arr.map((comp, i) => {
                         return (

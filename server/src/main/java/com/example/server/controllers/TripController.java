@@ -1,7 +1,10 @@
 package com.example.server.controllers;
 
 
+import com.example.server.models.Place;
+import com.example.server.models.Traveler;
 import com.example.server.models.Trip;
+import com.example.server.repositories.TravelerRepository;
 import com.example.server.repositories.TripRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +18,8 @@ public class TripController {
 
     @Autowired
     private TripRepository tripRepository;
+    private PlaceRepository placeRepository;
+    private TravelerRepository travelerRepository;
 
     @GetMapping("/trips")
     public Iterable<Trip> findAllTrips() {
@@ -28,21 +33,22 @@ public class TripController {
 
     @PostMapping("/trips")
     public Trip createNewTrip(@RequestBody Trip newTrip) {
-        int placeId, employeeId;
-        PlaceRepository placeRepository;
-
-        if (!placeRepository.findByName(newTrip.getDestination())) {
+        Place place;
+        Traveler employee;
+        if (placeRepository.findByName(newTrip.getDestination().getCity()) == null) {
             placeRepository.save(newTrip.getDestination());
-            newTrip.setDestination(placeRepository.findByName(newTrip.getDestination()));
-        } else {
-            newTrip.setDestination(placeRepository.findByName(newTrip.getDestination()));
         };
-        if (!travelerRepository.findByName(newTrip.getTraveler())) {
+
+        if (travelerRepository.findByName(newTrip.getTraveler().getName()) == null) {
             travelerRepository.save(newTrip.getTraveler());
-            newTrip.setTraveler(travelerRepository.findByName((newTrip.getTraveler())));
-        } else {
-            newTrip.setTraveler(travelerRepository.findByName((newTrip.getTraveler())));
         };
+
+        place = placeRepository.findByName(newTrip.getDestination().getCity());
+        employee = travelerRepository.findByName(newTrip.getTraveler().getName());
+
+        newTrip.setDestination(place);
+        newTrip.setTraveler(employee);
+
         return tripRepository.save(newTrip);
     };
 
@@ -60,9 +66,9 @@ public class TripController {
             oldData.setTraveler(newData.getTraveler());
         };
 
-        if (newData.getDestination() > 0) {
-            placeRepository.findByName(newData.getDestination());
-            oldData.setDestination(placeRepository.findByName(newData.getDestination()));
+        if (newData.getDestination() != null) {
+            Place place = placeRepository.findByName(newData.getDestination().getCity());
+            oldData.setDestination(place);
         };
         if (newData.getBudget() > 0) {
             oldData.setBudget(newData.getBudget());

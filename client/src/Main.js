@@ -137,57 +137,60 @@ handleSubApi(e) {
       <div className="Main">
         <div className="container">
           <div id="top" className="row no-gutters aligh-item-center">
-            <div className="col-sm-12" style={{marginBottom: "1rem"}}>
+            <div className="col-sm-12">
               <Graphs 
                   dataFromDb={this.state.dataFromDb}
               />
             </div>
           </div>
-          <div id="middle" className="row no-gutters align-item-center">  
-            <div className="col col-sm-2">
-                  <Weather 
-                      city={this.state.weather[0]}
-                      temp={this.state.weather[1]}
-                      hum={this.state.weather[2]}
-                      gen={this.state.weather[3]}
-                      pic={this.state.pictureBack}
-                  />
+          <div id="middle" className="row no-gutters align-items-center">  
+            <div className="row no-gutters">
+              <hr id="line" />
+              <div className="col col-sm-12" style={{padding: "0"}}>
+                <AddNewTrip />
+              </div>
             </div>
+            <div className="col col-sm-2">
+              <Weather 
+                city={this.state.weather[0]}
+                temp={this.state.weather[1]}
+                hum={this.state.weather[2]}
+                gen={this.state.weather[3]}
+                pic={this.state.pictureBack}
+              />
+            </div> 
             <div className="col col-sm-8">
               <TripTracker 
-                    dataFromDb ={this.state.dataFromDb}
-                    modifyData={this.modifyData}
+                dataFromDb ={this.state.dataFromDb}
+                modifyData={this.modifyData}
               />
             </div>
             <div className="col col-sm-2 ">
               <Time 
-                  time={this.state.time}
-                  pic={this.state.pictureBack}
-              />
+                time={this.state.time}
+                pic={this.state.pictureBack}
+              /> 
             </div>
-          </div>
-          <div id="bottom" className="row no-gutters">
-            <div className="input-group mb-3 col col-sm-6" style={{marginTop: "1rem", margin: "1.5rem auto"}}> 
-              <form style={{margin: "0 auto"}} onSubmit={this.handleSubApi}>
-                <input 
-                  type="text"
-                  style={{width: "20rem"}}
-                  className="form-control"
-                  name="inputForWeather"
-                  ref="weatime" 
-                  placeholder="Type the name of the city" 
-                  aria-describedby="basic-addon1" 
-                  value={this.state.inputCity}
-                  onChange={this.handleWTInput} />
-                </form>
-            </div>
-            <hr id="line" />
-            <div className="col col-sm-12">
-              <AddNewTrip />
+            <div id="bottom" className="row no-gutters">
+              <hr id="line" />
+              <div className="col col-sm-12"> 
+                <form style={{marginTop: "0.75rem"}} onSubmit={this.handleSubApi}>
+                  <input 
+                    type="text"
+                    style={{width: "20rem", display: "inline-block"}}
+                    className="form-control"
+                    name="inputForWeather"
+                    ref="weatime" 
+                    placeholder="Type the name of the city" 
+                    aria-describedby="basic-addon1" 
+                    value={this.state.inputCity}
+                    onChange={this.handleWTInput} />
+                  </form>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+    </div>
     );
   }
 }

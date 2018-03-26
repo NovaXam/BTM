@@ -20,10 +20,6 @@ public class PlaceController {
     public PlaceRepository placeRepository;
     private String CITY;
 
-    public int findByName(String name) {
-//      return (  SELECT Token.ID from PLACES where CITY = name );
-    };
-
     @GetMapping("/city/{cityId}")
     public Optional<Place> findCityById(@PathVariable Long cityId) {
         return placeRepository.findById(cityId);
@@ -31,7 +27,7 @@ public class PlaceController {
 
     @PostMapping("/city")
     public Place createNewPlace(@RequestBody Place newPlace) {
-        placeRepository.save(newPlace);
+        return placeRepository.save(newPlace);
     };
 }
 

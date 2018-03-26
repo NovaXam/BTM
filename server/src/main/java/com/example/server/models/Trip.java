@@ -14,11 +14,13 @@ public class Trip {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="TRAVELER")
-    private String traveler;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @Column(name="TRAVELER_ID")
+    private Traveler traveler;
 
-    @Column(name="DESTINATION")
-    private int destination;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @Column(name="DESTINATION_ID")
+    private Place destination;
 
     @Column(name="BUDGET")
     private float budget;
@@ -29,11 +31,16 @@ public class Trip {
     @Column(name="GOAL")
     private String goal;
 
-    public Trip(String traveler, int destination, float budget, String time, String goal) {
+    @Column(name="STATUS")
+    private int status;
+
+
+    public Trip(Traveler traveler, Place destination, float budget, String time, String goal) {
         this.traveler = traveler;
         this.destination = destination;
         this.budget = budget;
         this.time = time;
         this.goal = goal;
+        this.status = status;
     };
 }

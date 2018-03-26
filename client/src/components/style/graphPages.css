@@ -7,9 +7,35 @@
 }
 
 .barChartOpen {
-    /* display: inline-block; */
     height: 25rem;
     transition: height 2s;
     overflow-y: hidden;
     overflow-x: hidden;
+}
+
+.react-calendar {
+    border-radius: 5px;
+    height: 2.75rem;
+    padding: 1px;
+    width: 14rem;
+    margin: 0 auto;
+    font-size: 12px;
+}
+
+.react-calendar__tile {
+    padding: 5px 1px;
+}
+
+.navBlock {
+    margin: 10rem auto; 
+    text-align: center;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+    height: 14rem;
+    width: 15rem;
+    padding-top: 1rem;
+}
+
+.react-calendar__navigation button:hover {
+    background: blue;
 }
