@@ -18,3 +18,15 @@
     overflow-y: hidden;
     overflow-x: hidden;
 }
+
+.alert-warning:hover {
+    background-color: rgb(255, 215, 154);
+}
+
+.alert-success:hover {
+    background-color: rgb(154, 215, 192);
+}
+
+.alert-info:hover {
+    background-color: rgb(154, 200, 215);
+}

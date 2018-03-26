@@ -1,8 +1,8 @@
 # Business trip manager
 
 ## Technologies in use:
-   - React (react-router-dom module: Link, BrowserRouter, Route, Switch, Redirect)
-   - D3 (4 different graphs)
+   - React
+   - D3
    - Bootstrap
    - Spring
    - Java
@@ -18,7 +18,7 @@
    - Graphs
    - Personal traveler page
    - Services
-   - Userful information
+   - Information
 
 ## Ideas for SPA:
 
@@ -124,8 +124,8 @@ Track all company business' trips in one app with extended functionality and fri
 | 1.2 | build front-end, component structure of the app, write tests, content | 6, 2, 3  | done  |
 | 1.3 | build css effects, D3 graphs |  3, 6  | done |
 |  - |  #### MVP | 27 hours | done |
-| 2.1 | Spring Boot architecture data base(MVC) |  12  | ongoing |
-| 2.2 | connect back-end and front-end, tests |  6, 3  | upcoming |
+| 2.1 | Spring Boot architecture data base(MVC) |  12  | done |
+| 2.2 | connect back-end and front-end, tests |  6, 3  | done |
 | - | #### Version 1 |  21 hours  | uncoming |
 | 3.1 | add calendar option on the graph, fix bugs | 10, 2 | upcoming
 | 3.2 | redesign a grid | 12 | upcoming

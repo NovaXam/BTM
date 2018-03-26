@@ -136,8 +136,8 @@ handleSubApi(e) {
     return (
       <div className="Main">
         <div className="container">
-          <div id="top" className="row no-gutters justify-content-center">
-            <div className="col-sm-9" style={{margin: "1rem"}}>
+          <div id="top" className="row no-gutters aligh-item-center">
+            <div className="col-sm-12" style={{marginBottom: "1rem"}}>
               <Graphs 
                   dataFromDb={this.state.dataFromDb}
               />
