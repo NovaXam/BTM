@@ -4,6 +4,7 @@
     transition: height 2s;
     overflow-y: hidden;
     overflow-x: hidden;
+    border-bottom: 0.15rem solid lightgray;
 }
 
 .openGrpahArea {
@@ -12,4 +13,5 @@
     transition: height 2s;
     overflow-y: hidden;
     overflow-x: hidden;
+    border-bottom: 0.15rem solid lightgray;
 }

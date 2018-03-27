@@ -1,5 +1,4 @@
 .barChartClose {
-    /* display: none; */
     height: 8rem;
     transition: height 2s;
     overflow-y: hidden;

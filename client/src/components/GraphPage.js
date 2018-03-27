@@ -76,7 +76,7 @@ class GraphPage extends Component {
         case "Budget": 
             if (this.state.data[0].values.length > 0) {
                 return (
-                        <div className="row no-gutter graphContainer" style={{height: this.props.height, transition: "height 2s", overflowX: "hidden", marginTop: "1rem", borderBottom: "0.15rem solid lightgrey"}}>
+                        <div className="row no-gutter graphContainer" style={{height: this.props.height, transition: "height 2s", overflowX: "hidden", marginTop: "1rem"}}>
                             <div className="col col-sm-3">
                                 <div className="navBlock">
                                     <Calendar 
@@ -89,10 +89,10 @@ class GraphPage extends Component {
                             </div>
                             <div className="col col-sm-9">
                                 <div className="row align-items-start" style={{overflowY: "hidden", height: this.state.hei, transition: "height 2s", marginBottom: "1rem", textAlign: "right"}}>
-                                        <div className="col">
-                                            <button type="submit" className="btn btn-outline-info" onClick={this.handleCloseGraph}>X</button>
-                                        </div>
+                                    <div className="col">
+                                        <button type="submit" className="btn btn-outline-info" onClick={this.handleCloseGraph}>X</button>
                                     </div>
+                                </div>
                                 <div className="row no-gutter" style={{marginLeft: "1rem"}}>
                                     <BarChart  
                                         data={this.state.data[0]}
@@ -106,14 +106,14 @@ class GraphPage extends Component {
                     );
                 }
                 else return (
-                    <div className="graphContainer" style={{height: this.props.height, transition: "height 2s", overflow: "hidden", marginTop: "1rem", borderBottom: "0.15rem solid lightgrey"}}>
+                    <div className="graphContainer" style={{height: this.props.height, transition: "height 2s", overflow: "hidden", marginTop: "1rem"}}>
                     </div>
                 );
         break;
         case "Frequency": 
             if (this.state.data[0].values.length > 0) {
                 return (
-                        <div className="row no-gutter graphContainer" style={{height: this.props.height, transition: "height 2s", overflowX: "hidden", marginTop: "1rem", borderBottom: "0.15rem solid lightgrey"}}>
+                        <div className="row no-gutter graphContainer" style={{height: this.props.height, transition: "height 2s", overflowX: "hidden", marginTop: "1rem"}}>
                             <div className="col col-sm-3">
                                 <div className="navBlock">
                                     <Calendar 
@@ -132,7 +132,7 @@ class GraphPage extends Component {
                                 <div className="row no-gutter" style={{marginLeft: "1rem"}}>    
                                     <LineChart  
                                         data={this.state.data[0]}
-                                        width={800}
+                                        width={700}
                                         height={500}
                                         margin={{top: 10, bottom: 50, left: 50, right: 10}}
                                     />
@@ -142,7 +142,7 @@ class GraphPage extends Component {
                     );
                 }
                 else return (
-                    <div className="graphContainer" style={{height: this.props.height, transition: "height 2s", overflowX: "hidden", marginTop: "1rem", borderBottom: "0.15rem solid lightgrey"}}>
+                    <div className="graphContainer" style={{height: this.props.height, transition: "height 2s", overflowX: "hidden", marginTop: "1rem"}}>
                     </div>
                 );
             break;
@@ -150,7 +150,7 @@ class GraphPage extends Component {
             var sort = null;    
             if (this.state.data[0].values.length > 0) {
                 return (
-                    <div className="row no-gutter graphContainer" style={{height: this.props.height, transition: "height 2s", overflowX: "hidden", marginTop: "1rem", borderBottom: "0.15rem solid lightgrey"}}>
+                    <div className="row no-gutter graphContainer" style={{height: this.props.height, transition: "height 2s", overflowX: "hidden", marginTop: "1rem"}}>
                             <div className="col col-sm-3">
                                 <div className="navBlock">
                                     <Calendar 
@@ -169,7 +169,7 @@ class GraphPage extends Component {
                             <div className="row no-gutter" style={{marginLeft: "1rem"}}>    
                                 <PieChart  
                                     data={this.state.data[0]}
-                                    width={800}
+                                    width={700}
                                     height={500}
                                     margin={{top: 10, bottom: 50, left: 50, right: 10}}
                                     sort={sort}
@@ -180,13 +180,13 @@ class GraphPage extends Component {
                     );
                 }
                 else return (
-                    <div className="graphContainer" style={{height: this.props.height, transition: "height 2s", overflowX: "hidden", marginTop: "1rem", borderBottom: "0.15rem solid lightgrey"}}>
+                    <div className="graphContainer" style={{height: this.props.height, transition: "height 2s", overflowX: "hidden", marginTop: "1rem"}}>
                     </div>
                 );
             break;    
             default: 
             return (
-                <div className="graphContainer" style={{height: this.props.height, transition: "height 2s", overflowX: "hidden", marginTop: "1rem", borderBottom: "0.15rem solid lightgrey"}}>
+                <div className="graphContainer" style={{height: this.props.height, transition: "height 2s", overflowX: "hidden", marginTop: "1rem"}}>
                 </div>
             )    
         }

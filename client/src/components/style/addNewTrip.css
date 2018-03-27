@@ -1,6 +1,6 @@
 .closedFormTrip {
-    /* display: none; */
     height: 3.5rem;
+    width: 100%;
     transition: height 2s;
     overflow-y: hidden;
     overflow-x: hidden;
