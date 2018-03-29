@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import EntryContent from './EntryContent';
+import axios from 'axios';
 
 import './style/entry.css';
 
@@ -16,20 +17,20 @@ class Entry extends Component {
         this.handleCloseForm = this.handleCloseForm.bind(this);
         this.handleRollerView = this.handleRollerView.bind(this);
         this.handleUpdateForm = this.handleUpdateForm.bind(this);
-        this.handleButtonForm = this.handleButtonForm.bind(this);  
+        this.handleButtonForm = this.handleButtonForm.bind(this);
     };
 
     componentWillMount() {
         this.setState({
-            localData: this.props.entryData
+            localData: {...this.props.entryData}
         })
-    }
+    };
 
     componentWillReceiveProps(nextProps) {
         this.setState({
-            localData: nextProps.entryData
-        })
-    }
+            localData: {...nextProps.entryData}
+        });
+    };
 
     handleRollerAndContent(e) {
         e.preventDefault();
@@ -55,14 +56,15 @@ class Entry extends Component {
         this.setState({
             entrySlideClass: "entryClosed",
             statusView: "",
-            localData: this.props.entryData
+            localData: {...this.props.entryData}
         });
     };
 
     handleFilling(e) {
         e.preventDefault();
         e.stopPropagation();
-        var obj =  this.state.localData;
+        var obj = {...this.state.localData};
+
         obj[e.target.name] = e.target.value;
         this.setState({
            localData: obj
@@ -74,15 +76,19 @@ class Entry extends Component {
         e.stopPropagation();
         var dataToDb = {};
         for(let i = 0; i < 7; i++) {
-            dataToDb[`${e.target[i].name}`] = e.target[i].value;
+            if (e.target[i].name == "date") {
+                dataToDb["date"] = new Date(e.target[i].value);
+            } else {
+                dataToDb[`${e.target[i].name}`] = e.target[i].value;
+            }
         };
+
         this.props.modifyData(dataToDb);
         this.setState({
             statusView: "entryOpenedToExtendView",
             entrySlideClass: "entryOpenedView",
             localData: {...this.props.entryData}
         });
-        //make a axios post request to db and update entry with new data from dataToDb
       };
       
       handleButtonForm(e) {

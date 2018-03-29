@@ -28,6 +28,7 @@ async componentWillMount() {
     }
 };
 
+//checking if data updated on the page 
 async componentWillReceiveProps(nextProps) {
     var temp = {
         tempArr1: [],

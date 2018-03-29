@@ -5,5 +5,5 @@ import com.example.server.models.Place;
 import org.springframework.data.repository.CrudRepository;
 
 public interface PlaceRepository extends CrudRepository<Place, Long>{
-    Place findByName(String name);
-}
+    Place findByCityName(String name);
+};

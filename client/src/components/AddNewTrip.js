@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import Form from './Form';
-import Scroll from 'react-scroll';
 
 import './style/addNewTrip.css';
-
-const scroller = Scroll.scroller;
 
 class AddNewTrip extends Component {
     constructor(props) {
@@ -22,9 +19,6 @@ class AddNewTrip extends Component {
         this.setState({
             formTripState: "openedFormTrip"
         })
-        scroller.scrollTo('Form', {
-            smooth: true,
-          });
     };
 
     setForm() {

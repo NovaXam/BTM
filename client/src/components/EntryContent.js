@@ -80,7 +80,7 @@ const EntryContent = (props) => {
                 <hr />
                 {props.localData.budget} USD
                 <hr />
-                {props.localData.date} 
+                {props.localData.date.toString()}
                 <hr />
                 {props.localData.goal} 
                 <hr />
@@ -94,7 +94,7 @@ const EntryContent = (props) => {
                 <hr />
                 {props.localData.destination}
                 <hr />
-                {props.localData.date} 
+                {props.localData.date.toString()} 
             </div>
         )
     }

@@ -39,8 +39,8 @@ public class TravelerController {
     public Traveler updateTraveler(@PathVariable Long travelerId, @RequestBody Traveler newData) {
         Traveler oldData = travelerRepository.findById(travelerId).get();
 
-        if (newData.getName() != null) {
-            oldData.setName(newData.getName());
+        if (newData.getEmployeeName() != null) {
+            oldData.setEmployeeName(newData.getEmployeeName());
         };
         if (newData.getPosition() != null) {
             oldData.setPosition(newData.getPosition());

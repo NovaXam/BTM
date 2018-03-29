@@ -8,17 +8,20 @@ import com.example.server.repositories.TravelerRepository;
 import com.example.server.repositories.TripRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import com.example.server.repositories.PlaceRepository;
 
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 public class TripController {
 
     @Autowired
     private TripRepository tripRepository;
+    @Autowired
     private PlaceRepository placeRepository;
+    @Autowired
     private TravelerRepository travelerRepository;
 
     @GetMapping("/trips")
@@ -31,22 +34,33 @@ public class TripController {
         return tripRepository.findById(tripId);
     };
 
-    @PostMapping("/trips")
-    public Trip createNewTrip(@RequestBody Trip newTrip) {
+    @PostMapping("/newtrip")
+    public Trip createNewTrip(@RequestBody Trip newTrip) throws Exception {
         Place place;
         Traveler employee;
-        if (placeRepository.findByName(newTrip.getDestination().getCity()) == null) {
-            placeRepository.save(newTrip.getDestination());
+        String cityName = newTrip.getCity().getCityName();
+        System.out.println(cityName);
+        System.out.println(newTrip);
+        System.out.println(placeRepository.findByCityName(cityName));
+
+        if (placeRepository.findByCityName(cityName) == null) {
+            placeRepository.save(newTrip.getCity());
+            Iterable<Place> list = placeRepository.findAll();
+            System.out.println(list);
         };
 
-        if (travelerRepository.findByName(newTrip.getTraveler().getName()) == null) {
+        System.out.println("I passed fist level");
+
+        if (travelerRepository.findByEmployeeName(newTrip.getTraveler().getEmployeeName()) == null) {
             travelerRepository.save(newTrip.getTraveler());
         };
 
-        place = placeRepository.findByName(newTrip.getDestination().getCity());
-        employee = travelerRepository.findByName(newTrip.getTraveler().getName());
+        System.out.println("I passed second level");
 
-        newTrip.setDestination(place);
+        place = placeRepository.findByCityName(newTrip.getCity().getCityName());
+        employee = travelerRepository.findByEmployeeName(newTrip.getTraveler().getEmployeeName());
+
+        newTrip.setCity(place);
         newTrip.setTraveler(employee);
 
         return tripRepository.save(newTrip);
@@ -61,14 +75,14 @@ public class TripController {
     @PatchMapping("/trip/{tripId}")
     public Trip updateTrip(@PathVariable Long tripId, @RequestBody Trip newData) {
         Trip oldData = tripRepository.findById(tripId).get();
-
+        System.out.println(tripId);
         if (newData.getTraveler() != null) {
             oldData.setTraveler(newData.getTraveler());
         };
 
-        if (newData.getDestination() != null) {
-            Place place = placeRepository.findByName(newData.getDestination().getCity());
-            oldData.setDestination(place);
+        if (newData.getCity() != null) {
+            Place place = placeRepository.findByCityName(newData.getCity().getCityName());
+            oldData.setCity(place);
         };
         if (newData.getBudget() > 0) {
             oldData.setBudget(newData.getBudget());

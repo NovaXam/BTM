@@ -1,8 +1,10 @@
 package com.example.server.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor @NoArgsConstructor @Getter @Setter
@@ -14,33 +16,34 @@ public class Trip {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name="TRAVELER_ID")
+    @ManyToOne
+    @JoinColumn(name="EMPLOYEE_ID")
+//    @JsonBackReference
     private Traveler traveler;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name="DESTINATION_ID")
-    private Place destination;
+    @ManyToOne
+    @JoinColumn(name="CITY_ID")
+//    @JsonBackReference
+    private Place city;
 
     @Column(name="BUDGET")
     private float budget;
 
     @Column(name="TIME")
-    private String time;
+    private Date time;
 
     @Column(name="GOAL")
     private String goal;
 
-    @Column(name="STATUS")
+    @Column(name="STATUS_TRIP")
     private int status;
 
-
-    public Trip(Traveler traveler, Place destination, float budget, String time, String goal) {
+    public Trip(Traveler traveler, Place city, float budget, Date time, String goal, int status) {
         this.traveler = traveler;
-        this.destination = destination;
+        this.city = city;
         this.budget = budget;
         this.time = time;
         this.goal = goal;
         this.status = status;
     };
-}
+};

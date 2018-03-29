@@ -2,7 +2,15 @@
     margin: 1rem 1rem;
 }
 
-.inputAddTripField label {
+.inputAddTripField {
     margin-top: 0.5rem; 
     margin-bottom: 0.1rem;
+}
+
+
+
+.form .form-group {
+    display: inline-flex;
+    width: 100%;
+    text-align: center;
 }

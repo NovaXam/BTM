@@ -14,12 +14,15 @@ public class Place {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long city_id;
 
-    @Column(name="CITY")
-    private String city;
+    @Column(name="CITY_NAME")
+    private String cityName;
+
+    @OneToMany(mappedBy = "city")
+    private Set<Trip> trips = new HashSet<Trip>();
 
     public Place(String city) {
-        this.city = city;
+        this.cityName = city;
     };
-}
+};

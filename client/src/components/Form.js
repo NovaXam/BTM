@@ -6,7 +6,8 @@ class Form extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: "",
+            firstName: "",
+            secondName: "",
             destination: "",
             budget: "",
             date: "",
@@ -29,7 +30,9 @@ class Form extends Component {
         e.preventDefault();
         e.stopPropagation();
         switch(e.target.name) {
-            case "name": this.setState({name: e.target.value});
+            case "firstName": this.setState({firstName: e.target.value});
+            break;
+            case "secondName": this.setState({secondName: e.target.value});
             break;
             case "destination": this.setState({destination: e.target.value});
             break;
@@ -48,104 +51,121 @@ class Form extends Component {
         e.stopPropagation();
         e.preventDefault();
         this.props.setForm();
-        console.log(this.state);
-
-        //finish after db is hooked up
-
-        // axios.post('/newItem', this.state)
-        // .then((res) => {
-        //     console.log(res);
-        // })
-        // .catch((err) => {
-        //     console.log(err);
-        // })
+        const objForDb = {
+            traveler: this.state.firstName + " " + this.state.secondName,
+            city: this.state.destination,
+            budget: parseFloat(this.state.budget),
+            time: new Date(this.state.date),
+            goal: this.state.goal
+        }
+        switch(this.state.status) {
+            case "completed": objForDb["status_trip"] = 0;
+            break; 
+            case "ongoing": objForDb["status_trip"] = 1;
+            break; 
+            case "upcoming": objForDb["status_trip"] = 2;
+            break; 
+        };
+        console.log(objForDb);
+        axios({
+            method: 'POST',
+            url: "/newtrip", 
+            headers: {'X-Requested-With': 'XMLHttpRequest'},
+            responseType: 'json',
+            responseEncoding: 'utf8',
+            data: objForDb
+        })
+        .then((res) => {
+            console.log(res);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
     };
 
     render() {
         return (
-            <div className="form" style={{margin: "1rem auto", width: "40rem", backgroundColor: "lightblue", borderRadius: "1em"}}>
-                <button type="submit" className="btn btn-outline-info" style={{position: "relative", border: "none", top: "1rem", left: "18rem"}} onClick={this.handleCloseForm}>X</button>
-                <form style={{width: "35rem", margin: "0rem auto", paddingTop: "1rem"}} onSubmit={this.handleSubmit} >
-                    <div className="row no-gutters"> 
-                        <div className="col col-sm-6">                            
-                            <div className="form-group inputAddTripField" >
-                                <input 
-                                    type="text" 
-                                    className="form-control" 
-                                    name="firstName"
-                                    placeholder="First name" 
-                                    value={this.state.name}
-                                    onChange={this.handleFilling}
-                                />
-                            </div>
-                            <div className="form-group inputAddTripField">
-                                <input 
-                                    type="text" 
-                                    className="form-control" 
-                                    name="destination"
-                                    placeholder="Destination"
-                                    value={this.state.destination}
-                                    onChange={this.handleFilling}
-                                />
-                            </div>
-                            <div className="form-group inputAddTripField">
-                                <input 
-                                    type="text" 
-                                    className="form-control" 
-                                    placeholder="Budget"
-                                    name="budget"
-                                    value={this.state.budget}
-                                    onChange={this.handleFilling}
-                                />
-                            </div>
+            <div className="form" style={{margin: "1rem auto", width: "100%", backgroundColor: "lightblue", borderRadius: "0.5em"}}>
+                <button type="submit" className="btn btn-outline-info" style={{float: "right", border: "none", margin: "0.25rem" }} onClick={this.handleCloseForm}>X</button>
+                <form style={{paddingTop: "1rem", textAlign: "center"}} onSubmit={this.handleSubmit} >
+                    <div className="form-group row no-gutters"> 
+                        <div className="col col-mx-mb-6 sm-4 inputAddTripField">
+                            <input 
+                                type="text" 
+                                className="form-control" 
+                                name="firstName"
+                                placeholder="First name" 
+                                value={this.state.firstName}
+                                onChange={this.handleFilling}
+                            />
                         </div>
-                        <div className="col col-sm-6"> 
-                            <div className="form-group inputAddTripField">
-                                <input 
-                                    type="text" 
-                                    className="form-control" 
-                                    name="lastName"
-                                    placeholder="Second name" 
-                                    value={this.state.name}
-                                    onChange={this.handleFilling}
-                                />
-                            </div>
-                            <div className="form-group inputAddTripField">
-                                <input 
-                                    type="text" 
-                                    className="form-control" 
-                                    placeholder="MM-DD-YYYY" 
-                                    name="date"
-                                    value={this.state.date}
-                                    onChange={this.handleFilling}
-                                />
-                            </div>
-                            <div className="form-group inputAddTripField">
-                                <input 
-                                    type="text" 
-                                    className="form-control" 
-                                    placeholder="Goal"
-                                    name="goal"
-                                    value={this.state.goal}
-                                    onChange={this.handleFilling}
-                                />
-                            </div>
+                        <div className="col col-mx-mb-6 sm-4 inputAddTripField">
+                            <input 
+                                type="text" 
+                                className="form-control" 
+                                name="destination"
+                                placeholder="Destination"
+                                value={this.state.destination}
+                                onChange={this.handleFilling}
+                            />
                         </div>
                     </div>
-                    <div className="row no-gutters">
-                        <div className="col col-sm-12">
-                            <div className="form-group inputAddTripField">
-                                <select 
-                                    className="form-control" 
-                                    name="status"
-                                    onChange={this.handleFilling}
-                                >
-                                    <option>choose a trip status</option>
-                                    <option>completed</option>
-                                    <option>ongoing</option>
-                                    <option>upcoming</option>
-                                </select>
-                            </div>
+                    <div className="form-group row no-gutters">
+                        <div className="col col-mx-mb-6 sm-4 inputAddTripField">
+                            <input 
+                                type="text" 
+                                className="form-control" 
+                                placeholder="Budget"
+                                name="budget"
+                                value={this.state.budget}
+                                onChange={this.handleFilling}
+                            />
+                        </div>
+                        <div className="col col-mx-mb-6 sm-4 inputAddTripField"> 
+                            <input 
+                                type="text" 
+                                className="form-control" 
+                                name="secondName"
+                                placeholder="Second name" 
+                                value={this.state.secondName}
+                                onChange={this.handleFilling}
+                            />
+                        </div>
+                    </div>
+                    <div className="form-group row no-gutters">
+                        <div className="col col-mx-mb-6 sm-4 inputAddTripField">
+                            <input 
+                                type="text" 
+                                className="form-control" 
+                                placeholder="MM-DD-YYYY" 
+                                name="date"
+                                value={this.state.date}
+                                onChange={this.handleFilling}
+                            />
+                        </div>
+                        <div className="col col-mx-mb-6 sm-4 inputAddTripField">
+                            <input 
+                                type="text" 
+                                className="form-control" 
+                                placeholder="Goal"
+                                name="goal"
+                                value={this.state.goal}
+                                onChange={this.handleFilling}
+                            />
+                        </div>
+                    </div>
+                    <div className="form-group row no-gutters">
+                        <div className="col col-mx-mb-10 sm-4 inputAddTripField">
+                            <select 
+                                className="form-control" 
+                                name="status"
+                                onChange={this.handleFilling}
+                            >
+                                <option>choose a trip status</option>
+                                <option>completed</option>
+                                <option>ongoing</option>
+                                <option>upcoming</option>
+                            </select>
                         </div>
                     </div>
                     <div className="row no-gutters">

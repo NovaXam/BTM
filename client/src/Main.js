@@ -49,6 +49,7 @@ async modifyData(elem) {
 };
 
 updateState(modifiedState) {
+  console.log(modifiedState);
   this.setState({
     dataFromDb: modifiedState
   });
@@ -145,34 +146,22 @@ handleSubApi(e) {
           </div>
           <div className="row no-gutters">
             <div className="col col-sm-9">
-              <div id="middle" className="row no-gutters align-items-center">  
-                  <div className="col col-sm-12" style={{padding: "0"}}>
+              <div id="middle" className="row no-gutters">  
+                <div className="col col-sm-2" style={{padding: "0"}}></div>
+                  <div className="col col-sm-8" style={{padding: "0"}}>
                     <AddNewTrip />
                   </div>
+                  <div className="col col-sm-2" style={{padding: "0"}}></div>
                 </div>
-                {/* <div className="col col-sm-2">
-                  <Weather 
-                  city={this.state.weather[0]}
-                  temp={this.state.weather[1]}
-                  hum={this.state.weather[2]}
-                  gen={this.state.weather[3]}
-                  pic={this.state.pictureBack}
-                  />
-                </div>  */}
+                
                 <div className="row no-gutters">
-                <div className="col col-sm-12">
-                  <TripTracker 
-                    dataFromDb ={this.state.dataFromDb}
-                    modifyData={this.modifyData}
-                  />
+                  <div className="col col-sm-12">
+                    <TripTracker 
+                      dataFromDb ={this.state.dataFromDb}
+                      modifyData={this.modifyData}
+                    />
+                  </div>
                 </div>
-                </div>
-                {/* <div className="col col-sm-2 ">
-                  <Time 
-                    time={this.state.time}
-                    pic={this.state.pictureBack}
-                  /> 
-                </div> */}
                 <div id="bottom" className="row no-gutters">
                   <hr id="line" />
                   <div className="col col-sm-12"> 
@@ -191,10 +180,21 @@ handleSubApi(e) {
                   </div>
                 </div>
               </div>
-            </div>
             <div className="col col-sm-3"> 
+              <Weather 
+                city={this.state.weather[0]}
+                temp={this.state.weather[1]}
+                hum={this.state.weather[2]}
+                gen={this.state.weather[3]}
+                pic={this.state.pictureBack}
+              />
+              <Time 
+                time={this.state.time}
+                pic={this.state.pictureBack}
+              />
+            </div> 
             </div>
-            </div>
+          </div>
         </div>
     );
   }
