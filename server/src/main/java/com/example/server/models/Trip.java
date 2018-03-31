@@ -1,6 +1,7 @@
 package com.example.server.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -16,14 +17,13 @@ public class Trip {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="EMPLOYEE_ID")
-//    @JsonBackReference
     private Traveler traveler;
 
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="CITY_ID")
-//    @JsonBackReference
     private Place city;
 
     @Column(name="BUDGET")

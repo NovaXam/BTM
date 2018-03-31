@@ -37,7 +37,10 @@ class AddNewTrip extends Component {
                 <button type="submit" className="btn btn-outline-info" style={{width: "15rem", height: "3rem"}} onClick={this.handleOpenForm}>
                     <h3 style={{marginTop: "0"}}>Add new trip </h3>
                 </button>
-                <Form setForm={this.setForm} />
+                <Form 
+                    setForm={this.setForm} 
+                    addNewItem={this.props.addNewItem}
+                />
             </div>
         )
     }

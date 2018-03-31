@@ -74,25 +74,37 @@ public class TripController {
 
     @PatchMapping("/trip/{tripId}")
     public Trip updateTrip(@PathVariable Long tripId, @RequestBody Trip newData) {
-        Trip oldData = tripRepository.findById(tripId).get();
         System.out.println(tripId);
-        if (newData.getTraveler() != null) {
-            oldData.setTraveler(newData.getTraveler());
+        System.out.println(newData);
+        Trip oldData = tripRepository.findById(tripId).get();
+        Traveler employee;
+        Place place;
+        System.out.println(newData.getTraveler());
+        System.out.println(newData.getCity());
+        if (travelerRepository.findByEmployeeName(newData.getTraveler().getEmployeeName()) == null) {
+            travelerRepository.save(newData.getTraveler());
+            employee = travelerRepository.findByEmployeeName(newData.getTraveler().getEmployeeName());
+            oldData.setTraveler(employee);
+        } else {
+            employee = travelerRepository.findByEmployeeName(newData.getTraveler().getEmployeeName());
+            oldData.setTraveler(employee);
         };
+        System.out.println("i pass traveler");
 
-        if (newData.getCity() != null) {
-            Place place = placeRepository.findByCityName(newData.getCity().getCityName());
+        if (placeRepository.findByCityName(newData.getCity().getCityName()) == null) {
+            placeRepository.save(newData.getCity());
+            place = placeRepository.findByCityName(newData.getCity().getCityName());
+            oldData.setCity(place);
+        } else {
+            place = placeRepository.findByCityName(newData.getCity().getCityName());
             oldData.setCity(place);
         };
-        if (newData.getBudget() > 0) {
-            oldData.setBudget(newData.getBudget());
-        };
-        if (newData.getGoal() != null) {
-            oldData.setGoal(newData.getGoal());
-        };
-        if (newData.getTime() != null) {
-            oldData.setTime(newData.getTime());
-        };
+        System.out.println("i pass place");
+        oldData.setBudget(newData.getBudget());
+        oldData.setGoal(newData.getGoal());
+        oldData.setTime(newData.getTime());
+        System.out.println(newData.getTime());
+        System.out.println("this is over");
         return oldData;
     };
 };

@@ -1,5 +1,8 @@
 package com.example.server.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import javax.persistence.*;
 import java.util.HashSet;
@@ -30,7 +33,9 @@ public class Traveler {
     @Column(name="EMAIL")
     private String email;
 
-    @OneToMany(mappedBy = "traveler")
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "traveler")
+    @Column(nullable = true)
     private Set<Trip> trips = new HashSet<Trip>();
 
     public Traveler(String name) {

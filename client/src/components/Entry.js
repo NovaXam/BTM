@@ -82,7 +82,7 @@ class Entry extends Component {
                 dataToDb[`${e.target[i].name}`] = e.target[i].value;
             }
         };
-
+        console.log(dataToDb);
         this.props.modifyData(dataToDb);
         this.setState({
             statusView: "entryOpenedToExtendView",

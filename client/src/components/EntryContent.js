@@ -30,18 +30,18 @@ const EntryContent = (props) => {
                 <div className="form-group">
                         <input 
                             type="text" 
-                            name="destination"
+                            name="city"
                             className="form-control" 
-                            value={props.localData.destination}
+                            value={props.localData.city}
                             onChange={props.handleFilling}
                         />
                 </div>
                 <div className="form-group">
                         <input 
                             type="text" 
-                            name="date"
+                            name="time"
                             className="form-control"
-                            value={props.localData.date}
+                            value={props.localData.time}
                             onChange={props.handleFilling}        
                         />
                 </div>
@@ -76,11 +76,11 @@ const EntryContent = (props) => {
                 <p></p>
                 {props.localData.traveler}
                 <hr />
-                {props.localData.destination}
+                {props.localData.city}
                 <hr />
                 {props.localData.budget} USD
                 <hr />
-                {props.localData.date.toString()}
+                {props.localData.time.toString()}
                 <hr />
                 {props.localData.goal} 
                 <hr />
@@ -92,9 +92,9 @@ const EntryContent = (props) => {
             <div style={{padding: "0.5rem 0rem"}} onClick={props.handleRollerAndContent}>
                 {props.localData.traveler}
                 <hr />
-                {props.localData.destination}
+                {props.localData.city}
                 <hr />
-                {props.localData.date.toString()} 
+                {props.localData.time.toString()} 
             </div>
         )
     }

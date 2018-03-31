@@ -1,5 +1,8 @@
 package com.example.server.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,7 +22,9 @@ public class Place {
     @Column(name="CITY_NAME")
     private String cityName;
 
-    @OneToMany(mappedBy = "city")
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "city")
+    @Column(nullable = true)
     private Set<Trip> trips = new HashSet<Trip>();
 
     public Place(String city) {

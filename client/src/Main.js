@@ -28,11 +28,9 @@ class Main extends Component {
     this.deleteItemFromList = this.deleteItemFromList.bind(this);
     this. updateState = this.updateState.bind(this);
     this.updateValue = this.updateValue.bind(this);
+    this.addNewItem = this.addNewItem.bind(this);
+    this.tempObjAssing = this.tempObjAssing.bind(this);
   }
-
-  //feeding data from DB to a component
-  async componentWillMount() {
-};
 
 async modifyData(elem) {
   try {
@@ -41,7 +39,6 @@ async modifyData(elem) {
       const newState = await this.updateState(newList);
    } else {
       const newList = await this.updateValue(elem);
-      const newState = await this.updateState(newList);
    }
  } catch(err) {
     console.log(err);
@@ -56,34 +53,54 @@ updateState(modifiedState) {
 }
 
 updateValue(updatedEntry) {
+  console.log(updatedEntry);
   var obj = this.state.dataFromDb;
   updatedEntry.id = parseInt(updatedEntry.id);
   updatedEntry.status = parseInt(updatedEntry.status);
-  obj = obj.map((elem) => {
-    if (elem.id == updatedEntry.id) {
-      elem = {...updatedEntry}
-     } else {
-      };
-      return elem;
+  axios({
+    method: 'PATCH',
+    url: `/trip/${updatedEntry.id}`,
+    data: updatedEntry
+  })
+  .then((res) => {
+    console.log(res);
+    var updateEntryDB = this.tempObjAssing(res);
+    var tempObj = this.state.dataFromDb;
+    tempObj = tempObj.map((elem, i) => {
+      return elem.id == updateEntryDB.id ? elem = updateEntryDB : elem;
     });
-    return obj;
+    this.setState({
+      dataFromDb: tempObj
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 };
-
 
 deleteItemFromList(data) {
   let newElem = parseInt(data);
   var obj = this.state.dataFromDb;
+  console.log(newElem);
+  axios({
+    method: 'DELETE',
+    url: `/trip/${newElem}`
+   })
+   .then((res) => {
+     console.log(res);
+   })
+   .catch((err) => {
+     console.log(err);
+   });
+
   const newList = obj.filter((item) => {
       return item.id !== newElem;
     });
   return newList;
 };
 
-componentWillReceiveProps() {
-  this.setState({
-    dataFromDb: data
-  });
-  console.log()
+shouldComponentUpdate(nextProps, nextState) {
+  return nextProps ? true : false;
 };
 
 //method to catch an input value onSubmit on an API weather form field. 
@@ -132,6 +149,43 @@ handleSubApi(e) {
   });
 }
 
+addNewItem(item) {
+  console.log(item);
+  axios({
+    method: 'POST',
+    url: "/newtrip", 
+    headers: {'X-Requested-With': 'XMLHttpRequest'},
+    responseType: 'json',
+    responseEncoding: 'utf8',
+    data: item
+  })
+  .then((res) => {
+    console.log(res);
+    var newObj = this.tempObjAssing(res);
+    this.setState({
+      dataFromDb: this.state.dataFromDb.concat(newObj)
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+  })
+};
+
+tempObjAssing(res) {
+  var dateInString = res.data.time.slice(0,10);
+  var newObj = {
+    id: res.data.id,
+    traveler: res.data.traveler.employeeName,
+    city: res.data.city.cityName,
+    budget: res.data.budget,
+    goal: res.data.goal,
+    time: dateInString,
+    status: res.data.status
+  };
+  console.log(newObj);
+  return newObj;
+}
+
 //main render lifecycle method
   render() {
     return (
@@ -149,7 +203,9 @@ handleSubApi(e) {
               <div id="middle" className="row no-gutters">  
                 <div className="col col-sm-2" style={{padding: "0"}}></div>
                   <div className="col col-sm-8" style={{padding: "0"}}>
-                    <AddNewTrip />
+                    <AddNewTrip 
+                      addNewItem={this.addNewItem}
+                      />
                   </div>
                   <div className="col col-sm-2" style={{padding: "0"}}></div>
                 </div>

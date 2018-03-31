@@ -8,9 +8,9 @@ class Form extends Component {
         this.state = {
             firstName: "",
             secondName: "",
-            destination: "",
+            city: "",
             budget: "",
-            date: "",
+            time: "",
             goal: "",
             status: null
         }
@@ -34,11 +34,11 @@ class Form extends Component {
             break;
             case "secondName": this.setState({secondName: e.target.value});
             break;
-            case "destination": this.setState({destination: e.target.value});
+            case "city": this.setState({city: e.target.value});
             break;
             case "budget": this.setState({budget: e.target.value});
             break;
-            case "date": this.setState({date: e.target.value});
+            case "time": this.setState({time: e.target.value});
             break;
             case "goal": this.setState({goal: e.target.value});
             break;
@@ -52,35 +52,30 @@ class Form extends Component {
         e.preventDefault();
         this.props.setForm();
         const objForDb = {
-            traveler: this.state.firstName + " " + this.state.secondName,
-            city: this.state.destination,
+            traveler: (this.state.firstName + " " + this.state.secondName).toLowerCase(),
+            city: this.state.city.toLowerCase(),
             budget: parseFloat(this.state.budget),
-            time: new Date(this.state.date),
+            time: new Date(this.state.time),
             goal: this.state.goal
         }
-        switch(this.state.status) {
-            case "completed": objForDb["status_trip"] = 0;
+        switch(e.target[6].value) {
+            case "completed": objForDb["status"] = 0;
             break; 
-            case "ongoing": objForDb["status_trip"] = 1;
+            case "ongoing": objForDb["status"] = 1;
             break; 
-            case "upcoming": objForDb["status_trip"] = 2;
+            case "upcoming": objForDb["status"] = 2;
             break; 
         };
-        console.log(objForDb);
-        axios({
-            method: 'POST',
-            url: "/newtrip", 
-            headers: {'X-Requested-With': 'XMLHttpRequest'},
-            responseType: 'json',
-            responseEncoding: 'utf8',
-            data: objForDb
-        })
-        .then((res) => {
-            console.log(res);
-        })
-        .catch((err) => {
-            console.log(err);
-        })
+        this.setState({
+            firstName: "",
+            secondName: "",
+            city: "",
+            budget: "",
+            time: "",
+            goal: "",
+            status: null
+        });
+        this.props.addNewItem(objForDb);
     };
 
     render() {
@@ -103,9 +98,9 @@ class Form extends Component {
                             <input 
                                 type="text" 
                                 className="form-control" 
-                                name="destination"
-                                placeholder="Destination"
-                                value={this.state.destination}
+                                name="city"
+                                placeholder="Destination city"
+                                value={this.state.city}
                                 onChange={this.handleFilling}
                             />
                         </div>
@@ -138,8 +133,8 @@ class Form extends Component {
                                 type="text" 
                                 className="form-control" 
                                 placeholder="MM-DD-YYYY" 
-                                name="date"
-                                value={this.state.date}
+                                name="time"
+                                value={this.state.time}
                                 onChange={this.handleFilling}
                             />
                         </div>

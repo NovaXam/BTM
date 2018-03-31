@@ -171,6 +171,7 @@ class Graps extends Component {
                 };
             });
         });
+        console.log(map);
         finalArr.push(map);
         finalArr.push(tempArr); 
         return finalArr;
@@ -208,15 +209,15 @@ class Graps extends Component {
             console.log(elem);
             elem.map((elem) => {
                 let year = elem.date.split("-")[2];
-                let destination = elem.destination;
+                let city = elem.city;
                 if(map[year] == undefined) {
                     tempArr = tempArr.concat(year);
                     map[year] = {};
-                    map[year][destination] = 1;
-                } else if (map[year][destination] === undefined) {
-                        map[year][destination] = 1;
+                    map[year][city] = 1;
+                } else if (map[year][city] === undefined) {
+                        map[year][city] = 1;
                 } else {
-                        map[year][destination] += 1;
+                        map[year][city] += 1;
                     }
                 });
             });
