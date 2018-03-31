@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import EntryContent from './EntryContent';
-import axios from 'axios';
 
 import './style/entry.css';
 
@@ -76,8 +75,8 @@ class Entry extends Component {
         e.stopPropagation();
         var dataToDb = {};
         for(let i = 0; i < 7; i++) {
-            if (e.target[i].name == "date") {
-                dataToDb["date"] = new Date(e.target[i].value);
+            if (e.target[i].name == "time") {
+                dataToDb["time"] = new Date(e.target[i].value);
             } else {
                 dataToDb[`${e.target[i].name}`] = e.target[i].value;
             }

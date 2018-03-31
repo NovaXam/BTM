@@ -52,7 +52,9 @@ selector(arr, instance) {
         break;
         case 2: instance.tempArr3 = instance.tempArr3.concat(elem);
         break;
+        default: 
       };
+      return instance;
   });
   this.setState({
         cathegoryDataArr: [instance.tempArr1, instance.tempArr2, instance.tempArr3]
@@ -60,6 +62,7 @@ selector(arr, instance) {
   }
   
 render() {
+    console.log(this.state.cathegoryDataArr);
     return (  
         <div className="tripTracker">    
             <div className="row no-gutters align-items-start justify-content-start">

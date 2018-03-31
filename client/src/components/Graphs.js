@@ -18,9 +18,11 @@ class Graps extends Component {
             name: "",
             data: [],
             dataType: [],
-            height: "0rem",
+            height: null,
             nameGraph: ["BUDGET", "HOW OFTEN", "WHERE TO"],
-            openChart: ""
+            openChart: "",
+            widthGraph: null,
+            heightGraph: null
         }
         this.handleSingleGraph = this.handleSingleGraph.bind(this);
         this.buildDataBudgetGraph = this.buildDataBudgetGraph.bind(this);
@@ -28,7 +30,6 @@ class Graps extends Component {
         this.buildDataDestGraph = this.buildDataDestGraph.bind(this);
         this.closer = this.closer.bind(this);
         this.selectorGraphs = this.selectorGraphs.bind(this);
-        
     };
 
     async componentWillMount() {
@@ -58,7 +59,7 @@ class Graps extends Component {
         }
     };
         
-    //building a temporary storage for a specific cathegory of a trip 
+    //building a temporary storage for a specific status of a trip 
     selectorGraphs(arr, instance) {
         arr.map(function(elem) {
           switch(elem.status) {
@@ -83,7 +84,9 @@ class Graps extends Component {
                     data: this.buildDataBudgetGraph(value),
                     name: "Budget",
                     dataType: ["money", "month"],
-                    openChart: "0"
+                    openChart: "0",
+                    widthGraph: (window.innerWidth * 0.6),
+                    heightGraph: ((window.innerWidth * 0.6) * 0.6)
                 });
             break;
             case "1": 
@@ -91,7 +94,9 @@ class Graps extends Component {
                     data: this.buildDataFreqDurGraph(value),
                     name: "Frequency",
                     dataType: ["number", "month"],
-                    openChart: "1"
+                    openChart: "1",
+                    widthGraph: (window.innerWidth * 0.6),
+                    heightGraph: ((window.innerWidth * 0.6) * 0.6)
                 });
             break;
             case "2": 
@@ -99,14 +104,16 @@ class Graps extends Component {
                     data: this.buildDataDestGraph(value),
                     name: "Destination",
                     dataType: [],
-                    openChart: "2"
+                    openChart: "2",
+                    widthGraph: (window.innerWidth * 0.6),
+                    heightGraph: ((window.innerWidth * 0.6) * 0.6)
                 });
             break;
         }
         if (this.state.graphAreaState === "closedGrpahArea") {
             this.setState({
                 graphAreaState: "openGrpahArea",
-                height: "35rem",
+                height: ((window.innerWidth * 0.6) * 0.71),
                 hei: "2.35rem",
                 idChart: e.target.id
             });
@@ -158,8 +165,8 @@ class Graps extends Component {
         let tempArr = [];
         initInfo.map((elem) => {
             elem.map((elem) => {
-                let year = elem.date.split("-")[2];
-                let index = parseInt(elem.date.split("-")[0]);
+                let year = elem.time.split("-")[2];
+                let index = parseInt(elem.time.split("-")[0]);
                 let budget = parseInt(elem.budget);
                 if(map[year] == undefined) {
                     tempArr = tempArr.concat(year);
@@ -171,7 +178,6 @@ class Graps extends Component {
                 };
             });
         });
-        console.log(map);
         finalArr.push(map);
         finalArr.push(tempArr); 
         return finalArr;
@@ -183,8 +189,8 @@ class Graps extends Component {
         let tempArr = [];
         initInfo.map((elem) => {
             elem.map((elem) => {
-                let year = elem.date.split("-")[2];
-                let index = parseInt(elem.date.split("-")[0]);
+                let year = elem.time.split("-")[2];
+                let index = parseInt(elem.time.split("-")[0]);
                 let budget = parseInt(elem.budget);
                 if(map[year] == undefined) {
                     tempArr = tempArr.concat(year);
@@ -206,9 +212,8 @@ class Graps extends Component {
         let map = {};
         let tempArr = [];
         initInfo.map((elem) => {
-            console.log(elem);
             elem.map((elem) => {
-                let year = elem.date.split("-")[2];
+                let year = elem.time.split("-")[2];
                 let city = elem.city;
                 if(map[year] == undefined) {
                     tempArr = tempArr.concat(year);
@@ -234,6 +239,8 @@ class Graps extends Component {
                             name={this.state.name}
                             dataType={this.state.dataType}
                             height={this.state.height}
+                            widthGraph={this.state.widthGraph}
+                            heightGraph={this.state.heightGraph}
                             closer={this.closer}
                         />
                     <div className="row justify-content-around no-gutters" style={{position: "relative"}} onClick={this.handleSingleGraph}>

@@ -45,8 +45,6 @@ public class TripController {
 
         if (placeRepository.findByCityName(cityName) == null) {
             placeRepository.save(newTrip.getCity());
-            Iterable<Place> list = placeRepository.findAll();
-            System.out.println(list);
         };
 
         System.out.println("I passed fist level");
@@ -105,6 +103,7 @@ public class TripController {
         oldData.setTime(newData.getTime());
         System.out.println(newData.getTime());
         System.out.println("this is over");
+        tripRepository.save(oldData);
         return oldData;
     };
 };

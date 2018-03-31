@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import axios from 'axios';
 import './style/form.css';
 
 class Form extends Component {
@@ -80,7 +79,7 @@ class Form extends Component {
 
     render() {
         return (
-            <div className="form" style={{margin: "1rem auto", width: "100%", backgroundColor: "lightblue", borderRadius: "0.5em"}}>
+            <div className="form" style={{margin: "0rem auto 0rem", width: "100%", backgroundColor: "lightblue", borderRadius: "0.5em"}}>
                 <button type="submit" className="btn btn-outline-info" style={{float: "right", border: "none", margin: "0.25rem" }} onClick={this.handleCloseForm}>X</button>
                 <form style={{paddingTop: "1rem", textAlign: "center"}} onSubmit={this.handleSubmit} >
                     <div className="form-group row no-gutters"> 

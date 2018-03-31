@@ -25,6 +25,7 @@ class GraphPage extends Component {
         this.dataModify = this.dataModify.bind(this);
         this.handleCloseGraph = this.handleCloseGraph.bind(this);
         this.handleCalendarEvent = this.handleCalendarEvent.bind(this);
+        this.handleSize = this.handleSize.bind(this);
     };
 
     componentWillReceiveProps(nextProps) {
@@ -71,120 +72,125 @@ class GraphPage extends Component {
         console.log(date);
     };
 
+    handleSize(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log(e);
+    }
+
    render() {
     switch(this.props.name) {
         case "Budget": 
             if (this.state.data[0].values.length > 0) {
                 return (
-                        <div className="row no-gutter graphContainer" style={{height: this.props.height, transition: "height 2s", overflowX: "hidden", marginTop: "1rem"}}>
-                            <div className="col col-sm-3">
-                                <div className="navBlock">
-                                    <Calendar 
-                                        selectRange={this.state.range}
-                                        className={this.state.updatedCal}
-                                        value={this.state.value}
-                                        onChange={this.handleCalendarEvent}
-                                    />
-                                </div>
-                            </div>
-                            <div className="col col-sm-9">
-                                <div className="row align-items-start" style={{overflowY: "hidden", height: this.state.hei, transition: "height 2s", marginBottom: "1rem", textAlign: "right"}}>
-                                    <div className="col">
-                                        <button type="submit" className="btn btn-outline-info" onClick={this.handleCloseGraph}>X</button>
-                                    </div>
-                                </div>
-                                <div className="row no-gutter" style={{marginLeft: "1rem"}}>
-                                    <BarChart  
-                                        data={this.state.data[0]}
-                                        width={700}
-                                        height={500}
-                                        margin={{top: 10, bottom: 50, left: 50, right: 10}}
-                                    />
-                                </div>
+                    <div className="row no-gutter graphContainer" style={{height: this.props.height, transition: "height 2s", overflowX: "hidden", marginTop: "1rem"}}>
+                        <div className="col col-sm-3">
+                            <div className="navBlock">
+                                <Calendar 
+                                    selectRange={this.state.range}
+                                    className={this.state.updatedCal}
+                                    value={this.state.value}
+                                    onChange={this.handleCalendarEvent}
+                                />
                             </div>
                         </div>
-                    );
-                }
-                else return (
-                    <div className="graphContainer" style={{height: this.props.height, transition: "height 2s", overflow: "hidden", marginTop: "1rem"}}>
+                        <div className="col col-sm-9">
+                            <div className="row align-items-start" style={{overflowY: "hidden", height: this.state.hei, transition: "height 2s", marginBottom: "1rem", textAlign: "right"}}>
+                                <div className="col col-sm-12">
+                                    <button type="submit" className="btn btn-outline-info" onClick={this.handleCloseGraph}>X</button>
+                                </div>
+                            </div>
+                            <div className="row no-gutter" style={{marginLeft: "1rem"}}>
+                                <BarChart  
+                                    data={this.state.data[0]}
+                                    width={this.props.widthGraph}
+                                    height={this.props.heightGraph}
+                                    margin={{top: 10, bottom: 50, left: 50, right: 10}}
+                                />
+                            </div>
+                        </div>
                     </div>
                 );
+            }
+            else return (
+                <div className="graphContainer" style={{height: this.props.height, transition: "height 2s", overflow: "hidden", marginTop: "1rem"}}>
+                </div>
+            );
         break;
         case "Frequency": 
             if (this.state.data[0].values.length > 0) {
+                console.log(this.props);
                 return (
-                        <div className="row no-gutter graphContainer" style={{height: this.props.height, transition: "height 2s", overflowX: "hidden", marginTop: "1rem"}}>
-                            <div className="col col-sm-3">
-                                <div className="navBlock">
-                                    <Calendar 
-                                        selectRange={this.state.range}
-                                        className={this.state.updatedCal}
-                                        value={this.state.value}
-                                    />
-                                </div>
-                            </div>
-                            <div className="col col-sm-9">
-                                <div className="row align-items-start" style={{overflowY: "hidden", height: this.state.hei, transition: "height 2s", marginBottom: "1rem", textAlign: "right"}}>
-                                    <div className="col">
-                                        <button type="submit" className="btn btn-outline-info" onClick={this.handleCloseGraph}>X</button>
-                                    </div>
-                                </div>
-                                <div className="row no-gutter" style={{marginLeft: "1rem"}}>    
-                                    <LineChart  
-                                        data={this.state.data[0]}
-                                        width={700}
-                                        height={500}
-                                        margin={{top: 10, bottom: 50, left: 50, right: 10}}
-                                    />
-                                </div>
+                    <div className="row no-gutter graphContainer" style={{height: this.props.height, transition: "height 2s", overflowX: "hidden", marginTop: "1rem"}}>
+                        <div className="col col-sm-3">
+                            <div className="navBlock">
+                                <Calendar 
+                                    selectRange={this.state.range}
+                                    className={this.state.updatedCal}
+                                    value={this.state.value}
+                                />
                             </div>
                         </div>
-                    );
-                }
-                else return (
-                    <div className="graphContainer" style={{height: this.props.height, transition: "height 2s", overflowX: "hidden", marginTop: "1rem"}}>
+                        <div className="col col-sm-9">
+                            <div className="row align-items-start" style={{overflowY: "hidden", height: this.state.hei, transition: "height 2s", marginBottom: "1rem", textAlign: "right"}}>
+                                <div className="col col-sm-12">
+                                    <button type="submit" className="btn btn-outline-info" onClick={this.handleCloseGraph}>X</button>
+                                </div>
+                            </div>
+                            <div className="row no-gutter" style={{marginLeft: "1rem"}}>
+                                <LineChart  
+                                    data={this.state.data[0]}
+                                    width={this.props.widthGraph}
+                                    height={this.props.heightGraph}
+                                    margin={{top: 10, bottom: 50, left: 50, right: 10}}
+                                />
+                            </div>
+                        </div>
                     </div>
                 );
-            break;
+            } else return (
+                <div className="graphContainer" style={{height: this.props.height, transition: "height 2s", overflowX: "hidden", marginTop: "1rem"}}>
+                </div>
+            );
+        break;
         case "Destination": 
             var sort = null;    
             if (this.state.data[0].values.length > 0) {
                 return (
                     <div className="row no-gutter graphContainer" style={{height: this.props.height, transition: "height 2s", overflowX: "hidden", marginTop: "1rem"}}>
-                            <div className="col col-sm-3">
-                                <div className="navBlock">
-                                    <Calendar 
-                                        selectRange={this.state.range}
-                                        className={this.state.updatedCal}
-                                        value={this.state.value}
-                                    />
-                                </div>
-                            </div>
-                            <div className="col col-sm-9">
-                                <div className="row align-items-start" style={{overflowY: "hidden", height: this.state.hei, transition: "height 2s", marginBottom: "1rem", textAlign: "right"}}>
-                                    <div className="col">
-                                        <button type="submit" className="btn btn-outline-info" onClick={this.handleCloseGraph}>X</button>
-                                    </div>
-                                </div>
-                            <div className="row no-gutter" style={{marginLeft: "1rem"}}>    
-                                <PieChart  
-                                    data={this.state.data[0]}
-                                    width={700}
-                                    height={500}
-                                    margin={{top: 10, bottom: 50, left: 50, right: 10}}
-                                    sort={sort}
+                        <div className="col col-sm-3">
+                            <div className="navBlock">
+                                <Calendar 
+                                    selectRange={this.state.range}
+                                    className={this.state.updatedCal}
+                                    value={this.state.value}
                                 />
                             </div>
                         </div>
+                        <div className="col col-sm-9">
+                            <div className="row align-items-start" style={{overflowY: "hidden", height: this.state.hei, transition: "height 2s", marginBottom: "1rem", textAlign: "right"}}>
+                                <div className="col col-sm-12">
+                                    <button type="submit" className="btn btn-outline-info" onClick={this.handleCloseGraph}>X</button>
+                                </div>
+                            </div>
+                        <div className="row no-gutter" style={{marginLeft: "1rem"}}>    
+                            <PieChart  
+                                data={this.state.data[0]}
+                                width={this.props.widthGraph}
+                                height={this.props.heightGraph}
+                                margin={{top: 10, bottom: 50, left: 50, right: 10}}
+                                sort={sort}
+                            />
+                        </div>
                     </div>
-                    );
-                }
-                else return (
-                    <div className="graphContainer" style={{height: this.props.height, transition: "height 2s", overflowX: "hidden", marginTop: "1rem"}}>
-                    </div>
+                </div>
                 );
-            break;    
-            default: 
+            } else return (
+                <div className="graphContainer" style={{height: this.props.height, transition: "height 2s", overflowX: "hidden", marginTop: "1rem"}}>
+                </div>
+            );
+        break;    
+        default: 
             return (
                 <div className="graphContainer" style={{height: this.props.height, transition: "height 2s", overflowX: "hidden", marginTop: "1rem"}}>
                 </div>

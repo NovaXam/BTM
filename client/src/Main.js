@@ -26,15 +26,47 @@ class Main extends Component {
     this.handleSubApi = this.handleSubApi.bind(this);
     this.modifyData = this.modifyData.bind(this); 
     this.deleteItemFromList = this.deleteItemFromList.bind(this);
-    this. updateState = this.updateState.bind(this);
+    this.updateState = this.updateState.bind(this);
     this.updateValue = this.updateValue.bind(this);
     this.addNewItem = this.addNewItem.bind(this);
     this.tempObjAssing = this.tempObjAssing.bind(this);
   }
 
+componentWillMount() {
+  axios({
+    method: 'GET',
+    url: '/trips',
+  })
+  .then((res) => {
+    if (res.data.length > 0) {
+      var initialArrData = [];
+      console.log(res);
+      res.data.map((elem) => {
+        let newTime = elem.time.slice(0, 10).split("-").reverse().join("-");
+        let tempObj = {
+            id: elem.id,  
+            traveler: elem.traveler.employeeName,
+            city: elem.city.cityName,
+            budget: elem.budget.toString(),
+            goal: elem.goal,  
+            time: newTime,
+            status: elem.status
+          };
+          initialArrData.push(tempObj);
+        });
+      this.setState({
+        dataFromDb: this.state.dataFromDb.concat(initialArrData)
+      });
+    }
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+};
+
 async modifyData(elem) {
   try {
-    if (typeof elem == "string") {
+    if (typeof elem === "string") {
       const newList = await this.deleteItemFromList(elem);
       const newState = await this.updateState(newList);
    } else {
@@ -46,15 +78,12 @@ async modifyData(elem) {
 };
 
 updateState(modifiedState) {
-  console.log(modifiedState);
   this.setState({
     dataFromDb: modifiedState
   });
 }
 
 updateValue(updatedEntry) {
-  console.log(updatedEntry);
-  var obj = this.state.dataFromDb;
   updatedEntry.id = parseInt(updatedEntry.id);
   updatedEntry.status = parseInt(updatedEntry.status);
   axios({
@@ -63,7 +92,6 @@ updateValue(updatedEntry) {
     data: updatedEntry
   })
   .then((res) => {
-    console.log(res);
     var updateEntryDB = this.tempObjAssing(res);
     var tempObj = this.state.dataFromDb;
     tempObj = tempObj.map((elem, i) => {
@@ -81,7 +109,6 @@ updateValue(updatedEntry) {
 deleteItemFromList(data) {
   let newElem = parseInt(data);
   var obj = this.state.dataFromDb;
-  console.log(newElem);
   axios({
     method: 'DELETE',
     url: `/trip/${newElem}`
@@ -120,7 +147,6 @@ handleSubApi(e) {
   const weather = `https://api.openweathermap.org/data/2.5/weather?q=${this.state.inputCity}&units=metric&APPID=${key.apiWeather}`;
   if (this.state.inputCity.split(" ").length > 1) {
     const newString = this.state.inputCity.split(" ").join("-").toLowerCase();
-    console.log(newString);
     picture = `https://api.teleport.org/api/urban_areas/slug:${newString}/images/`;
   } else {
     picture = `https://api.teleport.org/api/urban_areas/slug:${this.state.inputCity.toLowerCase()}/images/`;
@@ -150,7 +176,6 @@ handleSubApi(e) {
 }
 
 addNewItem(item) {
-  console.log(item);
   axios({
     method: 'POST',
     url: "/newtrip", 
@@ -160,7 +185,6 @@ addNewItem(item) {
     data: item
   })
   .then((res) => {
-    console.log(res);
     var newObj = this.tempObjAssing(res);
     this.setState({
       dataFromDb: this.state.dataFromDb.concat(newObj)
@@ -172,7 +196,8 @@ addNewItem(item) {
 };
 
 tempObjAssing(res) {
-  var dateInString = res.data.time.slice(0,10);
+  var dateInString = res.data.time.slice(0,10).split("-").reverse().join("-");
+  console.log(dateInString);
   var newObj = {
     id: res.data.id,
     traveler: res.data.traveler.employeeName,
@@ -188,6 +213,7 @@ tempObjAssing(res) {
 
 //main render lifecycle method
   render() {
+    console.log(this.state.dataFromDb);
     return (
       <div className="Main">
         <div className="container">

@@ -33,8 +33,8 @@ class AddNewTrip extends Component {
 
     render() {
         return (  
-            <div className={this.state.formTripState} style={{margin: "0.5rem 0rem"}} >
-                <button type="submit" className="btn btn-outline-info" style={{width: "15rem", height: "3rem"}} onClick={this.handleOpenForm}>
+            <div className={this.state.formTripState} style={{margin: "0rem 0rem 0rem"}} >
+                <button type="submit" className="btn btn-outline-info" style={{width: "15rem", height: "3rem", margin: "0.5rem"}} onClick={this.handleOpenForm}>
                     <h3 style={{marginTop: "0"}}>Add new trip </h3>
                 </button>
                 <Form 
