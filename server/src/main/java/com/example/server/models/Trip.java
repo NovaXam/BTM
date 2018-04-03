@@ -1,6 +1,5 @@
 package com.example.server.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
@@ -20,7 +19,6 @@ public class Trip {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="EMPLOYEE_ID")
     private Traveler traveler;
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="CITY_ID")

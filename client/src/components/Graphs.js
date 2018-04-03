@@ -242,6 +242,7 @@ class Graps extends Component {
                             widthGraph={this.state.widthGraph}
                             heightGraph={this.state.heightGraph}
                             closer={this.closer}
+                            handleCalendarEvent={this.props.handleCalendarEvent}
                         />
                     <div className="row justify-content-around no-gutters" style={{position: "relative"}} onClick={this.handleSingleGraph}>
                         {

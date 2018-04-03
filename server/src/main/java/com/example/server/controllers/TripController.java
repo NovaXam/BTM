@@ -1,11 +1,14 @@
 package com.example.server.controllers;
 
-
 import com.example.server.models.Place;
 import com.example.server.models.Traveler;
 import com.example.server.models.Trip;
 import com.example.server.repositories.TravelerRepository;
 import com.example.server.repositories.TripRepository;
+
+import org.hibernate.Filter;
+import org.hibernate.Session;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,6 +26,14 @@ public class TripController {
     private PlaceRepository placeRepository;
     @Autowired
     private TravelerRepository travelerRepository;
+
+    @PostMapping("/range_graphs")
+    public List<Trip> findByRequest(@RequestBody Date [] time) {
+        Date first = time[0];
+        Date second = time[1];
+        System.out.println("I am in graphs" + time[0] + " " + time[1]);
+        return tripRepository.findByStatusAndTime(0, first, second);
+    };
 
     @GetMapping("/trips")
     public Iterable<Trip> findAllTrips() {

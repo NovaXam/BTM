@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { BarChart, LineChart, PieChart } from "react-d3-components";
 import Scroll from "react-scroll";
 import Calendar from 'react-calendar';
+import axios from 'axios';
 
 import './style/graphPages.css'; 
 
@@ -24,7 +25,6 @@ class GraphPage extends Component {
         };
         this.dataModify = this.dataModify.bind(this);
         this.handleCloseGraph = this.handleCloseGraph.bind(this);
-        this.handleCalendarEvent = this.handleCalendarEvent.bind(this);
         this.handleSize = this.handleSize.bind(this);
     };
 
@@ -68,15 +68,11 @@ class GraphPage extends Component {
         this.props.closer();
     };
 
-    handleCalendarEvent(date) {
-        console.log(date);
-    };
-
     handleSize(e) {
         e.preventDefault();
         e.stopPropagation();
         console.log(e);
-    }
+    };
 
    render() {
     switch(this.props.name) {
@@ -90,7 +86,7 @@ class GraphPage extends Component {
                                     selectRange={this.state.range}
                                     className={this.state.updatedCal}
                                     value={this.state.value}
-                                    onChange={this.handleCalendarEvent}
+                                    onChange={this.props.handleCalendarEvent}
                                 />
                             </div>
                         </div>

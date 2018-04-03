@@ -22,6 +22,7 @@ class Main extends Component {
     this.updateValue = this.updateValue.bind(this);
     this.addNewItem = this.addNewItem.bind(this);
     this.tempObjAssing = this.tempObjAssing.bind(this);
+    this.handleCalendarEvent = this.handleCalendarEvent.bind(this);
   }
 
 componentWillMount() {
@@ -143,6 +144,22 @@ addNewItem(item) {
   })
 };
 
+handleCalendarEvent(dateRange) {
+  console.log(dateRange);
+  axios({
+      method: 'POST',
+      url: "/range_graphs",
+      data: dateRange
+  })
+  .then((res) => {
+      console.log(res);
+  })
+  .catch((err) => {
+      console.log(err);
+  });
+};
+
+
 //adjusting a data revieved from a server to an appropriate format
 tempObjAssing(res) {
   var dateInString = res.data.time.slice(0,10).split("-").reverse().join("-");
@@ -169,6 +186,7 @@ tempObjAssing(res) {
             <div className="col col-sm-12">
               <Graphs 
                 dataFromDb={this.state.dataFromDb}
+                handleCalendarEvent={this.handleCalendarEvent}
               />
             </div>
           </div>
