@@ -130,15 +130,32 @@ Track all company business' trips in one app with extended functionality and fri
 |  - |  #### MVP | 27 hours | done |
 | 2.1 | Spring Boot architecture data base(MVC) |  12  | done |
 | 2.2 | connect back-end and front-end, tests |  6, 3  | done |
-| - | #### Version 1 |  21 hours  | uncoming |
-| 3.1 | add calendar option on the graph, fix bugs | 10, 2 | upcoming
-| 3.2 | redesign a grid | 12 | upcoming
-| 3.3 | update an Add trip form | 4 | upcoming
-| - | #### Version 2 | 28 hours | upcoming
-| 4.1 | add sort option for notes column | 8 | upcoming
-| 4.2 | add horizontal menu | 12 | upcoming 
-| 4.3 | add traveler profile | 24 | upcoming
-		    					   
+| - | #### Version 1 |  21 hours  | done |
+| 3.1 | add calendar option on the graph, fix bugs | 10, 2 | done |
+| 3.2 | redesign a grid | 12 | done |
+| 3.3 | update an Add trip form | 4 | done |
+| - | #### Version 2 | 28 hours | - 
+| 4.1 | add sort option for dashboard | 8 | upcoming |
+| 4.2 | add horizontal menu | 12 | upcoming |
+| 4.3 | add traveler profile page | 24 | upcoming |
+| - | #### Version 3 | 44 hours | - |
+| 5.1 | unit, integration, feature tests | 24 | upcoming |
+| - | #### Deployment  V 1.01 | 24 | upcoming |
+| 6.1 | add authentification | 16 | upcoming |
+| 6.2 | improve UI | 16 | upcoming |
+| - | #### Version 1.20 | 32 hours | - |
+| 7.1 | add Services sidebar | 8 | upcoming |
+| 7.2 | add hotels page | 24 | upcoming |
+| 7.3 | add map page | 16 | upcoming |
+| 7.4 | add sightseeings page | 24 | upcoming |
+| 7.5 | testing | 16 | upcoming |
+| - | #### Version 2.00 | 88 hours | - |
+| 8.1 | rebuild back-end using microservices | 40 | upcoming | 
+| - | #### Version 2.01 | 40 hours | - |
+| 9.1 | rebuild front-end using redux | upcoming |
+| - | #### Version 2.2 | 40 hours | - |
+|10.1 | extend analytical tools | 40 | upcoming |
+| - | #### Version 3.01 | 40 hours | - |
 
 ## Code snippet
 ```JS
@@ -220,7 +237,4 @@ handleSubApi(e) {
         return oldData;
     };
 
-
 ```
-
-
