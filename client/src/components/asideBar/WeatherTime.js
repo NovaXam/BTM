@@ -1,6 +1,7 @@
 import React from 'react';
 import Weather from './Weather';
 import Time from './Time';
+import Score from './Score';
 
 import '../style/weatherTime.css';
 
@@ -24,7 +25,7 @@ const WeatherTime = (props) => {
                         </form>
                     </div>
                 </div>
-                <div className="row no-gutters" style={{margin: "1rem 0rem 0rem"}}>
+                <div className="row no-gutters" style={{margin: "0rem 0rem 0rem"}}>
                     <div className="col col-sm-12 temperature"><h6 style={{margin: "0rem"}}><em>weather</em></h6></div>
                 </div>
                 <div className="row no-gutters">
@@ -35,12 +36,20 @@ const WeatherTime = (props) => {
                         gen={props.weather[3]}
                     />
                 </div>
-                <div className="row no-gutters" style={{margin: "1rem 0rem 0rem"}}>
+                <div className="row no-gutters" style={{margin: "0rem 0rem 0rem"}}>
                     <div className="col col-sm-12 temperature"><h6 style={{margin: "0rem"}}><em>time</em></h6></div>
                 </div>
                 <div className="row no-gutters">
                     <Time 
                         time={props.time}
+                    />
+                </div>
+                <div className="row no-gutters" style={{margin: "0rem 0rem 0rem"}}>
+                    <div className="col col-sm-12 temperature"><h6 style={{margin: "0rem"}}><em>safety(max.10)</em></h6></div>
+                </div>
+                <div className="row no-gutters">
+                    <Score 
+                        score={props.cityScore}
                     />
                 </div>
             </div>

@@ -18,7 +18,7 @@ class Graps extends Component {
             name: "",
             data: [],
             dataType: [],
-            height: null,
+            height: "0",
             nameGraph: ["BUDGET", "HOW OFTEN", "WHERE TO"],
             openChart: "",
             widthGraph: null,
@@ -85,8 +85,8 @@ class Graps extends Component {
                     name: "Budget",
                     dataType: ["money", "month"],
                     openChart: "0",
-                    widthGraph: (window.innerWidth * 0.6),
-                    heightGraph: ((window.innerWidth * 0.6) * 0.6)
+                    widthGraph: (window.innerWidth * 0.55),
+                    heightGraph: ((window.innerWidth * 0.55) * 0.6)
                 });
             break;
             case "1": 
@@ -95,8 +95,8 @@ class Graps extends Component {
                     name: "Frequency",
                     dataType: ["number", "month"],
                     openChart: "1",
-                    widthGraph: (window.innerWidth * 0.6),
-                    heightGraph: ((window.innerWidth * 0.6) * 0.6)
+                    widthGraph: (window.innerWidth * 0.55),
+                    heightGraph: ((window.innerWidth * 0.55) * 0.6)
                 });
             break;
             case "2": 
@@ -105,15 +105,15 @@ class Graps extends Component {
                     name: "Destination",
                     dataType: [],
                     openChart: "2",
-                    widthGraph: (window.innerWidth * 0.6),
-                    heightGraph: ((window.innerWidth * 0.6) * 0.6)
+                    widthGraph: (window.innerWidth * 0.55),
+                    heightGraph: ((window.innerWidth * 0.55) * 0.6)
                 });
             break;
         }
         if (this.state.graphAreaState === "closedGrpahArea") {
             this.setState({
                 graphAreaState: "openGrpahArea",
-                height: ((window.innerWidth * 0.6) * 0.71),
+                height: ((window.innerWidth * 0.6) * 0.65),
                 hei: "2.35rem",
                 idChart: e.target.id
             });

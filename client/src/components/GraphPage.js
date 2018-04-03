@@ -95,12 +95,12 @@ class GraphPage extends Component {
                             </div>
                         </div>
                         <div className="col col-sm-9">
-                            <div className="row align-items-start" style={{overflowY: "hidden", height: this.state.hei, transition: "height 2s", marginBottom: "1rem", textAlign: "right"}}>
+                            <div className="row align-items-start" style={{overflowY: "hidden", height: this.state.hei, transition: "height 2s", textAlign: "right"}}>
                                 <div className="col col-sm-12">
                                     <button type="submit" className="btn btn-outline-info" onClick={this.handleCloseGraph}>X</button>
                                 </div>
                             </div>
-                            <div className="row no-gutter" style={{marginLeft: "1rem"}}>
+                            <div className="row no-gutters justify-content-center" style={{margin: "0.5rem"}}>
                                 <BarChart  
                                     data={this.state.data[0]}
                                     width={this.props.widthGraph}
@@ -119,7 +119,6 @@ class GraphPage extends Component {
         break;
         case "Frequency": 
             if (this.state.data[0].values.length > 0) {
-                console.log(this.props);
                 return (
                     <div className="row no-gutter graphContainer" style={{height: this.props.height, transition: "height 2s", overflowX: "hidden", marginTop: "1rem"}}>
                         <div className="col col-sm-3">
@@ -132,12 +131,12 @@ class GraphPage extends Component {
                             </div>
                         </div>
                         <div className="col col-sm-9">
-                            <div className="row align-items-start" style={{overflowY: "hidden", height: this.state.hei, transition: "height 2s", marginBottom: "1rem", textAlign: "right"}}>
+                            <div className="row align-items-start" style={{overflowY: "hidden", height: this.state.hei, transition: "height 2s", textAlign: "right"}}>
                                 <div className="col col-sm-12">
                                     <button type="submit" className="btn btn-outline-info" onClick={this.handleCloseGraph}>X</button>
                                 </div>
                             </div>
-                            <div className="row no-gutter" style={{marginLeft: "1rem"}}>
+                            <div className="row no-gutters justify-content-center" style={{margin: "0.5rem"}}>
                                 <LineChart  
                                     data={this.state.data[0]}
                                     width={this.props.widthGraph}
@@ -168,12 +167,12 @@ class GraphPage extends Component {
                             </div>
                         </div>
                         <div className="col col-sm-9">
-                            <div className="row align-items-start" style={{overflowY: "hidden", height: this.state.hei, transition: "height 2s", marginBottom: "1rem", textAlign: "right"}}>
+                            <div className="row align-items-start" style={{overflowY: "hidden", height: this.state.hei, transition: "height 2s", textAlign: "right"}}>
                                 <div className="col col-sm-12">
                                     <button type="submit" className="btn btn-outline-info" onClick={this.handleCloseGraph}>X</button>
                                 </div>
                             </div>
-                        <div className="row no-gutter" style={{marginLeft: "1rem"}}>    
+                        <div className="row no-gutters justify-content-center" style={{margin: "0.5rem"}}>    
                             <PieChart  
                                 data={this.state.data[0]}
                                 width={this.props.widthGraph}

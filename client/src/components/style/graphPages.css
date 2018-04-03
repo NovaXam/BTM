@@ -15,7 +15,6 @@
 .react-calendar {
     border-radius: 5px;
     height: 2.75rem;
-    padding: 1px;
     width: 14rem;
     margin: 0 auto;
     font-size: 12px;
@@ -26,15 +25,18 @@
 }
 
 .navBlock {
-    margin: 10rem auto; 
+    margin: 5rem auto; 
     text-align: center;
     border-radius: 5px;
-    background-color: #f8f9fa;
     height: 14rem;
-    width: 15rem;
-    padding-top: 1rem;
+    width: auto;
 }
+
+.react-calendar__navigation button {
+    min-width: 0rem;
+    width: auto;
+};
 
 .react-calendar__navigation button:hover {
     background: blue;
-}
+};
