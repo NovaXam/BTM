@@ -168,7 +168,7 @@ class Graps extends Component {
                 let year = elem.time.split("-")[2];
                 let index = parseInt(elem.time.split("-")[0]);
                 let budget = parseInt(elem.budget);
-                if(map[year] == undefined) {
+                if (map[year] == undefined) {
                     tempArr = tempArr.concat(year);
                     var arrData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
                     map[year] = arrData;

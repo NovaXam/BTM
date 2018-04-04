@@ -14,7 +14,7 @@ class GraphPage extends Component {
         this.state = {
             data: [
                 {
-                    label: 'budget',
+                    label: 'trial',
                     values: []
                 }
             ],
@@ -29,7 +29,8 @@ class GraphPage extends Component {
     };
 
     componentWillReceiveProps(nextProps) {
-        if(nextProps.data[0] !== undefined) {
+        // nextProps.data[0] = undefined;
+        if (nextProps.data[0] !== undefined) {
             this.setState({
                 data: Object.assign({}, this.dataModify(nextProps)),
                 barAreaState: "barChartOpen"
@@ -47,6 +48,7 @@ class GraphPage extends Component {
         if (item.name == "Destination") {
             if (Object.keys(item.data[0]).length > 0) {
                 for (let elem in item.data[0]["2012"]) {
+                    console.log(elem);
                     newData[0].values.push({x: elem, y: item.data[0]["2012"][elem]});
                 }
             }
@@ -110,6 +112,11 @@ class GraphPage extends Component {
             }
             else return (
                 <div className="graphContainer" style={{height: this.props.height, transition: "height 2s", overflow: "hidden", marginTop: "1rem"}}>
+                    <div className="row align-items-start" style={{overflowY: "hidden", height: this.state.hei, transition: "height 2s", textAlign: "right"}}>
+                        <div className="col col-sm-12">
+                            <button type="submit" className="btn btn-outline-info" onClick={this.handleCloseGraph}>X</button>
+                        </div>
+                    </div>
                 </div>
             );
         break;
@@ -144,7 +151,12 @@ class GraphPage extends Component {
                     </div>
                 );
             } else return (
-                <div className="graphContainer" style={{height: this.props.height, transition: "height 2s", overflowX: "hidden", marginTop: "1rem"}}>
+                <div className="graphContainer" style={{height: this.props.height, transition: "height 2s", overflow: "hidden", marginTop: "1rem"}}>
+                    <div className="row align-items-start" style={{overflowY: "hidden", height: this.state.hei, transition: "height 2s", textAlign: "right"}}>
+                        <div className="col col-sm-12">
+                            <button type="submit" className="btn btn-outline-info" onClick={this.handleCloseGraph}>X</button>
+                        </div>
+                    </div>
                 </div>
             );
         break;
@@ -181,13 +193,23 @@ class GraphPage extends Component {
                 </div>
                 );
             } else return (
-                <div className="graphContainer" style={{height: this.props.height, transition: "height 2s", overflowX: "hidden", marginTop: "1rem"}}>
+                <div className="graphContainer" style={{height: this.props.height, transition: "height 2s", overflow: "hidden", marginTop: "1rem"}}>
+                    <div className="row align-items-start" style={{overflowY: "hidden", height: this.state.hei, transition: "height 2s", textAlign: "right"}}>
+                        <div className="col col-sm-12">
+                            <button type="submit" className="btn btn-outline-info" onClick={this.handleCloseGraph}>X</button>
+                        </div>
+                    </div>
                 </div>
             );
         break;    
         default: 
             return (
-                <div className="graphContainer" style={{height: this.props.height, transition: "height 2s", overflowX: "hidden", marginTop: "1rem"}}>
+                <div className="graphContainer" style={{height: this.props.height, transition: "height 2s", overflow: "hidden", marginTop: "1rem"}}>
+                    <div className="row align-items-start" style={{overflowY: "hidden", height: this.state.hei, transition: "height 2s", textAlign: "right"}}>
+                        <div className="col col-sm-12">
+                            <button type="submit" className="btn btn-outline-info" onClick={this.handleCloseGraph}>X</button>
+                        </div>
+                    </div>
                 </div>
             )    
         }

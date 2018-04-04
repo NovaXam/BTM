@@ -13,7 +13,8 @@ class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataFromDb: data
+      dataFromDb: data,
+      dataFromDbGraphs: []
     };
 
     this.modifyData = this.modifyData.bind(this); 
@@ -185,6 +186,7 @@ tempObjAssing(res) {
           <div id="top" className="row no-gutters">
             <div className="col col-sm-12">
               <Graphs 
+                dataFromDbGraphs={this.state.dataFromDbGraphs}
                 dataFromDb={this.state.dataFromDb}
                 handleCalendarEvent={this.handleCalendarEvent}
               />
