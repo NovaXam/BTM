@@ -7,61 +7,68 @@ const EntryContent = (props) => {
             <button type="submit" className="btn btn-outline-info btn-sm" style={{display: "inline-block", border: "none"}} onClick={props.handleCloseForm}>X</button>
             <form onSubmit={props.handleUpdateForm}> 
                 <input
-                        type="hidden" 
-                        name="id"
-                        className="form-control" 
-                        value={props.localData.id}
-                        />
-                        <input
-                            type="hidden" 
-                            name="status"
-                            className="form-control" 
-                            value={props.localData.status}
-                        />        
+                    type="hidden" 
+                    name="id"
+                    className="form-control" 
+                    value={props.localData.id}
+                />
                 <div className="form-group" >
-                        <input
-                            type="text" 
-                            name="traveler"
-                            className="form-control" 
-                            value={props.localData.traveler}
-                            onChange={props.handleFilling}
-                        />
+                    <input
+                        type="text" 
+                        name="traveler"
+                        className="form-control" 
+                        value={props.localData.traveler}
+                        onChange={props.handleFilling}
+                    />
                 </div>
                 <div className="form-group">
-                        <input 
-                            type="text" 
-                            name="city"
-                            className="form-control" 
-                            value={props.localData.city}
-                            onChange={props.handleFilling}
-                        />
+                    <input 
+                        type="text" 
+                        name="city"
+                        className="form-control" 
+                        value={props.localData.city}
+                        onChange={props.handleFilling}
+                    />
                 </div>
                 <div className="form-group">
-                        <input 
-                            type="text" 
-                            name="time"
-                            className="form-control"
-                            value={props.localData.time}
-                            onChange={props.handleFilling}        
-                        />
+                    <input 
+                        type="text" 
+                        name="time"
+                        className="form-control"
+                        value={props.localData.time}
+                        onChange={props.handleFilling}        
+                    />
                 </div>
                 <div className="form-group">
-                        <input 
-                            type="text" 
-                            name="budget"
-                            className="form-control"
-                            value={props.localData.budget}
-                            onChange={props.handleFilling}          
-                        />
+                    <input 
+                        type="text" 
+                        name="budget"
+                        className="form-control"
+                        value={props.localData.budget}
+                        onChange={props.handleFilling}          
+                    />
                 </div>
                 <div className="form-group">
-                        <input 
-                            type="text"
-                            name="goal"
-                            className="form-control"
-                            value={props.localData.goal}
-                            onChange={props.handleFilling}
-                        />
+                    <input 
+                        type="text"
+                        name="goal"
+                        className="form-control"
+                        value={props.localData.goal}
+                        onChange={props.handleFilling}
+                    />
+                </div>
+                <div className="form-group">
+                    <select 
+                        className="form-control" 
+                        name="status"
+                        value={props.localData.status}
+                        onChange={props.handleFilling}
+                    >
+                        <option>choose a trip status</option>
+                        <option>completed</option>
+                        <option>ongoing</option>
+                        <option>upcoming</option>
+                    </select>
                 </div>
                 <hr />
                 <button id={props.id} status={props.localData.status} className="btn btn-light btn-sm" style={{marginRight: "1rem"}} onClick={props.handleButtonForm}>Delete</button>

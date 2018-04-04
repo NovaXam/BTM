@@ -74,11 +74,19 @@ class Entry extends Component {
         e.preventDefault();
         e.stopPropagation();
         var dataToDb = {};
+        console.log(e.target[6].value);
         for(let i = 0; i < 7; i++) {
             if (e.target[i].name == "time") {
-                console.log(e.target[i].value);
-                console.log(e.target[i].value.slice(6), e.target[i].value.slice(3,5), e.target[i].value.slice(0, 2));
                 dataToDb["time"] = new Date(e.target[i].value.slice(6), (parseInt(e.target[i].value.slice(3,5))-1).toString(), e.target[i].value.slice(0, 2));
+            } else if (e.target[i].name == "status") {
+                switch(e.target[6].value) {
+                    case "completed": dataToDb["status"] = 0;
+                    break; 
+                    case "ongoing": dataToDb["status"] = 1;
+                    break; 
+                    case "upcoming": dataToDb["status"] = 2;
+                    break; 
+                };
             } else {
                 dataToDb[`${e.target[i].name}`] = e.target[i].value;
             }

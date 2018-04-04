@@ -184,7 +184,7 @@ handleCalendarEvent(dateRange) {
 };
 
 
-//adjusting a data revieved from a server to an appropriate format
+//adjusting a data revieved from a server to an appropriate format for a dashboard
 tempObjAssing(res) {
   console.log(res);
   var dateInString = res.data.time.slice(0,10).split("-").reverse().join("-");

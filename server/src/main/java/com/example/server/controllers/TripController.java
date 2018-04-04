@@ -117,8 +117,8 @@ public class TripController {
         oldData.setBudget(newData.getBudget());
         oldData.setGoal(newData.getGoal());
         oldData.setTime(newData.getTime());
-        System.out.println(newData.getTime());
-        System.out.println("this is over");
+        oldData.setStatus(newData.getStatus());
+        System.out.println("entity updated");
         tripRepository.save(oldData);
         return oldData;
     };
