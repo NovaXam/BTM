@@ -31,8 +31,14 @@ public class TripController {
     public List<Trip> findByRequest(@RequestBody Date [] time) {
         Date first = time[0];
         Date second = time[1];
-        System.out.println("I am in graphs" + time[0] + " " + time[1]);
+        System.out.println("I am in graphsRequest" + time[0] + " " + time[1]);
         return tripRepository.findByStatusAndTime(0, first, second);
+    };
+
+    @PostMapping("/initial_graphs")
+    public List<Trip> findByRequestGraphs(@RequestBody Date time) {
+        System.out.println("I am in initialGraphsRequest" + time);
+        return tripRepository.findByStatusAndTimeGraphs(0, time);
     };
 
     @GetMapping("/trips")
@@ -52,7 +58,6 @@ public class TripController {
         String cityName = newTrip.getCity().getCityName();
         System.out.println(cityName);
         System.out.println(newTrip);
-        System.out.println(placeRepository.findByCityName(cityName));
 
         if (placeRepository.findByCityName(cityName) == null) {
             placeRepository.save(newTrip.getCity());

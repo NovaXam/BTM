@@ -12,7 +12,7 @@ class Graps extends Component {
         super(props);
         this.state = { 
             graphAreaState: "closedGrpahArea",
-            cathegoryDataArrGraphs: [],
+            roughDataFromDB: [],
             hei: "0",
             singleGraphId: [0, 1, 2],
             name: "",
@@ -22,62 +22,30 @@ class Graps extends Component {
             nameGraph: ["BUDGET", "HOW OFTEN", "WHERE TO"],
             openChart: "",
             widthGraph: null,
-            heightGraph: null
+            heightGraph: null,
+            months: [0, "Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
+
         }
         this.handleSingleGraph = this.handleSingleGraph.bind(this);
         this.buildDataBudgetGraph = this.buildDataBudgetGraph.bind(this);
         this.buildDataFreqDurGraph = this.buildDataFreqDurGraph.bind(this);
         this.buildDataDestGraph = this.buildDataDestGraph.bind(this);
         this.closer = this.closer.bind(this);
-        this.selectorGraphs = this.selectorGraphs.bind(this);
+        this.constructorFinalData = this.constructorFinalData.bind(this);
     };
 
-    async componentWillMount() {
-        var temp = {
-            tempArr1: [],
-            tempArr2: [],
-            tempArr3: []
-          }
-          try {
-                const updatedState = await this.selectorGraphs(this.props.dataFromDb, temp);
+    async componentWillReceiveProps(nextProps) {  
+        try {
+            const updateState = await this.setState({roughDataFromDB: nextProps.dataFromDbGraphs})
+            const explisitelyRebootGraph = await this.rebuildGraph(this.state.openChart);
         } catch(err) {
           console.log(err);
         }
     };
-
-    async componentWillReceiveProps(nextProps) {
-        var temp = {
-            tempArr1: [],
-            tempArr2: [],
-            tempArr3: []
-          }
-          try {
-                const updatedState = await this.selectorGraphs(nextProps.dataFromDb, temp);
-                const explisitelyRebootGraph = await this.rebuildGraph(this.state.openChart);
-        } catch(err) {
-          console.log(err);
-        }
-    };
-        
-    //building a temporary storage for a specific status of a trip 
-    selectorGraphs(arr, instance) {
-        arr.map(function(elem) {
-          switch(elem.status) {
-            case 0: instance.tempArr1 = instance.tempArr1.concat(elem);
-            break;
-            case 1: instance.tempArr2 = instance.tempArr2.concat(elem);
-            break;
-            case 2: instance.tempArr3 = instance.tempArr3.concat(elem);
-            break;
-          };
-      });
-      this.setState({
-            cathegoryDataArrGraphs: [instance.tempArr1, instance.tempArr2, instance.tempArr3]
-        });
-      }
-
+      
     handleSingleGraph(e) {
-        const value = this.state.cathegoryDataArrGraphs;
+        const value = this.state.roughDataFromDB;
+        console.log(this.state.roughDataFromDB);
         switch(e.target.id) {
             case "0": 
                 this.setState({
@@ -123,8 +91,9 @@ class Graps extends Component {
         }
     };
 
+    //rebuild chart according to the user request of particular time scope. Invoked explicitely as a respond to user actions 
     rebuildGraph(graphType) {
-        const value = this.state.cathegoryDataArrGraphs;
+        const value = this.state.roughDataFromDB;
         switch(graphType) {
             case "0": 
                 this.setState({
@@ -157,78 +126,73 @@ class Graps extends Component {
             height: "0rem",
             hei: "0rem",
         });
-    }
+    };
 
-    buildDataBudgetGraph(initInfo) {
+    constructorFinalData(data) {
         let finalArr = [];
-        let map = {};
-        let tempArr = [];
-        initInfo.map((elem) => {
-            elem.map((elem) => {
-                let year = elem.time.split("-")[2];
-                let index = parseInt(elem.time.split("-")[0]);
-                let budget = parseInt(elem.budget);
-                if (map[year] == undefined) {
-                    tempArr = tempArr.concat(year);
-                    var arrData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-                    map[year] = arrData;
-                    map[year][index] += budget;
-                } else {
-                    map[year][index] += budget;
-                };
-            });
-        });
-        finalArr.push(map);
-        finalArr.push(tempArr); 
+        for(let elem in data) {
+            finalArr.push({"x": elem, "y": data[elem]});
+        };
+        console.log(finalArr);
         return finalArr;
     };
 
-    buildDataFreqDurGraph(initInfo) {
-        let finalArr = [];
-        let map = {};
-        let tempArr = [];
-        initInfo.map((elem) => {
-            elem.map((elem) => {
-                let year = elem.time.split("-")[2];
-                let index = parseInt(elem.time.split("-")[0]);
-                let budget = parseInt(elem.budget);
-                if(map[year] == undefined) {
-                    tempArr = tempArr.concat(year);
-                    var arrData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-                    map[year] = arrData;
-                    map[year][index] += 1;
+    //implicitely building charts with a scope of last 12 months as soon as a page is downloaded.
+    async buildDataBudgetGraph(initInfo) {
+        console.log(initInfo);
+        let container = {};
+        try {
+            const helperIterator = await initInfo.map((elem) => {
+                let month = this.state.months[parseInt(elem.time.split("-")[1])];
+                if (!container.hasOwnProperty(month)) {
+                    container[month] = parseInt(elem.budget);
                 } else {
-                    map[year][index] += 1;
+                    container[month] += parseInt(elem.budget);
                 };
             });
-        });
-        finalArr.push(map);
-        finalArr.push(tempArr); 
-        return finalArr;
+            const constructorFinalData = await this.constructorFinalData(container);
+            const newState = await this.setState({data: constructorFinalData});
+        } catch(err) {
+            console.log(err);
+        };
     };
 
-    buildDataDestGraph(initInfo) {
-        let finalArr = [];
-        let map = {};
-        let tempArr = [];
-        initInfo.map((elem) => {
-            elem.map((elem) => {
-                let year = elem.time.split("-")[2];
+    async buildDataFreqDurGraph(initInfo) {
+        console.log(initInfo);
+        let container = {};
+        try {
+            const helperIterator = await initInfo.map((elem) => {
+                let month = this.state.months[parseInt(elem.time.split("-")[1])];
+                if (!container.hasOwnProperty(month)) {
+                    container[month] = 1;
+                } else {
+                    container[month] += 1;
+                };
+            });
+            const constructorFinalData = await this.constructorFinalData(container);
+            const newState = await this.setState({data: constructorFinalData});
+        } catch(err) {
+            console.log(err);
+        };
+    };
+
+    async buildDataDestGraph(initInfo) {
+        console.log(initInfo);
+        let container = {};
+        try {
+            const helperIterator = await initInfo.map((elem) => {
                 let city = elem.city;
-                if(map[year] == undefined) {
-                    tempArr = tempArr.concat(year);
-                    map[year] = {};
-                    map[year][city] = 1;
-                } else if (map[year][city] === undefined) {
-                        map[year][city] = 1;
+                if (!container.hasOwnProperty(city)) {
+                    container[city] = 1;
                 } else {
-                        map[year][city] += 1;
-                    }
-                });
+                    container[city] += 1;
+                };
             });
-        finalArr.push(map);
-        finalArr.push(tempArr);
-        return finalArr;
+            const constructorFinalData = await this.constructorFinalData(container);
+            const newState = await this.setState({data: constructorFinalData});
+        } catch(err) {
+            console.log(err);
+        };
     };
 
     render() {

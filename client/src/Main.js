@@ -13,7 +13,7 @@ class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataFromDb: data,
+      dataFromDb: [],
       dataFromDbGraphs: []
     };
 
@@ -24,41 +24,62 @@ class Main extends Component {
     this.addNewItem = this.addNewItem.bind(this);
     this.tempObjAssing = this.tempObjAssing.bind(this);
     this.handleCalendarEvent = this.handleCalendarEvent.bind(this);
+    this.makeUpDataFromDb = this.makeUpDataFromDb.bind(this);
   }
 
 componentWillMount() {
-  axios({
-    method: 'GET',
-    url: '/trips',
+  const twelveMonth = new Date(Date.now() - (1000 * 60 * 60 * 24 * 30 * 12));
+  let dataParams = {
+    method: "POST",
+    url: "/initial_graphs",
+    data: twelveMonth
+  };
+
+  console.log(dataParams);
+
+  Promise.all([axios("/trips"), axios(dataParams)])
+  .then((res) => {
+    let dashBoardData = res[0].data;
+    let graphsData = res[1].data;
+    const dataReadyToFeedDashBoard = this.makeUpDataFromDb(dashBoardData);
+    const dataReadyToFeedGrpahs = this.makeUpDataFromDb(graphsData);
+    return {dataReadyToFeedDashBoard, dataReadyToFeedGrpahs};
   })
   .then((res) => {
-    if (res.data.length > 0) {
-      var initialArrData = [];
-      console.log(res);
-      res.data.map((elem) => {
-        let newTime = elem.time.slice(0, 10).split("-").reverse().join("-");
-        let tempObj = {
-            id: elem.id,  
-            traveler: elem.traveler.employeeName,
-            city: elem.city.cityName,
-            budget: elem.budget.toString(),
-            goal: elem.goal,  
-            time: newTime,
-            status: elem.status
-          };
-          initialArrData.push(tempObj);
-        });
-      this.setState({
-        dataFromDb: this.state.dataFromDb.concat(initialArrData)
+    console.log(res);  
+    this.setState({
+        dataFromDb: this.state.dataFromDb.concat(res.dataReadyToFeedDashBoard),
+        dataFromDbGraphs: this.state.dataFromDbGraphs.concat(res.dataReadyToFeedGrpahs)
       });
-    }
   })
   .catch((err) => {
     console.log(err);
   });
 };
 
+makeUpDataFromDb(data) {
+  if (data.length > 0) {
+    var initialArrData = [];
+    console.log(data);
+    data.map((elem) => {
+      let newTime = elem.time.slice(0, 10).split("-").reverse().join("-");
+      let tempObj = {
+          id: elem.id,
+          traveler: elem.traveler.employeeName,
+          city: elem.city.cityName,
+          budget: elem.budget.toString(),
+          goal: elem.goal,
+          time: newTime,
+          status: elem.status
+        };
+        initialArrData.push(tempObj);
+      });
+  };
+  return initialArrData;
+};
+
 async modifyData(elem) {
+  console.log(elem);
   try {
     if (typeof elem === "string") {
       const newList = await this.deleteItemFromList(elem);
@@ -153,7 +174,9 @@ handleCalendarEvent(dateRange) {
       data: dateRange
   })
   .then((res) => {
-      console.log(res);
+      this.setState({
+        dataFromDbGraphs: this.makeUpDataFromDb(res.data)
+      })
   })
   .catch((err) => {
       console.log(err);
@@ -163,8 +186,8 @@ handleCalendarEvent(dateRange) {
 
 //adjusting a data revieved from a server to an appropriate format
 tempObjAssing(res) {
+  console.log(res);
   var dateInString = res.data.time.slice(0,10).split("-").reverse().join("-");
-  console.log(dateInString);
   var newObj = {
     id: res.data.id,
     traveler: res.data.traveler.employeeName,
@@ -187,7 +210,6 @@ tempObjAssing(res) {
             <div className="col col-sm-12">
               <Graphs 
                 dataFromDbGraphs={this.state.dataFromDbGraphs}
-                dataFromDb={this.state.dataFromDb}
                 handleCalendarEvent={this.handleCalendarEvent}
               />
             </div>

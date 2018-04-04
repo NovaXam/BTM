@@ -40,3 +40,7 @@
 .react-calendar__navigation button:hover {
     background: blue;
 };
+
+.barChart_div_svg_g_g_.bar:hover {
+    fill: greenyellow;
+}

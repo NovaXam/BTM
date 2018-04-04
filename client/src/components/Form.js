@@ -50,11 +50,12 @@ class Form extends Component {
         e.stopPropagation();
         e.preventDefault();
         this.props.setForm();
+        let timeFormat = new Date(this.state.time.slice(6), (parseInt(this.state.time.slice(3,5))-1).toString(), this.state.time.slice(0, 2));
         const objForDb = {
             traveler: (this.state.firstName + " " + this.state.secondName).toLowerCase(),
             city: this.state.city.toLowerCase(),
             budget: parseFloat(this.state.budget),
-            time: new Date(this.state.time),
+            time: new Date(this.state.time.slice(6), (parseInt(this.state.time.slice(3,5))-1).toString(), this.state.time.slice(0, 2)),
             goal: this.state.goal
         }
         switch(e.target[6].value) {
@@ -131,7 +132,7 @@ class Form extends Component {
                             <input 
                                 type="text" 
                                 className="form-control" 
-                                placeholder="MM-DD-YYYY" 
+                                placeholder="DD-MM-YYYY" 
                                 name="time"
                                 value={this.state.time}
                                 onChange={this.handleFilling}

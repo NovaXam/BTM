@@ -76,7 +76,9 @@ class Entry extends Component {
         var dataToDb = {};
         for(let i = 0; i < 7; i++) {
             if (e.target[i].name == "time") {
-                dataToDb["time"] = new Date(e.target[i].value);
+                console.log(e.target[i].value);
+                console.log(e.target[i].value.slice(6), e.target[i].value.slice(3,5), e.target[i].value.slice(0, 2));
+                dataToDb["time"] = new Date(e.target[i].value.slice(6), (parseInt(e.target[i].value.slice(3,5))-1).toString(), e.target[i].value.slice(0, 2));
             } else {
                 dataToDb[`${e.target[i].name}`] = e.target[i].value;
             }
