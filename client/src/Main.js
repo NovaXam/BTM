@@ -235,7 +235,7 @@ tempObjAssing(res) {
                   </div>
                 </div>
                 <div id="bottom" className="row no-gutters">
-                  <hr id="line" />
+                  <hr id="line" style={{margin: "0.7rem auto 0rem"}} />
                 </div>
               </div>
             <div className="col col-sm-3"> 
