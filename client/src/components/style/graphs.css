@@ -1,5 +1,4 @@
 .closedGrpahArea {
-    /* display: none; */
     height: 100%;
     transition: height 2s;
     overflow-y: hidden;
@@ -8,7 +7,6 @@
 }
 
 .openGrpahArea {
-    /* display: inline-block; */
     height: 100%;
     transition: height 2s;
     overflow-y: hidden;

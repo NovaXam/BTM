@@ -2,26 +2,3 @@
     text-align: left;
     margin-left: 0.5rem;
 }
-
-.verticalBar {
-    display: inline-block;
-    height: 99.5%;
-    width: 100%; 
-    border-top-right-radius: 0.5rem;
-    border-bottom-right-radius: 0.5rem;
-    border-top: 0.1rem solid lightgray;
-    border-right: 0.1rem solid lightgray;
-    border-bottom: 0.1rem solid lightgray;
-    z-index: 1;
-    padding: 150% 0%;
-    cursor: pointer;
-}
-
-.verticalBar h6 {
-    transform: rotate(90deg);
-    font-size: 15px;
-};
-
-.verticalBar h6 #traveler {
-    margin-top: 3.5rem 0rem; 
-}
