@@ -1,6 +1,5 @@
 package com.example.server.controllers;
 
-
 import com.example.server.models.Traveler;
 import com.example.server.repositories.TravelerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
+@RestController
 public class TravelerController {
 
     @Autowired
@@ -38,15 +38,14 @@ public class TravelerController {
     @PatchMapping("/traveler/{travelerId}")
     public Traveler updateTraveler(@PathVariable Long travelerId, @RequestBody Traveler newData) {
         Traveler oldData = travelerRepository.findById(travelerId).get();
+        System.out.println("i am inside of traveler controller");
+        System.out.println(newData);
 
         if (newData.getEmployeeName() != null) {
             oldData.setEmployeeName(newData.getEmployeeName());
         };
         if (newData.getPosition() != null) {
             oldData.setPosition(newData.getPosition());
-        };
-        if (newData.getDepartment() != null) {
-            oldData.setDepartment(newData.getDepartment());
         };
         if (newData.getPhone() != null) {
             oldData.setPhone(newData.getPhone());

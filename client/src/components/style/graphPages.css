@@ -35,8 +35,8 @@
 .react-calendar__navigation button {
     min-width: 0rem;
     width: auto;
-};
+}
 
 .react-calendar__navigation button:hover {
     background: blue;
-};
+}

@@ -1,0 +1,29 @@
+.field {
+    text-align: right;
+}
+
+.field p {
+    margin-bottom: 0rem;
+    font-size: 14px;
+}
+
+.field h5 {
+    padding-right: 10px;
+    margin-top: 0.25rem;
+}
+
+.editableField {
+    margin: 0rem 1rem;
+    text-align: right;
+}
+
+.editableField p {
+    margin-bottom: 0rem;
+    font-size: 14px;
+}
+
+.editableLine {
+    padding-right: 10px;
+    width: 11rem;
+    margin-left: 0.5rem;
+}

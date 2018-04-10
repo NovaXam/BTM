@@ -13,8 +13,11 @@ class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataFromDb: data,
-      dataFromDbGraphs: []
+      dataFromDbRough: [],
+      dataFromDb: [],
+      dataFromDbGraphs: [],
+      profileTraveler: {},
+      asideTrigger: false
     };
 
     this.modifyData = this.modifyData.bind(this); 
@@ -24,41 +27,66 @@ class Main extends Component {
     this.addNewItem = this.addNewItem.bind(this);
     this.tempObjAssing = this.tempObjAssing.bind(this);
     this.handleCalendarEvent = this.handleCalendarEvent.bind(this);
+    this.makeUpDataFromDb = this.makeUpDataFromDb.bind(this);
+    this.handleClickForAsideBar = this.handleClickForAsideBar.bind(this);
+    this.employeeProfileCalculator = this.employeeProfileCalculator.bind(this);
+    this.erazeProfileFields = this.erazeProfileFields.bind(this);
+    this.asideTriggerFromEntry = this.asideTriggerFromEntry.bind(this);
   }
 
 componentWillMount() {
-  axios({
-    method: 'GET',
-    url: '/trips',
+  const twelveMonth = new Date(Date.now() - (1000 * 60 * 60 * 24 * 30 * 12));
+  let dataParams = {
+    method: "POST",
+    url: "/initial_graphs",
+    data: twelveMonth
+  };
+
+  Promise.all([axios("/trips"), axios(dataParams)])
+  .then((res) => {
+    let dashBoardData = res[0].data;
+    let graphsData = res[1].data;
+    this.setState({
+      dataFromDbRough: [...dashBoardData]
+    });
+    const dataReadyToFeedDashBoard = this.makeUpDataFromDb(dashBoardData);
+    const dataReadyToFeedGrpahs = this.makeUpDataFromDb(graphsData);
+    return {dataReadyToFeedDashBoard, dataReadyToFeedGrpahs};
   })
   .then((res) => {
-    if (res.data.length > 0) {
-      var initialArrData = [];
-      console.log(res);
-      res.data.map((elem) => {
-        let newTime = elem.time.slice(0, 10).split("-").reverse().join("-");
-        let tempObj = {
-            id: elem.id,  
-            traveler: elem.traveler.employeeName,
-            city: elem.city.cityName,
-            budget: elem.budget.toString(),
-            goal: elem.goal,  
-            time: newTime,
-            status: elem.status
-          };
-          initialArrData.push(tempObj);
-        });
-      this.setState({
-        dataFromDb: this.state.dataFromDb.concat(initialArrData)
+    this.setState({
+        dataFromDb: this.state.dataFromDb.concat(res.dataReadyToFeedDashBoard),
+        dataFromDbGraphs: this.state.dataFromDbGraphs.concat(res.dataReadyToFeedGrpahs)
       });
-    }
   })
   .catch((err) => {
     console.log(err);
   });
 };
 
+makeUpDataFromDb(data) {
+  if (data.length > 0) {
+    var initialArrData = [];
+    console.log(data);
+    data.map((elem) => {
+      let newTime = elem.time.slice(0, 10).split("-").reverse().join("-");
+      let tempObj = {
+          id: elem.id,
+          traveler: elem.traveler.employeeName,
+          city: elem.city.cityName,
+          budget: elem.budget.toString(),
+          goal: elem.goal,
+          time: newTime,
+          status: elem.status
+        };
+        initialArrData.push(tempObj);
+      });
+  };
+  return initialArrData;
+};
+
 async modifyData(elem) {
+  console.log(elem);
   try {
     if (typeof elem === "string") {
       const newList = await this.deleteItemFromList(elem);
@@ -69,6 +97,70 @@ async modifyData(elem) {
  } catch(err) {
     console.log(err);
   };
+};
+
+handleClickForAsideBar = async (data) => {
+  try {
+    const obj =  await this.state.dataFromDbRough.filter(elem => elem.id == data)[0];
+    const employeeTripsObj = await this.state.dataFromDbRough.filter(elem => elem.traveler.employeeName == obj.traveler.employeeName);
+    this.setState({
+      employeeProfileForDb: {...employeeTripsObj[0].traveler}
+    })
+    const createProfile = await this.employeeProfileCalculator(employeeTripsObj);
+    const changeState = await this.setState({profileTraveler: {...createProfile}});
+  } catch(err) {
+    console.log(err);
+  }
+};
+
+employeeProfileCalculator(data) {
+  var profile = { 
+    name: "",
+    position: "",
+    phone: "",
+    email: "",
+    budget: 0,
+    travels: 0,
+    cities: []
+  };
+  data.map((elem, i) => {
+    if (i == 0) {
+      profile.name = elem.traveler.employeeName;
+      profile.position = elem.traveler.position;
+      profile.phone = elem.traveler.email;
+      profile.budget = elem.budget;
+      profile.travels = data.length;
+      profile.cities.push(elem.city.cityName);
+    } else {
+      profile.budget += elem.budget;
+      profile.cities.push(elem.city.cityName);
+    }
+  });
+
+  profile.cities = profile.cities.join(", ");
+  profile.budget = profile.budget + " " + "USD"; 
+  return profile;
+};
+
+erazeProfileFields() {
+  console.log("eraze data");
+  this.setState({
+    profileTraveler: {
+      name: "",
+      position: "",
+      phone: "",
+      email: "",
+      budget: null,
+      travels: null,
+      cities: []
+    }
+  })
+};
+
+asideTriggerFromEntry() {
+  this.setState({
+    asideTrigger: true
+  });
 };
 
 updateState(modifiedState) {
@@ -153,7 +245,9 @@ handleCalendarEvent(dateRange) {
       data: dateRange
   })
   .then((res) => {
-      console.log(res);
+      this.setState({
+        dataFromDbGraphs: this.makeUpDataFromDb(res.data)
+      })
   })
   .catch((err) => {
       console.log(err);
@@ -161,10 +255,10 @@ handleCalendarEvent(dateRange) {
 };
 
 
-//adjusting a data revieved from a server to an appropriate format
+//adjusting a data revieved from a server to an appropriate format for a dashboard
 tempObjAssing(res) {
+  console.log(res);
   var dateInString = res.data.time.slice(0,10).split("-").reverse().join("-");
-  console.log(dateInString);
   var newObj = {
     id: res.data.id,
     traveler: res.data.traveler.employeeName,
@@ -187,7 +281,6 @@ tempObjAssing(res) {
             <div className="col col-sm-12">
               <Graphs 
                 dataFromDbGraphs={this.state.dataFromDbGraphs}
-                dataFromDb={this.state.dataFromDb}
                 handleCalendarEvent={this.handleCalendarEvent}
               />
             </div>
@@ -209,15 +302,22 @@ tempObjAssing(res) {
                     <TripTracker 
                       dataFromDb ={this.state.dataFromDb}
                       modifyData={this.modifyData}
+                      handleClickForAsideBar={this.handleClickForAsideBar}
+                      asideTrigger={this.asideTriggerFromEntry}
                     />
                   </div>
                 </div>
                 <div id="bottom" className="row no-gutters">
-                  <hr id="line" />
+                  <hr id="line" style={{margin: "0.7rem auto 0rem"}} />
                 </div>
               </div>
             <div className="col col-sm-3"> 
-              <AsideBar />
+              <AsideBar 
+                profileTraveler={this.state.profileTraveler}
+                erazeProfileFields={this.erazeProfileFields}
+                trigger={this.state.asideTrigger}
+                employeeProfileForDb={this.state.employeeProfileForDb}
+              />
             </div> 
             </div>
           </div>

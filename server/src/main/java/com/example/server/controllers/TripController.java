@@ -6,12 +6,8 @@ import com.example.server.models.Trip;
 import com.example.server.repositories.TravelerRepository;
 import com.example.server.repositories.TripRepository;
 
-import org.hibernate.Filter;
-import org.hibernate.Session;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import com.example.server.repositories.PlaceRepository;
 
@@ -31,8 +27,14 @@ public class TripController {
     public List<Trip> findByRequest(@RequestBody Date [] time) {
         Date first = time[0];
         Date second = time[1];
-        System.out.println("I am in graphs" + time[0] + " " + time[1]);
+        System.out.println("I am in graphsRequest" + time[0] + " " + time[1]);
         return tripRepository.findByStatusAndTime(0, first, second);
+    };
+
+    @PostMapping("/initial_graphs")
+    public List<Trip> findByRequestGraphs(@RequestBody Date time) {
+        System.out.println("I am in initialGraphsRequest" + time);
+        return tripRepository.findByStatusAndTimeGraphs(0, time);
     };
 
     @GetMapping("/trips")
@@ -52,7 +54,6 @@ public class TripController {
         String cityName = newTrip.getCity().getCityName();
         System.out.println(cityName);
         System.out.println(newTrip);
-        System.out.println(placeRepository.findByCityName(cityName));
 
         if (placeRepository.findByCityName(cityName) == null) {
             placeRepository.save(newTrip.getCity());
@@ -112,8 +113,8 @@ public class TripController {
         oldData.setBudget(newData.getBudget());
         oldData.setGoal(newData.getGoal());
         oldData.setTime(newData.getTime());
-        System.out.println(newData.getTime());
-        System.out.println("this is over");
+        oldData.setStatus(newData.getStatus());
+        System.out.println("entity updated");
         tripRepository.save(oldData);
         return oldData;
     };

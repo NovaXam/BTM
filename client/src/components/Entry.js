@@ -34,6 +34,9 @@ class Entry extends Component {
     handleRollerAndContent(e) {
         e.preventDefault();
         e.stopPropagation();
+        this.props.handleClickForAsideBar(e.target.id);
+        this.props.asideTrigger();
+        
         if (this.state.entrySlideClass == "entryClosed") {
         this.setState({
             statusView: "entryOpenedToExtendView",
@@ -74,9 +77,19 @@ class Entry extends Component {
         e.preventDefault();
         e.stopPropagation();
         var dataToDb = {};
+        console.log(e.target[6].value);
         for(let i = 0; i < 7; i++) {
             if (e.target[i].name == "time") {
-                dataToDb["time"] = new Date(e.target[i].value);
+                dataToDb["time"] = new Date(e.target[i].value.slice(6), (parseInt(e.target[i].value.slice(3,5))-1).toString(), e.target[i].value.slice(0, 2));
+            } else if (e.target[i].name == "status") {
+                switch(e.target[6].value) {
+                    case "completed": dataToDb["status"] = 0;
+                    break; 
+                    case "ongoing": dataToDb["status"] = 1;
+                    break; 
+                    case "upcoming": dataToDb["status"] = 2;
+                    break; 
+                };
             } else {
                 dataToDb[`${e.target[i].name}`] = e.target[i].value;
             }
