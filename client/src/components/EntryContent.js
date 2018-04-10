@@ -96,7 +96,7 @@ const EntryContent = (props) => {
         );
     } else {
         return (
-            <div style={{padding: "0.5rem 0rem"}} onClick={props.handleRollerAndContent}>
+            <div id={props.id} style={{padding: "0.5rem 0rem"}} onClick={props.handleRollerAndContent}>
                 {props.localData.traveler}
                 <hr />
                 {props.localData.city}

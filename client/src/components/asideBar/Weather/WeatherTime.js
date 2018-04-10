@@ -9,7 +9,7 @@ const WeatherTime = (props) => {
     console.log(props.data);    
     return (
             <div className="col col-sm-auto WTcontainer"
-                style={{width: `${props.widthBar}`, 
+                style={{width: `${props.widthBar}`,
                 borderTop: "0.1rem solid lightgray", 
                 borderLeft: "0.1rem solid lightgray", 
                 borderBottom: "0.1rem solid lightgray", 

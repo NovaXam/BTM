@@ -62,7 +62,6 @@ selector(arr, instance) {
   }
   
 render() {
-    console.log(this.state.cathegoryDataArr);
     return (  
         <div className="tripTracker">    
             <div className="row no-gutters align-items-start justify-content-start">
@@ -89,6 +88,8 @@ render() {
                                 handleUpdateForm={this.handleUpdateForm}
                                 handleButtonForm={this.handleButtonForm}
                                 modifyData={this.props.modifyData}
+                                handleClickForAsideBar={this.props.handleClickForAsideBar}
+                                asideTrigger={this.props.asideTrigger}
                             />
                         )
                     })

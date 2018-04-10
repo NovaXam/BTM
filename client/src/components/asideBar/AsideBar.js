@@ -42,7 +42,46 @@ class AsideBar extends Component {
         this.handleBarClick = this.handleBarClick.bind(this);
         this.switchForBar = this.switchForBar.bind(this);
         this.handleSubTraveler = this.handleSubTraveler.bind(this);
+        this.switcher = this.switcher.bind(this);
     };
+
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps);
+        (nextProps.trigger && this.state.widthBar !== "83%")
+            ?
+                this.switcher()
+            :
+                false;
+    };
+
+    switcher() {
+        let obj = {
+            barBorder: "0rem",
+            backColor: "rgba(248, 249, 250)",
+            status: true
+        };
+        let obj1 = {
+            barBorder: "0.1rem solid lightgray",
+            backColor: "",
+            status: false
+        };
+        let arr = [];
+        this.state.barAttributes.map((elem, i) => {
+            i == 1 ? arr.push(obj) : arr.push(obj1);
+        });
+        setTimeout(() => {
+            this.setState({
+                widthBar: "83%",
+                barStatus: this.state.barName[1],
+                barAttributes: [...arr]
+            })
+        }, 100)
+        this.setState({
+            widthBar: "0%",
+            barStatus: this.state.barName[1],
+            barAttributes: [...arr],
+        });
+    }
 
     //method to catch an input value onSubmit on an API weather form field. 
     handleWTInput(event) {
@@ -92,12 +131,11 @@ class AsideBar extends Component {
         });
       };
 
-
       handleSubTraveler(e) {
         e.preventDefault();
         e.stopPropagation();
         //make a calculation of traveler data on base of choosen critheria
-        console.log(e);
+        
       };
 
     //catching a click event from bar menu and redirect it to the appropriate switch function 
@@ -133,10 +171,14 @@ class AsideBar extends Component {
         this.state.barAttributes.map((elem, i) => {
             i == index ? arr.push(obj) : arr.push(obj1);
         });
-        console.log(arr);
         if (this.state.widthBar == "0%") {
+            setTimeout(() => {
+                this.setState({
+                    widthBar: "83%",
+                });
+            }, 100);
             this.setState({
-                widthBar: "83%",
+                widthBar: "0%",
                 barStatus: name,
                 barAttributes: [...arr],
             });
@@ -156,12 +198,13 @@ class AsideBar extends Component {
                 },
                 barAttributes: [...[obj1, obj1, obj1]],
             });
+            this.props.erazeProfileFields();
         }
     };
 
     render() {
-        switch("0") {
-            case("0"):
+        switch(this.state.barStatus) {
+            case("Weather"):
                 return (
                     <div className="row no-gutters smainContainerAside">
                         <WeatherTime
@@ -180,12 +223,13 @@ class AsideBar extends Component {
                     </div>
                 );
             break;
-            case("1"):
+            case("Traveler"):
                 return (
                     <div className="row no-gutters smainContainerAside">
                         <TravelerProfile
                              widthBar={this.state.widthBar}
                              handleSubTraveler={this.handleSubTraveler}
+                             profileTraveler={this.props.profileTraveler}
                         />
                         <BarMenu 
                             handleBarClick={this.handleBarClick}
@@ -196,8 +240,25 @@ class AsideBar extends Component {
                 )
             default: 
                 return (
-                    <div>
+                    <div className="row no-gutters smainContainerAside">
+                         <div className="col col-sm-auto WTcontainer"
+                            style={{
+                                width: this.state.widthBar,
+                                borderTop: "0.1rem solid lightgray", 
+                                borderLeft: "0.1rem solid lightgray", 
+                                borderBottom: "0.1rem solid lightgray", 
+                                transition: "width 2s",
+                                overflow: "hidden", 
+                                background: "linear-gradient(rgba(248, 249, 250, 0.9), rgba(255, 255, 255, 0))"}}
+                         >
+                         </div>
+                        <BarMenu 
+                            handleBarClick={this.handleBarClick}
+                            barName={this.state.barName}
+                            barAttributes={this.state.barAttributes}
+                        />
                     </div>
+                    
                 )
             }
         }

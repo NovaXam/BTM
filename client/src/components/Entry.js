@@ -34,6 +34,9 @@ class Entry extends Component {
     handleRollerAndContent(e) {
         e.preventDefault();
         e.stopPropagation();
+        this.props.handleClickForAsideBar(e.target.id);
+        this.props.asideTrigger();
+        
         if (this.state.entrySlideClass == "entryClosed") {
         this.setState({
             statusView: "entryOpenedToExtendView",

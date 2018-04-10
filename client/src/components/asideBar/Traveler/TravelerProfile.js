@@ -1,6 +1,11 @@
 import React from 'react';
+import Field from './Field';
 
 const TravelerProfile = (props) => {
+    console.log(props.profileTraveler);
+    let vals = Object.values(props.profileTraveler);
+    let keys = Object.keys(props.profileTraveler);
+    
     return (
         <div className="col col-sm-auto WTcontainer"
                 style={{width: `${props.widthBar}`, 
@@ -27,30 +32,17 @@ const TravelerProfile = (props) => {
                         </form>
                     </div>
                 </div>
-                <div className="row no-gutters" style={{margin: "0rem 0rem 0rem"}}>
-                    <div className="col col-sm-12 temperature"><h6 style={{margin: "0rem"}}><em>new param</em></h6></div>
-                </div>
-                <div className="row no-gutters" style={{height: "4.75rem"}}>
-                    {/* insert component */}
-                </div>
-                <div className="row no-gutters" style={{margin: "0rem 0rem 0rem"}}>
-                    <div className="col col-sm-12 temperature"><h6 style={{margin: "0rem"}}><em>new param</em></h6></div>
-                </div>
-                <div className="row no-gutters" style={{height: "4.75rem"}}>
-                    {/* insert component */}
-                </div>
-                <div className="row no-gutters" style={{margin: "0rem 0rem 0rem"}}>
-                    <div className="col col-sm-12 temperature"><h6 style={{margin: "0rem"}}><em>new param</em></h6></div>
-                </div>
-                <div className="row no-gutters" style={{height: "4.75rem"}}>
-                    {/* insert component */}
-                </div>
-                <div className="row no-gutters" style={{margin: "0rem 0rem 0rem", height: "4.75rem"}}>
-                    <div className="col col-sm-12 temperature"><h6 style={{margin: "0rem"}}><em>new param</em></h6></div>
-                </div>
-                <div className="row no-gutters">
-                    {/* insert component */}
-                </div>
+                {
+                    keys.map((elem, i) => {
+                        return (
+                            < Field
+                                fieldName={elem}
+                                data={vals[i]}
+                                key={i * Math.random()}
+                            />
+                        )
+                    })
+                }
         </div>
     )
 };

@@ -13,8 +13,11 @@ class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      dataFromDbRough: [],
       dataFromDb: [],
-      dataFromDbGraphs: []
+      dataFromDbGraphs: [],
+      profileTraveler: {},
+      asideTrigger: false
     };
 
     this.modifyData = this.modifyData.bind(this); 
@@ -25,6 +28,10 @@ class Main extends Component {
     this.tempObjAssing = this.tempObjAssing.bind(this);
     this.handleCalendarEvent = this.handleCalendarEvent.bind(this);
     this.makeUpDataFromDb = this.makeUpDataFromDb.bind(this);
+    this.handleClickForAsideBar = this.handleClickForAsideBar.bind(this);
+    this.employeeProfileCalculator = this.employeeProfileCalculator.bind(this);
+    this.erazeProfileFields = this.erazeProfileFields.bind(this);
+    this.asideTriggerFromEntry = this.asideTriggerFromEntry.bind(this);
   }
 
 componentWillMount() {
@@ -35,18 +42,18 @@ componentWillMount() {
     data: twelveMonth
   };
 
-  console.log(dataParams);
-
   Promise.all([axios("/trips"), axios(dataParams)])
   .then((res) => {
     let dashBoardData = res[0].data;
     let graphsData = res[1].data;
+    this.setState({
+      dataFromDbRough: [...dashBoardData]
+    });
     const dataReadyToFeedDashBoard = this.makeUpDataFromDb(dashBoardData);
     const dataReadyToFeedGrpahs = this.makeUpDataFromDb(graphsData);
     return {dataReadyToFeedDashBoard, dataReadyToFeedGrpahs};
   })
   .then((res) => {
-    console.log(res);  
     this.setState({
         dataFromDb: this.state.dataFromDb.concat(res.dataReadyToFeedDashBoard),
         dataFromDbGraphs: this.state.dataFromDbGraphs.concat(res.dataReadyToFeedGrpahs)
@@ -90,6 +97,67 @@ async modifyData(elem) {
  } catch(err) {
     console.log(err);
   };
+};
+
+handleClickForAsideBar = async (data) => {
+  try {
+    const obj =  await this.state.dataFromDbRough.filter(elem => elem.id == data)[0];
+    const employeeTipsObj = await this.state.dataFromDbRough.filter(elem => elem.traveler.employeeName == obj.traveler.employeeName);
+    const createProfile = await this.employeeProfileCalculator(employeeTipsObj);
+    const changeState = await this.setState({profileTraveler: {...createProfile}});
+  } catch(err) {
+    console.log(err);
+  }
+};
+
+employeeProfileCalculator(data) {
+  var profile = { 
+    name: "",
+    position: "",
+    phone: "",
+    email: "",
+    budget: 0,
+    travels: 0,
+    cities: []
+  };
+  data.map((elem, i) => {
+    if (i == 0) {
+      profile.name = elem.traveler.employeeName;
+      profile.position = elem.traveler.position;
+      profile.phone = elem.traveler.email;
+      profile.budget = elem.budget;
+      profile.travels = data.length;
+      profile.cities.push(elem.city.cityName);
+    } else {
+      profile.budget += elem.budget;
+      profile.cities.push(elem.city.cityName);
+    }
+  });
+
+  profile.cities = profile.cities.join(", ");
+  profile.budget = profile.budget + " " + "USD"; 
+  return profile;
+};
+
+erazeProfileFields() {
+  console.log("eraze data");
+  this.setState({
+    profileTraveler: {
+      name: "",
+      position: "",
+      phone: "",
+      email: "",
+      budget: null,
+      travels: null,
+      cities: []
+    }
+  })
+};
+
+asideTriggerFromEntry() {
+  this.setState({
+    asideTrigger: true
+  });
 };
 
 updateState(modifiedState) {
@@ -231,6 +299,8 @@ tempObjAssing(res) {
                     <TripTracker 
                       dataFromDb ={this.state.dataFromDb}
                       modifyData={this.modifyData}
+                      handleClickForAsideBar={this.handleClickForAsideBar}
+                      asideTrigger={this.asideTriggerFromEntry}
                     />
                   </div>
                 </div>
@@ -239,7 +309,11 @@ tempObjAssing(res) {
                 </div>
               </div>
             <div className="col col-sm-3"> 
-              <AsideBar />
+              <AsideBar 
+                profileTraveler={this.state.profileTraveler}
+                erazeProfileFields={this.erazeProfileFields}
+                trigger={this.state.asideTrigger}
+              />
             </div> 
             </div>
           </div>

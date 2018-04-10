@@ -2,3 +2,8 @@
     text-align: left;
     margin-left: 0.5rem;
 }
+
+.WTcontainer {
+    width: auto;
+    transition: width 2s;
+}
