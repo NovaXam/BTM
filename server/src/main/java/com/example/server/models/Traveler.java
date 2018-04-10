@@ -22,9 +22,6 @@ public class Traveler {
     @Column(name="POSITION")
     private String position;
 
-    @Column(name="DEPARTMENT")
-    private String department;
-
     @Column(name="PHONE")
     private String phone;
 
@@ -43,7 +40,6 @@ public class Traveler {
     public Traveler(String name, String position, String department, String phone, String email) {
         this.employeeName = name;
         this.position = position;
-        this.department = department;
         this.phone = phone;
         this.email = email;
     };

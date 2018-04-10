@@ -6,12 +6,8 @@ import com.example.server.models.Trip;
 import com.example.server.repositories.TravelerRepository;
 import com.example.server.repositories.TripRepository;
 
-import org.hibernate.Filter;
-import org.hibernate.Session;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import com.example.server.repositories.PlaceRepository;
 

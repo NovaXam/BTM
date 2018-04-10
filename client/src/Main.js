@@ -102,8 +102,11 @@ async modifyData(elem) {
 handleClickForAsideBar = async (data) => {
   try {
     const obj =  await this.state.dataFromDbRough.filter(elem => elem.id == data)[0];
-    const employeeTipsObj = await this.state.dataFromDbRough.filter(elem => elem.traveler.employeeName == obj.traveler.employeeName);
-    const createProfile = await this.employeeProfileCalculator(employeeTipsObj);
+    const employeeTripsObj = await this.state.dataFromDbRough.filter(elem => elem.traveler.employeeName == obj.traveler.employeeName);
+    this.setState({
+      employeeProfileForDb: {...employeeTripsObj[0].traveler}
+    })
+    const createProfile = await this.employeeProfileCalculator(employeeTripsObj);
     const changeState = await this.setState({profileTraveler: {...createProfile}});
   } catch(err) {
     console.log(err);
@@ -313,6 +316,7 @@ tempObjAssing(res) {
                 profileTraveler={this.state.profileTraveler}
                 erazeProfileFields={this.erazeProfileFields}
                 trigger={this.state.asideTrigger}
+                employeeProfileForDb={this.state.employeeProfileForDb}
               />
             </div> 
             </div>
