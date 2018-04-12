@@ -1,9 +1,12 @@
 import React from 'react';
-import Field from './Field';
+import DinamicFields from './DinamicFields';
+import StaticFields from './StaticFields';
 
 const TravelerProfile = (props) => {
-    let vals = Object.values(props.profileTraveler);
-    let keys = Object.keys(props.profileTraveler);
+    let valsStatic = Object.values(props.profileTraveler).slice(4);
+    let keysStatic = Object.keys(props.profileTraveler).slice(4);
+    let valsDinamic = Object.values(props.profileTraveler).slice(0, 4);
+    let keysDinamic = Object.keys(props.profileTraveler).slice(0, 4);
     return (
         <div className="col col-sm-auto WTcontainer"
                 style={{width: `${props.widthBar}`,
@@ -33,16 +36,26 @@ const TravelerProfile = (props) => {
                 <div className="row no-gutters">
                     <div className="col col-sm-12">
                     {
-                        keys.map((elem, i) => {
+                        keysDinamic.map((elem, i) => {
                             return (
-                                < Field
+                                < DinamicFields
                                     fieldName={elem}
-                                    data={vals[i]}
+                                    data={valsDinamic[i]}
                                     key={i * Math.random()}
                                     id={++i * Math.random() / i }
-                                    updateTraveler={props.updateTraveler}
-
-                                    
+                                    updateTraveler={props.updateTraveler}                                    
+                                />
+                            )
+                        })
+                    }
+                    { 
+                        keysStatic.map((elem, i) => {
+                            return (
+                                < StaticFields 
+                                    fieldName={elem}
+                                    data={valsStatic[i]}
+                                    key={i * Math.random()}
+                                    id={++i * Math.random() / i }
                                 />
                             )
                         })

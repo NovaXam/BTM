@@ -43,7 +43,6 @@ class AsideBar extends Component {
         this.switchForBar = this.switchForBar.bind(this);
         this.handleSubTraveler = this.handleSubTraveler.bind(this);
         this.switcher = this.switcher.bind(this);
-        this.updateTraveler = this.updateTraveler.bind(this);
     };
 
     componentWillReceiveProps(nextProps) {
@@ -203,22 +202,6 @@ class AsideBar extends Component {
         }
     };
 
-    updateTraveler(key, value) {
-        let obj = {...this.props.employeeProfileForDb}
-        delete obj.handler;
-        delete obj.hibernateLazyInitializer;
-        key == "name" ? obj["employeeName"] = value : obj[key] = value;
-        axios({
-            method: "PATCH",
-            url: `/traveler/${obj.employee_id}`,
-            data: obj
-        })
-        .then((res) =>  {
-            console.log(res);
-        })
-        .catch(err => console.log(err));
-    };
-
     render() {
         switch(this.state.barStatus) {
             case("Weather"):
@@ -247,7 +230,7 @@ class AsideBar extends Component {
                              widthBar={this.state.widthBar}
                              handleSubTraveler={this.handleSubTraveler}
                              profileTraveler={this.props.profileTraveler}
-                             updateTraveler={this.updateTraveler}
+                             updateTraveler={this.props.updateTraveler}
                         />
                         <BarMenu 
                             handleBarClick={this.handleBarClick}

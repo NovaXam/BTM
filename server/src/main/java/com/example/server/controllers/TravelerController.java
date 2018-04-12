@@ -38,8 +38,6 @@ public class TravelerController {
     @PatchMapping("/traveler/{travelerId}")
     public Traveler updateTraveler(@PathVariable Long travelerId, @RequestBody Traveler newData) {
         Traveler oldData = travelerRepository.findById(travelerId).get();
-        System.out.println("i am inside of traveler controller");
-        System.out.println(newData);
 
         if (newData.getEmployeeName() != null) {
             oldData.setEmployeeName(newData.getEmployeeName());

@@ -17,7 +17,8 @@ class Main extends Component {
       dataFromDb: [],
       dataFromDbGraphs: [],
       profileTraveler: {},
-      asideTrigger: false
+      asideTrigger: false,
+      employeeProfileForDb: {}
     };
 
     this.modifyData = this.modifyData.bind(this); 
@@ -32,6 +33,7 @@ class Main extends Component {
     this.employeeProfileCalculator = this.employeeProfileCalculator.bind(this);
     this.erazeProfileFields = this.erazeProfileFields.bind(this);
     this.asideTriggerFromEntry = this.asideTriggerFromEntry.bind(this);
+    this.updateTraveler = this.updateTraveler.bind(this);
   }
 
 componentWillMount() {
@@ -55,8 +57,8 @@ componentWillMount() {
   })
   .then((res) => {
     this.setState({
-        dataFromDb: this.state.dataFromDb.concat(res.dataReadyToFeedDashBoard),
-        dataFromDbGraphs: this.state.dataFromDbGraphs.concat(res.dataReadyToFeedGrpahs)
+      dataFromDb: this.state.dataFromDb.concat(res.dataReadyToFeedDashBoard),
+      dataFromDbGraphs: this.state.dataFromDbGraphs.concat(res.dataReadyToFeedGrpahs)
       });
   })
   .catch((err) => {
@@ -67,7 +69,6 @@ componentWillMount() {
 makeUpDataFromDb(data) {
   if (data.length > 0) {
     var initialArrData = [];
-    console.log(data);
     data.map((elem) => {
       let newTime = elem.time.slice(0, 10).split("-").reverse().join("-");
       let tempObj = {
@@ -127,7 +128,8 @@ employeeProfileCalculator(data) {
     if (i == 0) {
       profile.name = elem.traveler.employeeName;
       profile.position = elem.traveler.position;
-      profile.phone = elem.traveler.email;
+      profile.phone = elem.traveler.phone;
+      profile.email = elem.traveler.email;
       profile.budget = elem.budget;
       profile.travels = data.length;
       profile.cities.push(elem.city.cityName);
@@ -153,7 +155,8 @@ erazeProfileFields() {
       budget: null,
       travels: null,
       cities: []
-    }
+    },
+    asideTrigger: false
   })
 };
 
@@ -178,13 +181,24 @@ updateValue(updatedEntry) {
     data: updatedEntry
   })
   .then((res) => {
-    var updateEntryDB = this.tempObjAssing(res);
-    var tempObj = this.state.dataFromDb;
-    tempObj = tempObj.map((elem, i) => {
-      return elem.id == updateEntryDB.id ? elem = updateEntryDB : elem;
+    let tempDataFromDbRough = this.state.dataFromDbRough.map((elem, i) => {
+      if (elem.id == res.data.id) {
+        return elem = res.data;
+      } else return elem;
     });
+    return tempDataFromDbRough;
+  })
+  .then((value) => {
+    // console.log(value);
     this.setState({
-      dataFromDb: tempObj
+      dataFromDbRough: [...value]
+    });
+    return this.makeUpDataFromDb(value);
+  })
+  .then((result) => {
+    console.log(result);
+    this.setState({
+      dataFromDb: result
     });
   })
   .catch((err) => {
@@ -237,8 +251,50 @@ addNewItem(item) {
   })
 };
 
+updateTraveler(key, value) {
+  let obj = {...this.state.employeeProfileForDb}
+  delete obj.handler;
+  delete obj.hibernateLazyInitializer;
+  key == "name" ? obj["employeeName"] = value : obj[key] = value;
+  axios({
+    method: "PATCH",
+    url: `/traveler/${obj.employee_id}`,
+    data: obj
+  })
+  .then((res) => {
+    let tempDataFromDbRough = this.state.dataFromDbRough.map((elem, i) => {
+      if (elem.traveler.employee_id == res.data.employee_id) {
+         elem.traveler = res.data;
+         return elem;
+      } else return elem;
+    });
+    
+    let tempEmployeeProfileForDb = {...res.data};
+    tempEmployeeProfileForDb["name"] = tempEmployeeProfileForDb["employeeName"];
+    delete tempEmployeeProfileForDb.employeeName;
+    
+    let tempProfileTraveler = {...this.state.profileTraveler};
+    tempProfileTraveler["name"] = tempEmployeeProfileForDb["name"];
+    tempProfileTraveler["position"] = tempEmployeeProfileForDb["position"];
+    tempProfileTraveler["phone"] = tempEmployeeProfileForDb["phone"];
+    tempProfileTraveler["email"] = tempEmployeeProfileForDb["email"];
+    
+    this.setState({
+      dataFromDbRough: tempDataFromDbRough,
+      employeeProfileForDb: {...tempEmployeeProfileForDb},
+      profileTraveler: {...tempProfileTraveler}
+    });
+    return this.makeUpDataFromDb(tempDataFromDbRough);
+  })
+  .then((res) => {
+    this.setState({
+      dataFromDb: [...res]
+    });
+  })
+  .catch(err => console.log(err));
+};
+
 handleCalendarEvent(dateRange) {
-  console.log(dateRange);
   axios({
       method: 'POST',
       url: "/range_graphs",
@@ -303,7 +359,7 @@ tempObjAssing(res) {
                       dataFromDb ={this.state.dataFromDb}
                       modifyData={this.modifyData}
                       handleClickForAsideBar={this.handleClickForAsideBar}
-                      asideTrigger={this.asideTriggerFromEntry}
+                      asideTriggerPoint={this.asideTriggerFromEntry}
                     />
                   </div>
                 </div>
@@ -316,7 +372,7 @@ tempObjAssing(res) {
                 profileTraveler={this.state.profileTraveler}
                 erazeProfileFields={this.erazeProfileFields}
                 trigger={this.state.asideTrigger}
-                employeeProfileForDb={this.state.employeeProfileForDb}
+                updateTraveler={this.updateTraveler}
               />
             </div> 
             </div>

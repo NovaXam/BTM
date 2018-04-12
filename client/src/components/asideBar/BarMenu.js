@@ -2,7 +2,6 @@ import React from 'react';
 import SingleBar from './SingleBar';
 
 const BarMenu = (props) => {
-    console.log(props);
     return (
         <div className="col col-sm-2" onClick={props.handleBarClick}>
             {props.barAttributes.map((elem, i) => {

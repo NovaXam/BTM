@@ -89,7 +89,7 @@ render() {
                                 handleButtonForm={this.handleButtonForm}
                                 modifyData={this.props.modifyData}
                                 handleClickForAsideBar={this.props.handleClickForAsideBar}
-                                asideTrigger={this.props.asideTrigger}
+                                asideTrigger={this.props.asideTriggerPoint}
                             />
                         )
                     })

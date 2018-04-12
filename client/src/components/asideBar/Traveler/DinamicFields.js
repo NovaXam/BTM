@@ -1,17 +1,17 @@
 import React from 'react';
 import '../../style/field.css';
 
-class Field extends React.Component {
+class DinamicFields extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             editableState: false,
             value: this.props.data
         };
-        this.handleModifiedField = this.handleModifiedField.bind(this);
+        this.handleModifiedFieldOnSubmit = this.handleModifiedFieldOnSubmit.bind(this);
     };
 
-    handleModifiedField(e) {
+    handleModifiedFieldOnSubmit(e) {
         e.preventDefault();
         e.stopPropagation();
         this.setState({
@@ -21,18 +21,18 @@ class Field extends React.Component {
     };
 
     render() {
-        console.log(this.state.editableState);
         if (!this.state.editableState) {
             return (
-                <div className="row no-gutters field" ref="field" style={{margin: "0rem 0rem 0rem", height: "3.5rem", overflowX: "auto"}} onClick={(e) => this.setState({editableState: true})}>
+                <div className="row no-gutters field" style={{margin: "0rem 0rem 0rem", height: "3.5rem", overflowX: "auto"}} onClick={() => this.setState({editableState: true, value: this.props.data})}>
                     <p className="col col-sm-12 temperature"><em>{this.props.fieldName}</em></p>
                     <h5 id={this.props.id} className="col col-sm-12" value={this.props.data} style={{paddingRight: "1rem"}}>{this.props.data}</h5>
                 </div>
             )
         }
         else {
+            console.log(this.state.value);
             return (
-                <div className="row no-gutters editableField" ref="field" style={{margin: "0rem 0rem 0rem", height: "3.5rem", overflowX: "auto"}} onSubmit={this.handleModifiedField}>
+                <div className="row no-gutters editableField" style={{margin: "0rem 0rem 0rem", height: "3.5rem", overflowX: "auto"}} onSubmit={this.handleModifiedFieldOnSubmit}>
                     <p className="col col-sm-12 temperature"><em>{this.props.fieldName}</em></p>
                     <form> 
                         <input
@@ -50,4 +50,4 @@ class Field extends React.Component {
     }
 };
 
-export default Field;
+export default DinamicFields;
