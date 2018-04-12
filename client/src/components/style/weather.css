@@ -1,5 +1,10 @@
 .cityName {
     padding: 0.25rem 0rem;
+    color: #474150;
+}
+
+.cityTemp {
+    color: #474150;
 }
 
 .cityTemp h1 {

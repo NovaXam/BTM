@@ -1,6 +1,7 @@
 .temperature {
     text-align: left;
     margin-left: 0.5rem;
+    cursor: none;
 }
 
 .WTcontainer {

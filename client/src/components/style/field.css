@@ -24,6 +24,21 @@
 
 .editableLine {
     padding-right: 10px;
-    width: 11rem;
-    margin-left: 0.5rem;
+    width: 95%;
+    height: 90%;
+    margin: 0rem 0.25rem;
+}
+
+.static {
+    cursor: not-allowed;
+    font-weight: 400;
+    font-size: 18px;
+    color: #474150;
+}
+
+.dynamic {
+    cursor: pointer;
+    font-weight: 400;
+    font-size: 18px;
+    color: #474150;
 }

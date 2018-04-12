@@ -15,7 +15,7 @@ const WeatherTime = (props) => {
                 borderBottom: "0.1rem solid lightgray", 
                 transition: "width 2s", 
                 overflow: "hidden", 
-                background: "linear-gradient(rgba(248, 249, 250, 0.9), rgba(255, 255, 255, 0))"}}
+                background: "rgba(248, 249, 250, 0.9)"}}
             >
                 <div className="row no-gutters">
                     <div className="col col-sm-10" style={{margin: "1rem auto", padding: "0.25rem", borderRadius: '0.25rem'}}> 

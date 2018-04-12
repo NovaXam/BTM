@@ -41,12 +41,10 @@ class AsideBar extends Component {
         this.handleWTInput = this.handleWTInput.bind(this);
         this.handleBarClick = this.handleBarClick.bind(this);
         this.switchForBar = this.switchForBar.bind(this);
-        this.handleSubTraveler = this.handleSubTraveler.bind(this);
         this.switcher = this.switcher.bind(this);
     };
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps);
         (nextProps.trigger && this.state.widthBar !== "83%")
             ?
                 this.switcher()
@@ -131,16 +129,8 @@ class AsideBar extends Component {
         });
       };
 
-      handleSubTraveler(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        //make a calculation of traveler data on base of choosen critheria
-        
-      };
-
-    //catching a click event from bar menu and redirect it to the appropriate switch function 
+    //catching a click event from bar menu and redirect it to the appropriate switch function
     handleBarClick(e) {
-        console.log(e.target.id);
         switch(e.target.id) {
             case "0":
                 this.switchForBar(this.state.barName[0], e.target.id);
@@ -231,6 +221,9 @@ class AsideBar extends Component {
                              handleSubTraveler={this.handleSubTraveler}
                              profileTraveler={this.props.profileTraveler}
                              updateTraveler={this.props.updateTraveler}
+                             travelersList={this.props.travelersList}
+                             handleTypeForTraveler={this.props.handleTypeForTraveler}
+                             initialFieldValueTraveler={this.props.initialFieldValueTraveler}
                         />
                         <BarMenu 
                             handleBarClick={this.handleBarClick}
@@ -250,7 +243,7 @@ class AsideBar extends Component {
                                 borderBottom: "0.1rem solid lightgray", 
                                 transition: "width 2s",
                                 overflow: "hidden", 
-                                background: "linear-gradient(rgba(248, 249, 250, 0.9), rgba(255, 255, 255, 0))"}}
+                                background: "rgba(248, 249, 250, 0.9)"}}
                          >
                          </div>
                         <BarMenu 
