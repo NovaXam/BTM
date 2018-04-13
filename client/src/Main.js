@@ -18,13 +18,15 @@ class Main extends Component {
       dataFromDbGraphs: [],
       profileTraveler: {},
       asideTrigger: false,
-      employeeProfileForDb: {}
+      employeeProfileForDb: {},
+      travelersList: [],
+      initialFieldValueTraveler: false
     };
 
     this.modifyData = this.modifyData.bind(this); 
     this.deleteItemFromList = this.deleteItemFromList.bind(this);
     this.updateState = this.updateState.bind(this);
-    this.updateValue = this.updateValue.bind(this);
+    this.updateTrip = this.updateTrip.bind(this);
     this.addNewItem = this.addNewItem.bind(this);
     this.tempObjAssing = this.tempObjAssing.bind(this);
     this.handleCalendarEvent = this.handleCalendarEvent.bind(this);
@@ -34,6 +36,8 @@ class Main extends Component {
     this.erazeProfileFields = this.erazeProfileFields.bind(this);
     this.asideTriggerFromEntry = this.asideTriggerFromEntry.bind(this);
     this.updateTraveler = this.updateTraveler.bind(this);
+    this.makeTravelerList = this.makeTravelerList.bind(this);
+    this.handleTypeForTraveler = this.handleTypeForTraveler.bind(this);
   }
 
 componentWillMount() {
@@ -52,18 +56,32 @@ componentWillMount() {
       dataFromDbRough: [...dashBoardData]
     });
     const dataReadyToFeedDashBoard = this.makeUpDataFromDb(dashBoardData);
+    const travelersList = this.makeTravelerList(dashBoardData);
     const dataReadyToFeedGrpahs = this.makeUpDataFromDb(graphsData);
-    return {dataReadyToFeedDashBoard, dataReadyToFeedGrpahs};
+    return {dataReadyToFeedDashBoard, travelersList, dataReadyToFeedGrpahs};
   })
   .then((res) => {
     this.setState({
       dataFromDb: this.state.dataFromDb.concat(res.dataReadyToFeedDashBoard),
-      dataFromDbGraphs: this.state.dataFromDbGraphs.concat(res.dataReadyToFeedGrpahs)
+      dataFromDbGraphs: this.state.dataFromDbGraphs.concat(res.dataReadyToFeedGrpahs),
+      travelersList: [...res.travelersList]
       });
   })
   .catch((err) => {
     console.log(err);
   });
+};
+
+makeTravelerList(data) {
+  let arrTravalers = [];
+  let map = {};
+  data.map((elem, i) => {
+    if (!map.hasOwnProperty(elem.traveler.employeeName)) {
+      map[elem.traveler.employeeName] = elem.traveler.employeeName;
+      arrTravalers.push({label: elem.traveler.employeeName});
+    };
+  });
+  return arrTravalers;
 };
 
 makeUpDataFromDb(data) {
@@ -91,9 +109,12 @@ async modifyData(elem) {
   try {
     if (typeof elem === "string") {
       const newList = await this.deleteItemFromList(elem);
-      const newState = await this.updateState(newList);
+      const newState = await this.updateState(newList.newDataFromDb);
+      this.setState({
+        dataFromDbRough: newList.tempDataFromDbRought
+      })
    } else {
-      const newList = await this.updateValue(elem);
+      const newList = await this.updateTrip(elem);
    }
  } catch(err) {
     console.log(err);
@@ -101,11 +122,27 @@ async modifyData(elem) {
 };
 
 handleClickForAsideBar = async (data) => {
+  console.log(data);
   try {
     const obj =  await this.state.dataFromDbRough.filter(elem => elem.id == data)[0];
     const employeeTripsObj = await this.state.dataFromDbRough.filter(elem => elem.traveler.employeeName == obj.traveler.employeeName);
     this.setState({
-      employeeProfileForDb: {...employeeTripsObj[0].traveler}
+      employeeProfileForDb: {...employeeTripsObj[0].traveler},
+      initialFieldValueTraveler: true
+    })
+    const createProfile = await this.employeeProfileCalculator(employeeTripsObj);
+    const changeState = await this.setState({profileTraveler: {...createProfile}});
+  } catch(err) {
+    console.log(err);
+  }
+};
+
+handleTypeForTraveler = async (name) => {
+  try {
+    const employeeTripsObj = await this.state.dataFromDbRough.filter(elem => elem.traveler.employeeName == name);
+    this.setState({
+      employeeProfileForDb: {...employeeTripsObj[0].traveler},
+      initialFieldValueTraveler: false
     })
     const createProfile = await this.employeeProfileCalculator(employeeTripsObj);
     const changeState = await this.setState({profileTraveler: {...createProfile}});
@@ -156,7 +193,8 @@ erazeProfileFields() {
       travels: null,
       cities: []
     },
-    asideTrigger: false
+    asideTrigger: false,
+    initialFieldValueTraveler: true
   })
 };
 
@@ -172,7 +210,7 @@ updateState(modifiedState) {
   });
 }
 
-updateValue(updatedEntry) {
+updateTrip(updatedEntry) {
   updatedEntry.id = parseInt(updatedEntry.id);
   updatedEntry.status = parseInt(updatedEntry.status);
   axios({
@@ -181,24 +219,28 @@ updateValue(updatedEntry) {
     data: updatedEntry
   })
   .then((res) => {
-    let tempDataFromDbRough = this.state.dataFromDbRough.map((elem, i) => {
+    const tempDataFromDbRough = this.state.dataFromDbRough.map((elem, i) => {
       if (elem.id == res.data.id) {
         return elem = res.data;
       } else return elem;
     });
-    return tempDataFromDbRough;
+    const employeeTripsObj = tempDataFromDbRough.filter(elem => elem.traveler.employeeName == res.data.traveler.employeeName);
+    const travelersList = this.makeTravelerList(tempDataFromDbRough);
+    return {tempDataFromDbRough, employeeTripsObj, travelersList};
   })
   .then((value) => {
-    // console.log(value);
+    const createProfile = this.employeeProfileCalculator(value.employeeTripsObj);
     this.setState({
-      dataFromDbRough: [...value]
+      dataFromDbRough: [...value.tempDataFromDbRough],
+      travelersList: [...value.travelersList]
     });
-    return this.makeUpDataFromDb(value);
+    const newDataFromDb = this.makeUpDataFromDb(value.tempDataFromDbRough);
+    return {createProfile, newDataFromDb};
   })
   .then((result) => {
-    console.log(result);
     this.setState({
-      dataFromDb: result
+      dataFromDb: result.newDataFromDb,
+      profileTraveler: result.createProfile
     });
   })
   .catch((err) => {
@@ -207,11 +249,11 @@ updateValue(updatedEntry) {
 };
 
 deleteItemFromList(data) {
-  let newElem = parseInt(data);
+  let deletedElem = parseInt(data);
   var obj = this.state.dataFromDb;
   axios({
     method: 'DELETE',
-    url: `/trip/${newElem}`
+    url: `/trip/${deletedElem}`
    })
    .then((res) => {
      console.log(res);
@@ -219,11 +261,14 @@ deleteItemFromList(data) {
    .catch((err) => {
      console.log(err);
    });
-
-  const newList = obj.filter((item) => {
-      return item.id !== newElem;
+  const tempDataFromDbRought = [];
+  const newDataFromDb = obj.filter((item, i) => {
+    if (this.state.dataFromDbRough.id !== deletedElem) {
+        tempDataFromDbRought.push(this.state.dataFromDbRough[i]);
+        return item.id !== deletedElem;
+      }
     });
-  return newList;
+  return {newDataFromDb, tempDataFromDbRought};
 };
 
 shouldComponentUpdate(nextProps, nextState) {
@@ -241,9 +286,15 @@ addNewItem(item) {
     data: item
   })
   .then((res) => {
-    var newObj = this.tempObjAssing(res);
+    console.log(res);
     this.setState({
-      dataFromDb: this.state.dataFromDb.concat(newObj)
+      dataFromDbRough: this.state.dataFromDbRough.concat(res.data)
+    });
+  })
+  .then(() => {
+    this.setState({
+      dataFromDb: this.makeUpDataFromDb(this.state.dataFromDbRough),
+      travelersList: this.makeTravelerList(this.state.dataFromDbRough)
     });
   })
   .catch((err) => {
@@ -373,6 +424,9 @@ tempObjAssing(res) {
                 erazeProfileFields={this.erazeProfileFields}
                 trigger={this.state.asideTrigger}
                 updateTraveler={this.updateTraveler}
+                travelersList={this.state.travelersList}
+                handleTypeForTraveler={this.handleTypeForTraveler}
+                initialFieldValueTraveler={this.state.initialFieldValueTraveler}
               />
             </div> 
             </div>

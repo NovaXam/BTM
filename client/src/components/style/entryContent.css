@@ -1,0 +1,11 @@
+hr {
+    margin: 0.35rem 0.35rem;
+}
+
+.singleEntry h6 {
+    margin: 0.25rem 0.25rem
+}
+
+.singleEntry {
+    z-index: 1;
+}
