@@ -122,6 +122,7 @@ async modifyData(elem) {
 };
 
 handleClickForAsideBar = async (data) => {
+  console.log(data);
   try {
     const obj =  await this.state.dataFromDbRough.filter(elem => elem.id == data)[0];
     const employeeTripsObj = await this.state.dataFromDbRough.filter(elem => elem.traveler.employeeName == obj.traveler.employeeName);
@@ -241,9 +242,6 @@ updateTrip(updatedEntry) {
       dataFromDb: result.newDataFromDb,
       profileTraveler: result.createProfile
     });
-  })
-  .then(() => {
-    
   })
   .catch((err) => {
     console.log(err);

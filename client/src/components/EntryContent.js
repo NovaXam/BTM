@@ -1,4 +1,5 @@
 import React from 'react';
+import './style/entryContent.css';
 
 const EntryContent = (props) => {
     if (props.statusView == "entryOpenedToEdit") {
@@ -80,28 +81,28 @@ const EntryContent = (props) => {
         return (
             <div style={{padding: "0rem 0rem"}}>
                 <button type="submit" className="btn btn-outline-info btn-sm" style={{display: "inline-block", border: "none"}} onClick={props.handleCloseForm}>X</button>
-                <p></p>
-                {props.localData.traveler}
+                {/* <p></p> */}
+                <h6>{props.localData.traveler}</h6>
                 <hr />
-                {props.localData.city}
+                <h6>{props.localData.city}</h6>
                 <hr />
-                {props.localData.budget} USD
+                <h6>{props.localData.budget} USD</h6>
                 <hr />
-                {props.localData.time.toString()}
+                <h6>{props.localData.time.toString()}</h6>
                 <hr />
-                {props.localData.goal} 
+                <h6>{props.localData.goal}</h6>
                 <hr />
                 <button type="submit" className="btn btn-light btn-sm" onClick={props.handleRollerView}>Edit</button>
             </div>
         );
     } else {
         return (
-            <div id={props.id} style={{padding: "0.5rem 0rem"}} onClick={props.handleRollerAndContent}>
-                {props.localData.traveler}
+            <div id={props.id} className="singleEntry" onClick={props.handleRollerAndContent}>
+                <h6 id={props.id}> {props.localData.traveler}</h6>
                 <hr />
-                {props.localData.city}
+                <h6 id={props.id}> {props.localData.city}</h6>
                 <hr />
-                {props.localData.time.toString()} 
+                <h6 id={props.id}> {props.localData.time.toString()}</h6>
             </div>
         )
     }

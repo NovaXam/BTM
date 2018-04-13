@@ -23,7 +23,7 @@ class DinamicFields extends React.Component {
     render() {
         if (!this.state.editableState) {
             return (
-                <div className="row no-gutters field" style={{margin: "0rem 0rem 0rem", height: "3.5rem"}} onClick={() => this.setState({editableState: true, value: this.props.data})}>
+                <div className="row no-gutters field" style={{margin: "0rem 0rem 0rem", minHeight: "3.5rem"}} onClick={() => this.setState({editableState: true, value: this.props.data})}>
                     <p className="col col-sm-12 temperature"><em>{this.props.fieldName}</em></p>
                     <h5 id={this.props.id} className="col col-sm-12 dynamic" value={this.props.data} style={{paddingRight: "1rem"}}>{this.props.data}</h5>
                 </div>
@@ -32,7 +32,7 @@ class DinamicFields extends React.Component {
         else {
             console.log(this.state.value);
             return (
-                <div className="row no-gutters editableField" style={{margin: "0rem 0rem 0rem", height: "3.5rem"}} onSubmit={this.handleModifiedFieldOnSubmit}>
+                <div className="row no-gutters editableField" style={{margin: "0rem 0rem 0rem", minHeight: "3.5rem"}} onSubmit={this.handleModifiedFieldOnSubmit}>
                     <p className="col col-sm-12 temperature"><em>{this.props.fieldName}</em></p>
                     <div className="form-group">
                         <form > 

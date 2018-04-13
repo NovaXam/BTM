@@ -1,5 +1,5 @@
 .entryOpenedView {
-    height: 18rem;
+    height: 17rem;
     transition: height 2s;
     overflow-y: hidden;
     overflow-x: hidden;
@@ -17,6 +17,7 @@
     transition: height 1s;
     overflow-y: hidden;
     overflow-x: hidden;
+    padding: 0.6rem 1.25rem;
 }
 
 .alert-warning:hover {
