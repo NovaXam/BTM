@@ -135,9 +135,9 @@ Track all company business' trips in one app with extended functionality and fri
 | 3.2 | redesign a grid | 12 | done |
 | 3.3 | update an Add trip form | 4 | done |
 | - | #### Version 2 | 28 hours | - 
-| 4.1 | add sort option for dashboard | 8 | upcoming |
-| 4.2 | add horizontal menu | 12 | upcoming |
-| 4.3 | add traveler profile page | 24 | upcoming |
+| 4.1 | add sort option for dashboard | 8 | done |
+| 4.2 | add horizontal menu | 12 | done |
+| 4.3 | add traveler profile page | 24 | done |
 | - | #### Version 3 | 44 hours | - |
 | 5.1 | unit, integration, feature tests | 24 | upcoming |
 | - | #### Deployment  V 1.01 | 24 | upcoming |
