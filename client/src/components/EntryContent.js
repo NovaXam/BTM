@@ -72,8 +72,8 @@ const EntryContent = (props) => {
                     </select>
                 </div>
                 <hr />
-                <button id={props.id} status={props.localData.status} className="btn btn-light btn-sm" style={{marginRight: "1rem"}} onClick={props.handleButtonForm}>Delete</button>
-                <button type="submit" name="save" className="btn btn-info btn-sm" style={{marginLeft: "1rem"}} >Save</button>
+                <button id={props.id} status={props.localData.status} className="btn btn-light btn-sm" style={{marginRight: "4%"}} onClick={props.handleButtonForm}>Delete</button>
+                <button type="submit" name="save" className="btn btn-info btn-sm" style={{marginLeft: "4%"}} >Save</button>
             </form>
         </div>
         );

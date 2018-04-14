@@ -19,3 +19,8 @@ hr {
 #bottom {
   width: 100%;
 }
+
+.bottomBarRow {
+  width: 100%;
+  padding: 0rem 0.2rem 0rem 0rem; 
+}

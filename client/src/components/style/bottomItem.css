@@ -1,0 +1,32 @@
+.item {
+    max-width: 31.3%;
+    display: inline-block;
+    margin: 0% 1%;
+}
+
+.itemDescClose {
+    height: 0rem;
+    transition: height 2s;
+    border: 1px solid lightgray;
+    background: rgba(248, 249, 250, 0.9);
+    overflow: hidden;
+}
+
+.itemDescOpen {
+    height: 17rem;
+    transition: height 2s;
+    border: 1px solid lightgray;
+    background: rgba(248, 249, 250, 0.9);
+    overflow: hidden;
+}
+
+.itemSwitch {
+    border: 1px solid lightgray;
+    height: 1.5rem;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px; 
+}
+
+.itemSwitch:hover {
+    background: rgba(248, 249, 250);
+}

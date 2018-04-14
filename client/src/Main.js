@@ -8,6 +8,7 @@ import TripTracker from './components/tripTracker';
 import AddNewTrip from './components/AddNewTrip';
 import data from './dataStorage/trips';
 import AsideBar from './components/asideBar/AsideBar';
+import BottomBar from './components/bottomBar/BottomBar';
 
 class Main extends Component {
   constructor(props) {
@@ -413,9 +414,6 @@ tempObjAssing(res) {
                       asideTriggerPoint={this.asideTriggerFromEntry}
                     />
                   </div>
-                </div>
-                <div id="bottom" className="row no-gutters">
-                  <hr id="line" style={{margin: "0.7rem auto 0rem"}} />
                 </div>
               </div>
             <div className="col col-sm-3"> 

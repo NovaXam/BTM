@@ -158,7 +158,6 @@ class Graps extends Component {
     };
 
     async buildDataFreqDurGraph(initInfo) {
-        console.log(initInfo);
         let container = {};
         try {
             const helperIterator = await initInfo.map((elem) => {

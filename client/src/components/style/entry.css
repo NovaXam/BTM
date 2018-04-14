@@ -1,19 +1,19 @@
 .entryOpenedView {
-    height: 17rem;
+    height: 60%;
     transition: height 2s;
     overflow-y: hidden;
     overflow-x: hidden;
 }
 
 .entryOpened {
-    height: 27rem;
+    height: 96%;
     transition: height 2s;
     overflow-y: hidden;
     overflow-x: hidden;
 }
 
 .entryClosed {
-    height: 7rem;
+    height: 25%;
     transition: height 1s;
     overflow-y: hidden;
     overflow-x: hidden;
