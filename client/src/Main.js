@@ -287,7 +287,6 @@ addNewItem(item) {
     data: item
   })
   .then((res) => {
-    console.log(res);
     this.setState({
       dataFromDbRough: this.state.dataFromDbRough.concat(res.data)
     });
