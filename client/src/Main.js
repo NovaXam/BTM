@@ -110,10 +110,8 @@ async modifyData(elem) {
   try {
     if (typeof elem === "string") {
       const newList = await this.deleteItemFromList(elem);
-      const newState = await this.updateState(newList.newDataFromDb);
-      this.setState({
-        dataFromDbRough: newList.tempDataFromDbRought
-      })
+      // const newState = await this.updateState(newList.newDataFromDb);
+      // const newDataFromDbRough = await this.setState({dataFromDbRough: newList.tempDataFromDbRought})
    } else {
       const newList = await this.updateTrip(elem);
    }
@@ -127,12 +125,12 @@ handleClickForAsideBar = async (data) => {
   try {
     const obj =  await this.state.dataFromDbRough.filter(elem => elem.id == data)[0];
     const employeeTripsObj = await this.state.dataFromDbRough.filter(elem => elem.traveler.employeeName == obj.traveler.employeeName);
-    this.setState({
+    const createProfile = await this.employeeProfileCalculator(employeeTripsObj);
+    const changeState = await this.setState({
+      profileTraveler: {...createProfile},
       employeeProfileForDb: {...employeeTripsObj[0].traveler},
       initialFieldValueTraveler: true
     })
-    const createProfile = await this.employeeProfileCalculator(employeeTripsObj);
-    const changeState = await this.setState({profileTraveler: {...createProfile}});
   } catch(err) {
     console.log(err);
   }
@@ -141,12 +139,12 @@ handleClickForAsideBar = async (data) => {
 handleTypeForTraveler = async (name) => {
   try {
     const employeeTripsObj = await this.state.dataFromDbRough.filter(elem => elem.traveler.employeeName == name);
-    this.setState({
+    const createProfile = await this.employeeProfileCalculator(employeeTripsObj);
+    const changeState = await this.setState({
+      profileTraveler: {...createProfile},
       employeeProfileForDb: {...employeeTripsObj[0].traveler},
       initialFieldValueTraveler: false
     })
-    const createProfile = await this.employeeProfileCalculator(employeeTripsObj);
-    const changeState = await this.setState({profileTraveler: {...createProfile}});
   } catch(err) {
     console.log(err);
   }
@@ -252,24 +250,47 @@ updateTrip(updatedEntry) {
 deleteItemFromList(data) {
   let deletedElem = parseInt(data);
   var obj = this.state.dataFromDb;
+  let tempDataFromDbRought = [];
+  let tempDeletedObj = {}
   axios({
     method: 'DELETE',
     url: `/trip/${deletedElem}`
-   })
-   .then((res) => {
-     console.log(res);
-   })
-   .catch((err) => {
+  })
+  .then((res) => {
+    console.log(res);
+    tempDeletedObj = obj.filter((item, i) => {
+      return item.id == deletedElem;
+    });
+    const newDataFromDb = obj.filter((item, i) => {
+      return item.id !== deletedElem;
+    })
+    tempDataFromDbRought = this.state.dataFromDbRough.filter((elem, i) => {
+        return elem.id !== deletedElem;
+      });
+    return {newDataFromDb, tempDataFromDbRought};
+  })
+  .then((res) => {
+    console.log(res);
+    this.setState({
+      dataFromDb: res.newDataFromDb,
+      dataFromDbRough: res.tempDataFromDbRought
+    });
+    const employeeTripsObj = this.state.dataFromDbRough.filter(elem => elem.traveler.employeeName == this.state.employeeProfileForDb.employeeName);
+    return tempDeletedObj[0].traveler == this.state.employeeProfileForDb.employeeName 
+      ? 
+      this.employeeProfileCalculator(employeeTripsObj) 
+      : 
+      0; 
+  })
+  .then((res) => {
+    console.log(res);
+    if (res !== 0) {
+      this.setState({profileTraveler: {...res}});
+    }
+  })
+  .catch((err) => {
      console.log(err);
    });
-  const tempDataFromDbRought = [];
-  const newDataFromDb = obj.filter((item, i) => {
-    if (this.state.dataFromDbRough.id !== deletedElem) {
-        tempDataFromDbRought.push(this.state.dataFromDbRough[i]);
-        return item.id !== deletedElem;
-      }
-    });
-  return {newDataFromDb, tempDataFromDbRought};
 };
 
 shouldComponentUpdate(nextProps, nextState) {
@@ -381,6 +402,7 @@ tempObjAssing(res) {
 
 //main render lifecycle method
   render() {
+    console.log(this.state.profileTraveler);
     return (
       <div className="Main">
         <div className="container">
