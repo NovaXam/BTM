@@ -26,7 +26,6 @@ class Main extends Component {
 
     this.modifyData = this.modifyData.bind(this); 
     this.deleteItemFromList = this.deleteItemFromList.bind(this);
-    this.updateState = this.updateState.bind(this);
     this.updateTrip = this.updateTrip.bind(this);
     this.addNewItem = this.addNewItem.bind(this);
     this.tempObjAssing = this.tempObjAssing.bind(this);
@@ -39,6 +38,7 @@ class Main extends Component {
     this.updateTraveler = this.updateTraveler.bind(this);
     this.makeTravelerList = this.makeTravelerList.bind(this);
     this.handleTypeForTraveler = this.handleTypeForTraveler.bind(this);
+    this.helperIterateFunc = this.helperIterateFunc.bind(this);
   }
 
 componentWillMount() {
@@ -106,12 +106,9 @@ makeUpDataFromDb(data) {
 };
 
 async modifyData(elem) {
-  console.log(elem);
   try {
     if (typeof elem === "string") {
       const newList = await this.deleteItemFromList(elem);
-      // const newState = await this.updateState(newList.newDataFromDb);
-      // const newDataFromDbRough = await this.setState({dataFromDbRough: newList.tempDataFromDbRought})
    } else {
       const newList = await this.updateTrip(elem);
    }
@@ -120,8 +117,8 @@ async modifyData(elem) {
   };
 };
 
+//updating state of a traveler profile on base of an user click on particular trip on dashboard
 handleClickForAsideBar = async (data) => {
-  console.log(data);
   try {
     const obj =  await this.state.dataFromDbRough.filter(elem => elem.id == data)[0];
     const employeeTripsObj = await this.state.dataFromDbRough.filter(elem => elem.traveler.employeeName == obj.traveler.employeeName);
@@ -136,6 +133,7 @@ handleClickForAsideBar = async (data) => {
   }
 };
 
+//updating state of a traveler profile on base of an user search criteria put in input field 
 handleTypeForTraveler = async (name) => {
   try {
     const employeeTripsObj = await this.state.dataFromDbRough.filter(elem => elem.traveler.employeeName == name);
@@ -150,6 +148,7 @@ handleTypeForTraveler = async (name) => {
   }
 };
 
+//compputing an outcome for a traveler profile on base of filter results 
 employeeProfileCalculator(data) {
   var profile = { 
     name: "",
@@ -180,6 +179,7 @@ employeeProfileCalculator(data) {
   return profile;
 };
 
+//erazing profile fields when user double-click to close a bar 
 erazeProfileFields() {
   console.log("eraze data");
   this.setState({
@@ -197,18 +197,14 @@ erazeProfileFields() {
   })
 };
 
+//update state of aside bar true - opened, false - closed
 asideTriggerFromEntry() {
   this.setState({
     asideTrigger: true
   });
 };
 
-updateState(modifiedState) {
-  this.setState({
-    dataFromDb: modifiedState
-  });
-}
-
+//updating trip properies. Syncronized with traveler profile and bottom menu bar
 updateTrip(updatedEntry) {
   updatedEntry.id = parseInt(updatedEntry.id);
   updatedEntry.status = parseInt(updatedEntry.status);
@@ -247,11 +243,11 @@ updateTrip(updatedEntry) {
   });
 };
 
+//delete trip from board. Syncronized with traveler profile and bottom menu
 deleteItemFromList(data) {
   let deletedElem = parseInt(data);
   var obj = this.state.dataFromDb;
-  let tempDataFromDbRought = [];
-  let tempDeletedObj = {}
+  let tempDeletedObj = [];
   axios({
     method: 'DELETE',
     url: `/trip/${deletedElem}`
@@ -261,43 +257,45 @@ deleteItemFromList(data) {
     tempDeletedObj = obj.filter((item, i) => {
       return item.id == deletedElem;
     });
-    const newDataFromDb = obj.filter((item, i) => {
-      return item.id !== deletedElem;
-    })
-    tempDataFromDbRought = this.state.dataFromDbRough.filter((elem, i) => {
-        return elem.id !== deletedElem;
-      });
+    const newDataFromDb = this.helperIterateFunc(obj, deletedElem);
+    const tempDataFromDbRought = this.helperIterateFunc(this.state.dataFromDbRough, deletedElem);
     return {newDataFromDb, tempDataFromDbRought};
   })
   .then((res) => {
-    console.log(res);
     this.setState({
       dataFromDb: res.newDataFromDb,
       dataFromDbRough: res.tempDataFromDbRought
     });
     const employeeTripsObj = this.state.dataFromDbRough.filter(elem => elem.traveler.employeeName == this.state.employeeProfileForDb.employeeName);
-    return tempDeletedObj[0].traveler == this.state.employeeProfileForDb.employeeName 
+    return tempDeletedObj[0].traveler == this.state.employeeProfileForDb.employeeName
       ? 
-      this.employeeProfileCalculator(employeeTripsObj) 
+      this.employeeProfileCalculator(employeeTripsObj)
       : 
-      0; 
+      0;
   })
   .then((res) => {
-    console.log(res);
-    if (res !== 0) {
-      this.setState({profileTraveler: {...res}});
-    }
+    res != 0 ? this.setState({
+      profileTraveler: {...res},
+      travelersList: this.makeTravelerList(this.state.dataFromDbRough)
+    }) : 0;
   })
   .catch((err) => {
      console.log(err);
    });
 };
 
+helperIterateFunc(obj, deletedElemId) {
+  const newVal = obj.filter((item, i) => {
+    return item.id !== deletedElemId;
+  });
+  return newVal;
+};
+
 shouldComponentUpdate(nextProps, nextState) {
   return nextProps ? true : false;
 };
 
-//weather, time and picture API calls
+//add new trip on board. Syncronized with traveler profile and bottom menu bar
 addNewItem(item) {
   axios({
     method: 'POST',
@@ -311,8 +309,22 @@ addNewItem(item) {
     this.setState({
       dataFromDbRough: this.state.dataFromDbRough.concat(res.data)
     });
+    const employeeTripsObj = this.state.dataFromDbRough.filter(elem => elem.traveler.employeeName == this.state.employeeProfileForDb.employeeName);
+    return res.data.traveler.employeeName == this.state.employeeProfileForDb.employeeName
+      ? 
+      this.employeeProfileCalculator(employeeTripsObj)
+      : 
+      0;
   })
-  .then(() => {
+  .then((res) => {
+    res != 0 
+    ? 
+    this.setState({
+      profileTraveler: {...res},
+      travelersList: this.makeTravelerList(this.state.dataFromDbRough),
+      dataFromDb: this.makeUpDataFromDb(this.state.dataFromDbRough),
+    }) 
+    : 
     this.setState({
       dataFromDb: this.makeUpDataFromDb(this.state.dataFromDbRough),
       travelersList: this.makeTravelerList(this.state.dataFromDbRough)
@@ -323,6 +335,7 @@ addNewItem(item) {
   })
 };
 
+//update traveler profile from aside menu
 updateTraveler(key, value) {
   let obj = {...this.state.employeeProfileForDb}
   delete obj.handler;
@@ -382,7 +395,6 @@ handleCalendarEvent(dateRange) {
   });
 };
 
-
 //adjusting a data revieved from a server to an appropriate format for a dashboard
 tempObjAssing(res) {
   console.log(res);
@@ -396,7 +408,6 @@ tempObjAssing(res) {
     time: dateInString,
     status: res.data.status
   };
-  console.log(newObj);
   return newObj;
 }
 

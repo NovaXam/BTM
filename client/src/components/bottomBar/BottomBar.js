@@ -16,7 +16,7 @@ class BottomBar extends Component {
         <div className="row no-gutters justify-content-center bottomBarRow"> 
             {
                 this.props.itemDescClassIdValuepair.map((elem, i) => {
-                    if (this.props.dashBoardColumn[i] !== undefined || {}) {
+                    if (this.props.dashBoardColumn[i] !== undefined) {
                         return (
                             <BottomItem
                                 id={elem[1]}

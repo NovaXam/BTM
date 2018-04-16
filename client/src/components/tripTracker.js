@@ -38,6 +38,7 @@ async componentWillMount() {
 
 //checking if data updated on the page 
 async componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
     var temp = {
         tempArr1: [],
         tempArr2: [],
@@ -45,6 +46,10 @@ async componentWillReceiveProps(nextProps) {
       }
       try {
             const updatedState = await this.selector(nextProps.dataFromDb, temp);
+            const findWhoIsOpened = await this.state.itemDescClassIdValuepair.map((elem, i) => elem[0] && this.computeDataOutOfRow(i));
+            this.setState({
+                dashBoardColumn: [...findWhoIsOpened]
+            });
     } catch(err) {
       console.log(err);
     }
@@ -62,7 +67,6 @@ selector(arr, instance) {
         break;
         default: 
       };
-      return instance;
   });
   this.setState({
         cathegoryDataArr: [instance.tempArr1, instance.tempArr2, instance.tempArr3]
@@ -95,7 +99,6 @@ classSwitch(index) {
         newItemDescClassIdValuepair[index][2] = "col col-sm-12 itemDescOpen";
         newItemDescClassIdValuepair[index][3] = caretTop;
         newdashBoardColumn[index] = this.computeDataOutOfRow(index);
-        console.log(newdashBoardColumn);
         this.setState({
             itemDescClassIdValuepair: newItemDescClassIdValuepair,
             dashBoardColumn: [...newdashBoardColumn]
@@ -105,7 +108,6 @@ classSwitch(index) {
         newItemDescClassIdValuepair[index][2] = "col col-sm-12 itemDescClose";
         newItemDescClassIdValuepair[index][3] = caretBottom;
         newdashBoardColumn[index] = undefined;
-        console.log(newdashBoardColumn);
         this.setState({
             itemDescClassIdValuepair: newItemDescClassIdValuepair,
             dashBoardColumn: [...newdashBoardColumn]
