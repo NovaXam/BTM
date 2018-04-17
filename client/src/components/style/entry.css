@@ -1,15 +1,21 @@
 .entryOpenedView {
     height: 60%;
-    transition: height 2s;
+    transition: cubic-bezier(0.25, 0.65, 0.25, 0.94) height 2s;
     overflow-y: hidden;
     overflow-x: hidden;
+    line-height: 0.1rem;
+    margin: 0.5rem 0.5rem 0.5rem 0.5rem;
+    cursor: pointer; 
 }
 
 .entryOpened {
     height: 96%;
-    transition: height 2s;
+    transition:  cubic-bezier(0.25, 0.65, 0.25, 0.94) height 2s;
     overflow-y: hidden;
     overflow-x: hidden;
+    line-height: 0.1rem;
+    margin: 0.5rem 0.5rem 0.5rem 0.5rem;
+    cursor: pointer; 
 }
 
 .entryClosed {
@@ -18,6 +24,9 @@
     overflow-y: hidden;
     overflow-x: hidden;
     padding: 0.6rem 1.25rem;
+    line-height: 0.1rem;
+    margin: 0.5rem 0.5rem 0.5rem 0.5rem;
+    cursor: pointer; 
 }
 
 .alert-warning:hover {

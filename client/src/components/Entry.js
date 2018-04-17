@@ -17,17 +17,31 @@ class Entry extends Component {
         this.handleRollerView = this.handleRollerView.bind(this);
         this.handleUpdateForm = this.handleUpdateForm.bind(this);
         this.handleButtonForm = this.handleButtonForm.bind(this);
+        this.switchFunc = this.switchFunc.bind(this);
     };
 
     componentWillMount() {
         this.setState({
-            localData: {...this.props.entryData}
+            localData: this.switchFunc(this.props.entryData)
         })
     };
 
+    switchFunc(data) {
+        let obj = {...data}; 
+        switch(data.status) {
+            case 0 : obj["status"] = "completed";
+            break;
+            case 1 : obj["status"] = "ongoing";
+            break;
+            case 2 : obj["status"] = "upcoming";
+            break;
+        }
+        return obj;
+    }
+
     componentWillReceiveProps(nextProps) {
         this.setState({
-            localData: {...nextProps.entryData}
+            localData: this.switchFunc(nextProps.entryData)
         });
     };
 
@@ -36,13 +50,13 @@ class Entry extends Component {
         e.stopPropagation();
         this.props.handleClickForAsideBar(e.target.id);
         this.props.asideTrigger();
-        
+
         if (this.state.entrySlideClass == "entryClosed") {
-        this.setState({
-            statusView: "entryOpenedToExtendView",
-            entrySlideClass: "entryOpenedView"
-            }); 
-        }
+            this.setState({
+                statusView: "entryOpenedToExtendView",
+                entrySlideClass: "entryOpenedView"
+            });
+        };
     };
 
     handleRollerView(e) {
@@ -58,18 +72,17 @@ class Entry extends Component {
         this.setState({
             entrySlideClass: "entryClosed",
             statusView: "",
-            localData: {...this.props.entryData}
+            localData: this.switchFunc(this.props.entryData)
         });
     };
 
     handleFilling(e) {
         e.preventDefault();
         e.stopPropagation();
-        var obj = {...this.state.localData};
-
+        var obj = this.state.localData;
         obj[e.target.name] = e.target.value;
         this.setState({
-           localData: obj
+            localData: {...obj}
         });
     };
 
@@ -95,8 +108,8 @@ class Entry extends Component {
         };
         this.props.modifyData(dataToDb);
         this.setState({
-            statusView: "entryOpenedToExtendView",
-            entrySlideClass: "entryOpenedView",
+            statusView: "",
+            entrySlideClass: "entryClosed",
             localData: {...this.props.entryData}
         });
       };
@@ -114,12 +127,12 @@ class Entry extends Component {
       
     render() {
         return (
-            <div 
-                style={{lineHeight: "0.1rem", margin: "0.5rem 0.5rem 0.5rem 0.5rem", cursor: "pointer"}} 
+            <div
                 className={`${this.props.type[2]} ${this.state.entrySlideClass}`}
                 id={this.props.id} 
-                role="alert" 
-                >
+                role="alert"
+                name="randomContainer"
+            >
                 <EntryContent  
                     id={this.props.entryData.id}
                     statusView={this.state.statusView}

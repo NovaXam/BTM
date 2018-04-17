@@ -45,7 +45,6 @@ class Graps extends Component {
       
     handleSingleGraph(e) {
         const value = this.state.roughDataFromDB;
-        console.log(this.state.roughDataFromDB);
         switch(e.target.id) {
             case "0": 
                 this.setState({
@@ -133,13 +132,11 @@ class Graps extends Component {
         for(let elem in data) {
             finalArr.push({"x": elem, "y": data[elem]});
         };
-        console.log(finalArr);
         return finalArr;
     };
 
     //implicitely building charts with a scope of last 12 months as soon as a page is downloaded.
     async buildDataBudgetGraph(initInfo) {
-        console.log(initInfo);
         let container = {};
         try {
             const helperIterator = await initInfo.map((elem) => {
@@ -176,7 +173,6 @@ class Graps extends Component {
     };
 
     async buildDataDestGraph(initInfo) {
-        console.log(initInfo);
         let container = {};
         try {
             const helperIterator = await initInfo.map((elem) => {

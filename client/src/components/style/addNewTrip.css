@@ -1,6 +1,8 @@
 .closedFormTrip {
     height: 4rem;
-    transition: height 2s;
+    transition: cubic-bezier(0.25, 0.55, 0.25, 0.94) height 2s;
+    -webkit-transition: cubic-bezier(0.25, 0.55, 0.25, 0.94) height 2s;
+    -moz-transition: cubic-bezier(0.25, 0.55, 0.25, 0.94) height 2s;
     overflow-y: hidden;
     overflow-x: hidden;
 }
@@ -8,7 +10,9 @@
 .openedFormTrip {
     display: inline-block;
     height: 27rem;
-    transition: height 2s;
+    transition: cubic-bezier(0.25, 0.55, 0.25, 0.94) height 2s;
+    -webkit-transition: cubic-bezier(0.25, 0.55, 0.25, 0.94) height 2s;
+    -moz-transition: cubic-bezier(0.25, 0.55, 0.25, 0.94) height 2s;
     overflow-y: hidden;
     overflow-x: hidden;
 }

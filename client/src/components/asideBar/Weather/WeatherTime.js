@@ -5,8 +5,7 @@ import Score from './Score';
 
 import '../../style/weatherTime.css';
 
-const WeatherTime = (props) => {
-    console.log(props.data);    
+const WeatherTime = (props) => { 
     return (
             <div className="col col-sm-auto WTcontainer"
                 style={{width: `${props.widthBar}`,

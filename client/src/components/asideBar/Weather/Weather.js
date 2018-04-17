@@ -2,7 +2,6 @@ import React from 'react';
 import '../../style/weather.css';
 
 const Weather = (props) => {
-    console.log(props.data);
     if (props.data !== undefined) {
     return (  
         <div className="col col-sm-10 weather" style={{borderBottom: "0.1rem solid lightgray", height: "8rem", textAlign: "center", margin: "0rem auto 1rem"}} >

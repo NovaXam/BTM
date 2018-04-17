@@ -1,5 +1,8 @@
 import React from 'react';
 import './style/entryContent.css';
+import * as Scroll from "react-scroll";
+
+let Element = Scroll.Element;
 
 const EntryContent = (props) => {
     if (props.statusView == "entryOpenedToEdit") {
@@ -59,16 +62,15 @@ const EntryContent = (props) => {
                     />
                 </div>
                 <div className="form-group">
-                    <select 
-                        className="form-control" 
-                        name="status"
-                        value={props.localData.status}
-                        onChange={props.handleFilling}
-                    >
-                        <option>choose a trip status</option>
-                        <option>completed</option>
-                        <option>ongoing</option>
-                        <option>upcoming</option>
+                    <select
+                            className="form-control entryContentFormSelect"
+                            name="status"
+                            value={props.localData.status}
+                            onChange={props.handleFilling}
+                        >
+                            <option value="completed">completed</option>
+                            <option value="ongoing">ongoing</option>
+                            <option value="upcoming">upcoming</option>
                     </select>
                 </div>
                 <hr />
@@ -81,7 +83,6 @@ const EntryContent = (props) => {
         return (
             <div style={{padding: "0rem 0rem"}}>
                 <button type="submit" className="btn btn-outline-info btn-sm" style={{display: "inline-block", border: "none"}} onClick={props.handleCloseForm}>X</button>
-                {/* <p></p> */}
                 <h6>{props.localData.traveler}</h6>
                 <hr />
                 <h6>{props.localData.city}</h6>

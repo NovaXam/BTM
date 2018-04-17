@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import * as Scroll from "react-scroll";
 import TripList from './tripList';
 import TTHeader from './TTHeader';
 import BottomBar from './bottomBar/BottomBar';
@@ -6,6 +7,10 @@ import BottomBar from './bottomBar/BottomBar';
 import './style/tripTracker.css';
 import caretBottom from "../assets/caret-bottom-2x.png";
 import caretTop from "../assets/caret-top-2x.png";
+
+var scroll = Scroll.animateScroll;
+var scrollToElement = Scroll.scroller;
+
 
 class TripTracker extends Component {
 constructor(props) {
@@ -38,7 +43,6 @@ async componentWillMount() {
 
 //checking if data updated on the page 
 async componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
     var temp = {
         tempArr1: [],
         tempArr2: [],
@@ -81,14 +85,32 @@ selector(arr, instance) {
     switch(index) {
         case "0": 
             this.classSwitch(index);
+            scrollToElement.scrollTo("item", {
+                duration: 1500,
+                delay: 100,
+                smooth: true,
+                offset: 50, 
+            });
         break;
         case "1": 
             this.classSwitch(index);
+            scrollToElement.scrollTo("item", {
+                duration: 1500,
+                delay: 100,
+                smooth: true,
+                offset: 50, 
+            });
         break;
         case "2": 
             this.classSwitch(index);
-        default: false;
-    }
+            scrollToElement.scrollTo("item", {
+                duration: 1500,
+                delay: 100,
+                smooth: true,
+                offset: 50, 
+            });
+        default: scroll.scrollToTop();
+    };
   };
 
 classSwitch(index) {
@@ -161,6 +183,7 @@ render() {
                         return (
                             <TripList 
                                 key={i}
+                                id={i}
                                 data={this.state.cathegoryDataArr[i]}
                                 type={comp}
                                 handleUpdateForm={this.handleUpdateForm}

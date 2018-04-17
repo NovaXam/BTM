@@ -413,7 +413,6 @@ tempObjAssing(res) {
 
 //main render lifecycle method
   render() {
-    console.log(this.state.profileTraveler);
     return (
       <div className="Main">
         <div className="container">

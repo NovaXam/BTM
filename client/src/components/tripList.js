@@ -1,5 +1,8 @@
 import React from 'react';
+import {Element} from "react-scroll";
+
 import Entry from './Entry';
+
 import './style/tripList.css';
 
 class TripList extends React.Component {
@@ -7,7 +10,7 @@ class TripList extends React.Component {
         return (
             <div className="col col-sm-4 tripList">
                 {this.props.data.map((elem, i) => {
-                    return <Entry 
+                    return <Entry
                             key={i}
                             type={this.props.type}
                             entryData={elem}

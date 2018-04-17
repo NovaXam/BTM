@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import WeatherTime from './Weather/WeatherTime';
-import { key } from '../../assets/LocalStorage';
 import axios from 'axios';
 
 import BarMenu from './BarMenu';
@@ -83,7 +82,6 @@ class AsideBar extends Component {
 
     //method to catch an input value onSubmit on an API weather form field. 
     handleWTInput(event) {
-        console.log(event.target.value);
         event.preventDefault();
         event.stopPropagation();
         this.setState({
@@ -96,7 +94,7 @@ class AsideBar extends Component {
         e.preventDefault();
         e.stopPropagation();
         var score = "";
-        const weather = `https://api.openweathermap.org/data/2.5/weather?q=${this.state.inputCity}&units=metric&APPID=${key.apiWeather}`;
+        const weather = `https://api.openweathermap.org/data/2.5/weather?q=${this.state.inputCity}&units=metric&APPID=${process.env.REACT_APP_API_WEATHER}`;
         if (this.state.inputCity.split(" ").length > 1) {
             const newString = this.state.inputCity.split(" ").join("-").toLowerCase();
             score = `https://api.teleport.org/api/urban_areas/slug:${newString.toLowerCase()}/scores/`;
@@ -110,7 +108,7 @@ class AsideBar extends Component {
             let weather = [res[0].data.name, temp, res[0].data.weather[0].description];
             let cityRate = Math.round(res[1].data.categories[7].score_out_of_10);
             tempObj = {...[weather], cityRate};
-            const time = `http://api.geonames.org/timezoneJSON?lat=${res[0].data.coord.lat}&lng=${res[0].data.coord.lon}&username=${key.apiTime}`;
+            const time = `http://api.geonames.org/timezoneJSON?lat=${res[0].data.coord.lat}&lng=${res[0].data.coord.lon}&username=${process.env.REACT_APP_API_TIME}`;
             axios(time)
             .then((res) => {
                 const time = res.data.time.split(" ");
