@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import BottomItem from './BottomItem';
+import '../style/bottomBar.css';
 
 class BottomBar extends Component {
     constructor(props) {

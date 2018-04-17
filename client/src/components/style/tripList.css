@@ -1,0 +1,6 @@
+.tripList {
+    height: 100%;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: auto;
+    -moz-overflow-scrolling: auto;
+}

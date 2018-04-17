@@ -1,6 +1,7 @@
 .smainContainerAside {
     margin-top: 4rem;
     height: 507px;
+    overflow: hidden;
 }
 
 .verticalBar {

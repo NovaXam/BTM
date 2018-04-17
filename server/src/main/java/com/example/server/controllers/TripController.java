@@ -3,15 +3,16 @@ package com.example.server.controllers;
 import com.example.server.models.Place;
 import com.example.server.models.Traveler;
 import com.example.server.models.Trip;
+import com.example.server.repositories.PlaceRepository;
 import com.example.server.repositories.TravelerRepository;
 import com.example.server.repositories.TripRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import com.example.server.repositories.PlaceRepository;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class TripController {
