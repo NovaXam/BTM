@@ -5,10 +5,13 @@ import Entry from './Entry';
 
 import './style/tripList.css';
 
+
+
+
 class TripList extends React.Component {
     render() {
         return (
-            <div className="col col-sm-4 tripList">
+            <Element className="col col-sm-4 tripList" id="containerElement">
                 {this.props.data.map((elem, i) => {
                     return <Entry
                             key={i}
@@ -20,7 +23,7 @@ class TripList extends React.Component {
                         />
                     })
                 }
-            </div>
+            </Element>
         )
     };
 }

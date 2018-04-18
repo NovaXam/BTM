@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import Scroll from 'react-scroll';
-import SingleGraph from './SingleGraph';
 
-import './style/graphs.css';
+import SingleGraph from './SingleGraph';
 import GraphPage from './GraphPage';
 
-const scroller = Scroll.scroller;
+import './style/graphs.css';
 
 class Graps extends Component {
     constructor(props) {
@@ -45,14 +43,16 @@ class Graps extends Component {
       
     handleSingleGraph(e) {
         const value = this.state.roughDataFromDB;
+        let width = 0;
+        window.innerWidth !== 1920 ? width = (window.innerWidth * 0.55) : width = (window.innerWidth * 0.45)
         switch(e.target.id) {
             case "0": 
-                this.setState({
+            this.setState({
                     data: this.buildDataBudgetGraph(value),
                     name: "Budget",
                     dataType: ["money", "month"],
                     openChart: "0",
-                    widthGraph: (window.innerWidth * 0.55),
+                    widthGraph: width,
                     heightGraph: ((window.innerWidth * 0.55) * 0.6)
                 });
             break;
@@ -62,7 +62,7 @@ class Graps extends Component {
                     name: "Frequency",
                     dataType: ["number", "month"],
                     openChart: "1",
-                    widthGraph: (window.innerWidth * 0.55),
+                    widthGraph: width,
                     heightGraph: ((window.innerWidth * 0.55) * 0.6)
                 });
             break;
@@ -72,7 +72,7 @@ class Graps extends Component {
                     name: "Destination",
                     dataType: [],
                     openChart: "2",
-                    widthGraph: (window.innerWidth * 0.55),
+                    widthGraph: width,
                     heightGraph: ((window.innerWidth * 0.55) * 0.6)
                 });
             break;
@@ -83,9 +83,6 @@ class Graps extends Component {
                 height: ((window.innerWidth * 0.6) * 0.65),
                 hei: "2.35rem",
                 idChart: e.target.id
-            });
-            scroller.scrollTo(`${this.state.graphAreaState}`, {
-                smooth: true,
             });
         }
     };
