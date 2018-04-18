@@ -115,7 +115,7 @@ Track all company business' trips in one app with extended functionality and fri
 
 ## Views
    #### Main dashboard with an opened aside menu
-![alt text](https://github.com/NovaXam/BTM/blob/master/Planning/view/asideWT.png)
+![alt text](https://github.com/NovaXam/BTM/blob/master/Planning/views/asideWT.png)
 
 > aside menu represent three scope: 
 - Weather and Time of a place of destination
@@ -123,23 +123,23 @@ Track all company business' trips in one app with extended functionality and fri
 - Service still under construction
 
    #### Main dashboard with an opened aside menu and bottom bar
-![alt text](https://github.com/NovaXam/BTM/blob/master/Planning/view/dashboard1.png)
+![alt text](https://github.com/NovaXam/BTM/blob/master/Planning/views/dashboard1.png)
 
 > bottom bar menu represent a statistic information about each stage colomn of the trip 
 
    #### Main dashboard with an opened form to add a new trip
-![alt text](https://github.com/NovaXam/BTM/blob/master/Planning/view/addEntry.png)
+![alt text](https://github.com/NovaXam/BTM/blob/master/Planning/views/addEntry.png)
 
 > form to add new entry into a dashboard
 - It automaticaly create a traveler profile which could be modified in aside Traveler menu
 
    #### Graph part of the app with an opened graph "Destinations"
-![alt text](https://github.com/NovaXam/BTM/blob/master/Planning/view/D3_c1.png)
+![alt text](https://github.com/NovaXam/BTM/blob/master/Planning/views/D3_c1.png)
 
 > by default it provide you with a graphic representation of statistic info for the last 12 month.
 
    #### Graph part of the app with an opened graph "Expenditures"
-![alt text](https://github.com/NovaXam/BTM/blob/master/Planning/view/D3_b1.png)
+![alt text](https://github.com/NovaXam/BTM/blob/master/Planning/views/D3_b1.png)
 
 > by default it provide you with a graphic representation of statistic info for the last 12 month.    
 
