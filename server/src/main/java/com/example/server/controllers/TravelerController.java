@@ -14,28 +14,28 @@ public class TravelerController {
     @Autowired
     public TravelerRepository travelerRepository;
 
-    @GetMapping("/traveler")
+    @GetMapping("/travelers")
     public Iterable<Traveler> findAllTravelers() {
         return travelerRepository.findAll();
     };
 
-    @GetMapping("/traveler/{travelerId}")
+    @GetMapping("/travelers/{travelerId}")
     public Optional<Traveler> findTravelerById(@PathVariable Long travelerId) {
         return travelerRepository.findById(travelerId);
     };
 
-    @PostMapping("/traveler")
+    @PostMapping("/travelers")
     public Traveler createNewTraveler(@RequestBody Traveler newTraveler) {
         return travelerRepository.save(newTraveler);
     };
 
-    @DeleteMapping("/traveler/{travelerId}")
+    @DeleteMapping("/travelers/{travelerId}")
     public HttpStatus deleteTraveler(@PathVariable Long travelerId) {
         travelerRepository.deleteById(travelerId);
         return HttpStatus.OK;
     };
 
-    @PatchMapping("/traveler/{travelerId}")
+    @PatchMapping("/travelers/{travelerId}")
     public Traveler updateTraveler(@PathVariable Long travelerId, @RequestBody Traveler newData) {
         Traveler oldData = travelerRepository.findById(travelerId).get();
 

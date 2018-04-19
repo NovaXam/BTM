@@ -36,22 +36,18 @@ public class PlacesApiFeatureTest {
     @Test
     public void shouldAllowFullCrudForAPlace() throws Exception {
 
-        Place firstPlace = new Place(
-                "helsinki"
-        );
+        Place firstPlace = new Place("helsinki");
 
-        Place secondPlace = new Place(
-                "oslo"
-        );
+        Place secondPlace = new Place("oslo");
 
         Stream.of(firstPlace, secondPlace)
                 .forEach(place -> {
                     placeRepository.save(place);
                 });
 
-        // Test get all Users
+        // Test get all Places
         when()
-                .get("http://localhost:8080/places/")
+                .get("http://localhost:8080/cities")
                 .then()
                 .statusCode(is(200))
                 .and().body(containsString("helsinki"))
@@ -59,21 +55,20 @@ public class PlacesApiFeatureTest {
 
 
         //Test creating place
-
         Place newPlace = new Place("Lisabon");
 
         given()
                 .contentType(JSON)
                 .and().body(newPlace)
                 .when()
-                .post("http://localhost:8080/places/")
+                .post("http://localhost:8080/cities")
                 .then()
                 .statusCode(is(200))
                 .and().body(containsString("lisabon"));
 
         //Test get all places
         when()
-                .get("http://localhost:8080/places/")
+                .get("http://localhost:8080/cities")
                 .then()
                 .statusCode(is(200))
                 .and().body(containsString("lisabon"))
@@ -83,7 +78,7 @@ public class PlacesApiFeatureTest {
 
         //Test get places by ID
          when()
-                .get("http://localhost:8080/places/" + secondPlace.getCity_id())
+                .get("http://localhost:8080/cities/" + secondPlace.getCity_id())
                 .then()
                 .statusCode(is(200))
                 .and().body(containsString("oslo"));
@@ -92,7 +87,7 @@ public class PlacesApiFeatureTest {
         secondPlace.setCityName("copenhagen");
         given()
                 .contentType(JSON)
-                .and().body(newPlace)
+                .and().body(secondPlace)
                 .when()
                 .post("http://localhost:8080/places/" + secondPlace.getCity_id())
                 .then()
@@ -101,7 +96,7 @@ public class PlacesApiFeatureTest {
 
         //Test deleting place by ID
         when()
-                .delete("http://localhost:8080/places/" + firstPlace.getCity_id())
+                .delete("http://localhost:8080/places" + firstPlace.getCity_id())
                 .then()
                 .statusCode(is(200));
     };

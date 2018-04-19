@@ -5,9 +5,6 @@ import Entry from './Entry';
 
 import './style/tripList.css';
 
-
-
-
 class TripList extends React.Component {
     render() {
         return (
